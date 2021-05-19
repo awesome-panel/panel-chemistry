@@ -15,6 +15,7 @@ Maybe we also improve it further
 
 - Add CI/ CD on Github to build, test and deploy the package. (I have not tried this before)
 - Add various badges (I have not tried this before).
+- Add documentation on read the docs. But not for now in order to keep things simple.
 
 ## Getting Started
 
