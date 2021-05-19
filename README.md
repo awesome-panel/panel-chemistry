@@ -9,7 +9,7 @@ The structure of the project will be the same as the [panel-highcharts](https://
 - [binder](https://mybinder.org/) to provide an easy to use environment for trying, learning, exploring and using the packing. [See](https://github.com/MarcSkovMadsen/panel-highcharts/tree/main/binder).
 - Python [Invoke](http://www.pyinvoke.org/) to easily run build, test etc tasks. [See](https://github.com/MarcSkovMadsen/panel-highcharts/tree/main/tasks)
     - This includes includes running isort, autoflake, black, pylint, mypy and pytest and making sure all test should pass before merging to main branch. This will keep the code and package working and maintainable.
-- Provide an examples folder of notebooks. [See](https://github.com/MarcSkovMadsen/panel-highcharts/tree/main/examples)
+- Provide documentation via this README and an examples folder of notebooks. [See](https://github.com/MarcSkovMadsen/panel-highcharts/tree/main/examples)
 
 Maybe we also improve it further
 
