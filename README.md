@@ -37,3 +37,7 @@ editor
 
 - [Dash Bio](https://dash.plotly.com/dash-bio)
 - [Awesome Python Chemistry](https://github.com/lmmentel/awesome-python-chemistry)
+
+## Contributing
+
+If you want to contribute reach out via [Github Issues](https://github.com/MarcSkovMadsen/panel-chem-bio/issues) or in the Contributor Community Forum on Gitter: https://gitter.im/panel-chem-bio/community#
