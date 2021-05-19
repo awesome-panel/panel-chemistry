@@ -2,7 +2,7 @@
 
 The purpose of the panel-chem-bio project is to make it really easy to work with EDA and create awesome visual tools within the domains of Chemistry and Molecular Biology using [Panel](https://panel.holoviz.org).
 
-THIS PROJECT IS JUST STARTING (2021-05-19) AND NOTHING MORE THAN AN IDEA. It was started the discussion [How to display JSME molecular editor with Panel?](https://discourse.holoviz.org/t/how-to-display-jsme-molecular-editor-with-panel/2306/12) in the [Panel Community Forum](https://discourse.holoviz.org/)
+THIS PROJECT IS JUST STARTING (2021-05-19) AND NOTHING MORE THAN AN IDEA. It was started by the discussion [How to display JSME molecular editor with Panel?](https://discourse.holoviz.org/t/how-to-display-jsme-molecular-editor-with-panel/2306/12) in the [Panel Community Forum](https://discourse.holoviz.org/)
 
 The structure of the project will be the same as the [panel-highcharts](https://github.com/marcskovmadsen/panel-highcharts) project and package until something else is decided. I.e. we use
 
