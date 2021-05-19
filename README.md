@@ -6,10 +6,10 @@ THIS PROJECT IS JUST STARTING (2021-05-19) AND NOTHING MORE THAN AN IDEA. It was
 
 The structure of the project will be the same as the [panel-highcharts](https://github.com/marcskovmadsen/panel-highcharts) project and package until something else is decided. I.e. we use
 
-- [binder](https://mybinder.org/) to provide an easy to use environment for trying, learning, exploring and using the packing. [See](https://github.com/MarcSkovMadsen/panel-highcharts/tree/main/binder).
-- Python [Invoke](http://www.pyinvoke.org/) to easily run build, test etc tasks. [See](https://github.com/MarcSkovMadsen/panel-highcharts/tree/main/tasks)
+- [binder](https://mybinder.org/) to provide an easy to use environment for trying, learning, exploring and using the packing. [See MarcSkovMadsen/../binder](https://github.com/MarcSkovMadsen/panel-highcharts/tree/main/binder).
+- Python [Invoke](http://www.pyinvoke.org/) to easily run build, test etc tasks. [See MarcSkovMadsen/../tasks](https://github.com/MarcSkovMadsen/panel-highcharts/tree/main/tasks)
     - This includes includes running isort, autoflake, black, pylint, mypy and pytest and making sure all test should pass before merging to main branch. This will keep the code and package working and maintainable.
-- Provide documentation via this README and an examples folder of notebooks. [See](https://github.com/MarcSkovMadsen/panel-highcharts/tree/main/examples)
+- Provide documentation via this README and an examples folder of notebooks. [See MarcSkovMadsen/../examples](https://github.com/MarcSkovMadsen/panel-highcharts/tree/main/examples)
 
 Maybe we also improve it further
 
