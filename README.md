@@ -1,6 +1,6 @@
 # panel-chem-bio
 
-The purpose of the panel-chem-bio project is to make it really easy to work with EDA and create awesome visual tools within the domains of Chemistry and Molecular Biology using [Panel](https://panel.holoviz.org).
+The purpose of the panel-chem-bio project is to make it really easy to work with Exploratory Data Analysis and to create awesome analytics tools within the domains of Chemistry and Molecular Biology using [Panel](https://panel.holoviz.org).
 
 THIS PROJECT IS JUST STARTING (2021-05-19) AND NOTHING MORE THAN AN IDEA. It was started by the discussion [How to display JSME molecular editor with Panel?](https://discourse.holoviz.org/t/how-to-display-jsme-molecular-editor-with-panel/2306/12) in the [Panel Community Forum](https://discourse.holoviz.org/)
 
