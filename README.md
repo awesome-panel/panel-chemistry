@@ -2,14 +2,14 @@
 
 The purpose of the panel-chem-bio project is to make it really easy to work with Exploratory Data Analysis and to create awesome analytics tools within the domains of Chemistry and Molecular Biology using [Panel](https://panel.holoviz.org).
 
-THIS PROJECT IS JUST STARTING (2021-05-19) AND NOTHING MORE THAN AN IDEA. It was started by the discussion [How to display JSME molecular editor with Panel?](https://discourse.holoviz.org/t/how-to-display-jsme-molecular-editor-with-panel/2306/12) in the [Panel Community Forum](https://discourse.holoviz.org/)
+THIS PROJECT IS JUST STARTING (2021-05-19) AND NOT MUCH MORE THAN AN IDEA. It was started by the discussion [How to display JSME molecular editor with Panel?](https://discourse.holoviz.org/t/how-to-display-jsme-molecular-editor-with-panel/2306/12) in the [Panel Community Forum](https://discourse.holoviz.org/)
 
 The structure of the project will be the same as the [panel-highcharts](https://github.com/marcskovmadsen/panel-highcharts) project and package until something else is decided. I.e. we use
 
-- [binder](https://mybinder.org/) to provide an easy to use environment for trying, learning, exploring and using the packing. [See MarcSkovMadsen/../binder](https://github.com/MarcSkovMadsen/panel-highcharts/tree/main/binder).
-- Python [Invoke](http://www.pyinvoke.org/) to easily run build, test etc tasks. [See MarcSkovMadsen/../tasks](https://github.com/MarcSkovMadsen/panel-highcharts/tree/main/tasks)
-    - This includes includes running isort, autoflake, black, pylint, mypy and pytest and making sure all test should pass before merging to main branch. This will keep the code and package working and maintainable.
-- Provide documentation via this README and an examples folder of notebooks. [See MarcSkovMadsen/../examples](https://github.com/MarcSkovMadsen/panel-highcharts/tree/main/examples)
+- [binder](https://mybinder.org/) to provide an easy to use environment for trying, learning, exploring and using the packing. [See MarcSkovMadsen/../binder](https://github.com/MarcSkovMadsen/panel-chem-bio/tree/main/binder).
+- Python [Invoke](http://www.pyinvoke.org/) to easily run build, test etc tasks. [See MarcSkovMadsen/../tasks](https://github.com/MarcSkovMadsen/panel-chem-bio/tree/main/tasks)
+  - This includes includes running isort, autoflake, black, pylint, mypy and pytest and making sure all test should pass before merging to main branch. This will keep the code and package working and maintainable.
+- Provide documentation via this README and an examples folder of notebooks. [See MarcSkovMadsen/../examples](https://github.com/MarcSkovMadsen/panel-chem-bio/tree/main/examples)
 
 Maybe we also improve it further
 
@@ -41,3 +41,5 @@ editor
 ## Contributing
 
 If you want to contribute reach out via [Github Issues](https://github.com/MarcSkovMadsen/panel-chem-bio/issues) or in the Contributor Community Forum on Gitter: https://gitter.im/panel-chem-bio/community#
+
+For more details see the [Developer Guide](DEVELOPER_GUIDE.md)
