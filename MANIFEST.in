@@ -1,7 +1,7 @@
-graft panel_chem_bio/dist
-include panel_chem_bio/*.json
-include panel_chem_bio/models/*.ts
-include panel_chem_bio/index.ts
+graft panel_chemistry/dist
+include panel_chemistry/*.json
+include panel_chemistry/models/*.ts
+include panel_chemistry/index.ts
 include README.md
 global-exclude *.ipynb_checkpoints/*
 global-exclude *.py[co]
