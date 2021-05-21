@@ -37,7 +37,7 @@ editor
 
 ## examples
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/holoviz/panel-chemistry/master?urlpath=lab/tree/examples)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/holoviz/panel-chemistry/main?urlpath=lab/tree/examples)
 
 ## ⭐ Inspirational Resources
 
