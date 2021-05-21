@@ -35,6 +35,10 @@ editor
 
 ![JSME Editor](https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/JMEEditor2008-2.png/300px-JMEEditor2008-2.png)
 
+## examples
+
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/holoviz/panel-chemistry/master?urlpath=lab/tree/examples)
+
 ## ⭐ Inspirational Resources
 
 - [Dash Bio](https://dash.plotly.com/dash-bio)
