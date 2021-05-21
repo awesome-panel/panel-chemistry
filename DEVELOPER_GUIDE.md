@@ -8,8 +8,8 @@
 ## Installation
 
 ```bash
-git clone https://github.com/marcskovmadsen/panel-chem-bio
-cd panel-chem-bio
+git clone https://github.com/marcskovmadsen/panel-chemistry
+cd panel-chemistry
 ```
 
 Create your virtual environment.
@@ -24,7 +24,7 @@ Activate your virtual environment. On Windows with Git Bash it can be done via
 source .venv/Scripts/activate # Windows
 ```
 
-Install the `panel-chem-bio` package for editing
+Install the `panel-chemistry` package for editing
 
 ```bash
 pip install -e .[all]
@@ -33,7 +33,7 @@ pip install -e .[all]
 ## Bokeh Models build
 
 ```bash
-panel build panel_chem_bio
+panel build panel_chemistry
 ```
 
 ## Tests
@@ -71,7 +71,7 @@ Pylint looks for programming errors, helps enforcing a coding standard,
 sniffs for code smells and offers simple refactoring suggestions.
 =======================================================================
 
-pylint setup.py tasks panel_chem_bio tests
+pylint setup.py tasks panel_chemistry tests
 
 --------------------------------------------------------------------
 Your code has been rated at 10.00/10 (previous run: 10.00/10, +0.00)
@@ -80,17 +80,17 @@ Your code has been rated at 10.00/10 (previous run: 10.00/10, +0.00)
 Running mypy for identifying python type errors
 ===============================================
 
-mypy setup.py tasks panel_chem_bio tests
+mypy setup.py tasks panel_chemistry tests
 Success: no issues found in 16 source files
 
 Running pytest the test framework
 =================================
 
-pytest tests --doctest-modules --cov=panel_chem_bio -m "not functionaltest a
+pytest tests --doctest-modules --cov=panel_chemistry -m "not functionaltest a
 nd not integrationtest" --cov-report html:test_results/cov_html
 ============================= test session starts =============================
 platform win32 -- Python 3.8.4, pytest-6.2.2, py-1.10.0, pluggy-0.13.1
-rootdir: C:\repos\private\panel-chem-bio, configfile: pytest.ini, testpaths: tests
+rootdir: C:\repos\private\panel-chemistry, configfile: pytest.ini, testpaths: tests
 plugins: anyio-2.2.0, cov-2.11.1
 collected 6 items
 
@@ -130,7 +130,7 @@ or to test
 python -m twine upload --repository testpypi dist/*0.0.1*
 ```
 
-Have binder build the new image: [binder](https://mybinder.org/v2/gh/MarcSkovMadsen/panel-chem-bio/master?urlpath=labs)
+Have binder build the new image: [binder](https://mybinder.org/v2/gh/MarcSkovMadsen/panel-chemistry/master?urlpath=labs)
 
 ## Build and Run Binder Image Locally
 
@@ -143,7 +143,7 @@ python -m pip install jupyter-repo2docker
 You can then run
 
 ```python
-jupyter-repo2docker https://github.com/MarcSkovMadsen/panel-chem-bio
+jupyter-repo2docker https://github.com/MarcSkovMadsen/panel-chemistry
 ```
 
 Note: Does not work on Windows.
@@ -152,4 +152,4 @@ Note: Does not work on Windows.
 
 Open Binder to rebuild the package
 
-[Open Binder](https://mybinder.org/v2/gh/MarcSkovMadsen/panel-chem-bio/master?urlpath=labs)
+[Open Binder](https://mybinder.org/v2/gh/MarcSkovMadsen/panel-chemistry/master?urlpath=labs)

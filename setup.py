@@ -4,7 +4,7 @@ from typing import List
 
 import setuptools
 
-with open("README.md", "r") as fh:
+with open("README.md", "r", encoding="utf8") as fh:
     long_description = fh.read()
 
 ROOT = pathlib.Path.cwd()
@@ -48,7 +48,7 @@ extras_require = {
 extras_require["all"] = sorted(set(sum(extras_require.values(), [])))
 
 setuptools.setup(
-    name="panel-chem-bio",
+    name="panel-chemistry",
     version=VERSION,
     description="""This purpose makes it easy to work with the domains of Chemistry and Molecular
 Biology using Panel""",
@@ -58,9 +58,9 @@ Biology using Panel""",
     author_email="marc.skov.madsen@gmail.com",
     platforms=["Windows", "Mac OS X", "Linux"],
     license="Apache 2",
-    url="https://github.com/MarcSkovMadsen/panel-chem-bio",
+    url="https://github.com/MarcSkovMadsen/panel-chemistry",
     # My Project contains more folders/ packages but they should not be included
-    packages=setuptools.find_packages(include=["panel_chem_bio", "panel_chem_bio.*"]),
+    packages=setuptools.find_packages(include=["panel_chemistry", "panel_chemistry.*"]),
     include_package_data=True,
     classifiers=[
         # I would like to indicate that this package is a package for the Panel framework
