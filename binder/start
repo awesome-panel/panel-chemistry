@@ -1,0 +1,6 @@
+#!/bin/bash
+export BOKEH_ALLOW_WS_ORIGIN=hub.gke2.mybinder.org
+echo '' >> panel/template/base.py
+echo 'BasicTemplate.param.site_url.default="./"' >> panel/template/base.py
+jupyter trust examples/*.ipynb
+exec "$@"
