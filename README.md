@@ -1,6 +1,6 @@
 # 🧪 panel-chemistry
 
-The purpose of the `panel-chemistry` project is to make it really easy for you 👨‍🔬 do exploratory Data Analysis 📈 and build powerful data and viz tools 🛠️ within the domain of Chemistry ⚗️.
+The purpose of the `panel-chemistry` project is to make it really easy for you 👨‍🔬 to do exploratory Data Analysis 📈 and build powerful data and viz tools 🛠️ within the domain of Chemistry ⚗️.
 
 ## 💡 Background
 
