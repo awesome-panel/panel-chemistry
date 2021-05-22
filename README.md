@@ -1,6 +1,8 @@
 # 🧪 Panel-Chemistry
 
-The purpose of the `panel-chemistry` project is to make it really easy for you 👨‍🔬 to do **exploratory data analysis** and **build powerful data and viz tools** 📈🛠️ within the domain of **Chemistry** ⚗️ using [Python](https://www.python.org/) 🐍 and [HoloViz Panel](https://panel.holoviz.org/) ❤️.
+The purpose of the `panel-chemistry` project is to make it really easy for you  to do **exploratory data analysis** and **build powerful data and viz tools** within the domain of **Chemistry** using [Python](https://www.python.org/) and [HoloViz Panel](https://panel.holoviz.org/).
+
+👨‍🔬🧪📈🛠️🐍❤️
 
 ## 👍 Status
 

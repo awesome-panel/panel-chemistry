@@ -10,15 +10,15 @@ from invoke import task
 
 @task(aliases=["extensions"])
 def bokeh_extensions(command):
-    """Builds the Bokeh extensions
+    """Builds the Bokeh extensions using Node.js
 
-    Please note this requires node.js>=14 is installed
+    Please note this requires Node.js>=14 to be installed
     """
     print(
-        """Builds the Bokeh extensions
+        """Builds the Bokeh extensions using Node.js
 
-Please note this requires node.js>=14 is installed
-=================================================
+Please note this requires Node.js>=14 to be installed
+=====================================================
 """
     )
     command.run("panel build panel_chemistry", echo=True)
@@ -38,3 +38,18 @@ Remember to update the version number in the VERSION file!
 """
     )
     command.run("python setup.py sdist bdist_wheel", echo=True)
+
+@task(aliases=["binder"])
+def binder_image(command):
+    """Builds the panel-chemistry binder image using jupyter-repo2docker
+
+
+    Please note this does not work on Windows"""
+    print(
+        """Builds the panel-chemistry binder image using jupyter-repo2docker
+
+Please note this does not work on Windows
+=========================================
+"""
+    )
+    command.run("jupyter-repo2docker .", echo=True)
