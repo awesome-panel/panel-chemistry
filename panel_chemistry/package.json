@@ -1,0 +1,12 @@
+{
+  "name": "panel_chemistry",
+  "version": "0.0.2",
+  "description": "Panel extension for data analysis and data apps within the domain of Chemistry",
+  "license": "Apache 2.0",
+  "keywords": [],
+  "repository": {},
+  "dependencies": {
+    "@bokeh/bokehjs": "^2.3.2"
+  },
+  "devDependencies": {}
+}
