@@ -1,6 +1,6 @@
 graft panel_chemistry/dist
 include panel_chemistry/*.json
-include panel_chemistry/models/*.ts
+include panel_chemistry/bokeh_extensions/*.ts
 include panel_chemistry/index.ts
 include README.md
 global-exclude *.ipynb_checkpoints/*

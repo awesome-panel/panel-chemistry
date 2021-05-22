@@ -57,6 +57,57 @@ conda install -c conda-forge nodejs
 panel build panel_chemistry
 ```
 
+## 📝 Invoke
+
+We use [Python Invoke](http://www.pyinvoke.org/) to easily run build, test etc tasks. You can learn more about the available options via `invoke --list`.
+
+```bash
+$ invoke --list
+Available tasks:
+
+  test.all (test.pre-commit, test.test)   Runs isort, autoflake, black, pylint, mypy and pytest
+  test.autoflake                          Runs autoflake to remove unused imports on all .py files recursively
+  test.bandit                             Runs Bandit the security linter from PyCQA.
+  test.black                              Runs black (autoformatter) on all .py files recursively
+  test.isort                              Runs isort (import sorter) on all .py files recursively
+  test.mypy                               Runs mypy (static type checker) on all .py files recursively
+  test.pylint                             Runs pylint (linter) on all .py files recursively to identify coding errors
+  test.pytest                             Runs pytest to identify failing tests
+```
+
+and the `--help` flag. For examples
+
+```bash
+$ invoke test.pytest --help
+Usage: inv[oke] [--core-opts] test.pytest [--options] [other tasks here ...]
+
+Docstring:
+  Runs pytest to identify failing tests
+
+  Arguments:
+      command {[type]} -- Invoke command object
+
+  Keyword Arguments:
+      root_dir {str} -- The directory from which to run the tests
+      test_files {str} -- A space separated list of folders and files to test. (default: {'tests})
+      integrationtest {bool} -- If True tests marked integrationtest or functionaltest will be
+          run. Otherwise not. (default: {False})
+      test_results {string} -- If not None test reports will be generated in the test_results
+          folder
+      open_results {bool} -- If True test reports in the 'test_results' folder will be opened in
+          a browser
+
+  # Print running pytest
+
+Options:
+  -e STRING, --test-results=STRING
+  -i, --integrationtest
+  -o, --[no-]open-results
+  -t STRING, --test-files=STRING
+```
+
+The tasks are defined in the [tasks](./tasks/__init__.py) module.
+
 ## 🧪 Tests
 
 ```bash
@@ -72,20 +123,19 @@ Running isort the Python code import sorter
 ===========================================
 
 isort .
-Skipped 7 files
+Skipped 5 files
 
 Running autoflake to remove unused imports on all .py files recursively
 =======================================================================
 
-autoflake --imports=pytest,pandas,numpy,plotly,dash,urllib3 --in-place --recur
-sive .
+autoflake --imports=pytest,pandas,numpy,panel,holoviews,hvplot,plotly,urllib3,pathlib --in-place --recursive .
 
 Running Black the Python code formatter
 =======================================
 
 black .
 All done! \u2728 \U0001f370 \u2728
-16 files left unchanged.
+8 files left unchanged.
 
 Running pylint.
 Pylint looks for programming errors, helps enforcing a coding standard,
@@ -102,34 +152,27 @@ Running mypy for identifying python type errors
 ===============================================
 
 mypy setup.py tasks panel_chemistry tests
-Success: no issues found in 16 source files
+Success: no issues found in 5 source files
 
 Running pytest the test framework
 =================================
 
-pytest tests --doctest-modules --cov=panel_chemistry -m "not functionaltest a
-nd not integrationtest" --cov-report html:test_results/cov_html
+pytest tests --doctest-modules --cov=panel_chemistry -m "not functionaltest and not integrationtest" --cov-report html:test_results/cov_html
 ============================= test session starts =============================
-platform win32 -- Python 3.8.4, pytest-6.2.2, py-1.10.0, pluggy-0.13.1
+platform win32 -- Python 3.8.4, pytest-6.2.4, py-1.10.0, pluggy-0.13.1
 rootdir: C:\repos\private\panel-chemistry, configfile: pytest.ini, testpaths: tests
-plugins: anyio-2.2.0, cov-2.11.1
-collected 6 items
+plugins: anyio-3.1.0, cov-2.12.0
+collected 0 items
 
-tests\test_config.py .                                                   [ 16%]
-tests\test_highchart.py ...                                              [ 66%]
-tests\models\test_highchart.py ..                                        [100%]
 
 ----------- coverage: platform win32, python 3.8.4-final-0 -----------
 Coverage HTML written to dir test_results/cov_html
 
-
-============================== 6 passed in 2.07s ==============================
-
-All Tests Passed Successfully
-=============================
+============================ no tests ran in 0.09s ============================
+Coverage.py warning: No data was collected. (no-data-collected)
 ```
 
-## 🚢 Package Build and Deploye
+## 🚢 Package Build and Deploy
 
 In the `VERSION` file update the `version` number and then run
 
