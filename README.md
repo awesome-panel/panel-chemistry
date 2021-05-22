@@ -2,7 +2,7 @@
 
 The purpose of the `panel-chemistry` project is to make it really easy for you 👨‍🔬 to do *exploratory data analysis* and build powerful data and viz tools 📈🛠️ within the domain of Chemistry ⚗️.
 
-## 💡 Background
+## 🏁 Background
 
 THIS PROJECT IS JUST STARTING (2021-05-19) AND NOT MUCH MORE THAN AN IDEA.
 
@@ -28,7 +28,7 @@ editor
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcskovmadsen/panel-chemistry/main?urlpath=lab/tree/examples)
 
-## ⭐ Inspirational Resources
+## 💡 Inspirational Resources
 
 - [Dash Bio](https://dash.plotly.com/dash-bio)
 - [Awesome Python Chemistry](https://github.com/lmmentel/awesome-python-chemistry)
