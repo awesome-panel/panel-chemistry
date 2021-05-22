@@ -2,7 +2,7 @@
   "name": "panel_chemistry",
   "version": "0.0.1",
   "description": "The panel-chemistry project makes it really easy for you to do exploratory data analysis and build powerful data and viz tools within the domain of Chemistry",
-  "license": "BSD-3-Clause",
+  "license": "Apache 2.0",
   "keywords": [],
   "repository": {},
   "dependencies": {
