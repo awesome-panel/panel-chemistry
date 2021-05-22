@@ -1,11 +1,24 @@
-# For Contributers
+# 🎁 For Contributers
 
-## Prerequisites
+The structure of the project will be the same as the [panel-highcharts](https://github.com/marcskovmadsen/panel-highcharts) project and package until something else is decided. I.e. we use
+
+- [binder](https://mybinder.org/) to provide an easy to use environment for trying, learning, exploring and using the packing. [See MarcSkovMadsen/../binder](https://github.com/MarcSkovMadsen/panel-chemistry/tree/main/binder).
+- Python [Invoke](http://www.pyinvoke.org/) to easily run build, test etc tasks. [See MarcSkovMadsen/../tasks](https://github.com/MarcSkovMadsen/panel-chemistry/tree/main/tasks)
+  - This includes includes running isort, autoflake, black, pylint, mypy and pytest and making sure all test should pass before merging to main branch. This will keep the code and package working and maintainable.
+- Provide documentation via this README and an examples folder of notebooks. [See MarcSkovMadsen/../examples](https://github.com/MarcSkovMadsen/panel-chemistry/tree/main/examples)
+
+Maybe we also improve it further
+
+- Add CI/ CD on Github to build, test and deploy the package. (I have not tried this before)
+- Add various badges (I have not tried this before).
+- Add documentation on read the docs. But not for now in order to keep things simple.
+
+## 🛠️ Prerequisites
 
 - Python >= 3.7
 - Node >= 14
 
-## Installation
+## 🏃 Installation
 
 ```bash
 git clone https://github.com/marcskovmadsen/panel-chemistry
@@ -30,13 +43,13 @@ Install the `panel-chemistry` package for editing
 pip install -e .[all]
 ```
 
-## Bokeh Models build
+## 🏗️ Bokeh Models build
 
 ```bash
 panel build panel_chemistry
 ```
 
-## Tests
+## 🧪 Tests
 
 ```bash
 invoke test.all
@@ -108,7 +121,7 @@ All Tests Passed Successfully
 =============================
 ```
 
-## Package build
+## 🚢 Package Build and Deploye
 
 In the `VERSION` file update the `version` number and then run
 
@@ -116,23 +129,27 @@ In the `VERSION` file update the `version` number and then run
 python setup.py sdist bdist_wheel
 ```
 
-## Package Deploy
-
-to production
+to build and
 
 ```bash
 python -m twine upload dist/*0.0.1*
 ```
 
-or to test
+to deploy the package 📦.
+
+### 🚚 Deploying to Test PyPi
 
 ```bash
 python -m twine upload --repository testpypi dist/*0.0.1*
 ```
 
-Have binder build the new image: [binder](https://mybinder.org/v2/gh/MarcSkovMadsen/panel-chemistry/master?urlpath=labs)
+### 📒 Rebuild the Binder Image
 
-## Build and Run Binder Image Locally
+Open Binder to rebuild the package
+
+[Open Binder](https://mybinder.org/v2/gh/MarcSkovMadsen/panel-chemistry/master?urlpath=labs)
+
+#### 💻 Build and Run the Binder Image Locally
 
 In order to test the Binder Image you can install repo2docker
 
@@ -147,9 +164,3 @@ jupyter-repo2docker https://github.com/MarcSkovMadsen/panel-chemistry
 ```
 
 Note: Does not work on Windows.
-
-## Open Binder
-
-Open Binder to rebuild the package
-
-[Open Binder](https://mybinder.org/v2/gh/MarcSkovMadsen/panel-chemistry/master?urlpath=labs)
