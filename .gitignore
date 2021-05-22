@@ -128,3 +128,5 @@ dmypy.json
 # Pyre type checker
 .pyre/
 test_results
+panel_chemistry/node_modules
+.vscode

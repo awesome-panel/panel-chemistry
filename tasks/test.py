@@ -148,7 +148,9 @@ Running autoflake to remove unused imports on all .py files recursively
     )
     # command.run("RUN rm -rf .mypy_cache/; exit 0")
     command.run(
-        "autoflake --imports=pytest,pandas,numpy,plotly,dash,urllib3 --in-place --recursive .",
+        "autoflake "
+        "--imports=pytest,pandas,numpy,panel,holoviews,hvplot,plotly,urllib3,pathlib "
+        "--in-place --recursive .",
         echo=True,
     )
 

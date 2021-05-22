@@ -11,9 +11,7 @@ DONT_SERVE = []
 
 def get_apps():
     return [
-        app
-        for app in glob("examples/reference/*.ipynb", recursive=True)
-        if not app in DONT_SERVE
+        app for app in glob("examples/reference/*.ipynb", recursive=True) if not app in DONT_SERVE
     ]
 
 
