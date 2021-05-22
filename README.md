@@ -36,7 +36,7 @@ editor
 
 ## 👩‍🏫 Examples
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcskovmadsen/panel-chemistry/main?urlpath=lab/tree/examples)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcskovmadsen/panel-chemistry/main?urlpath=labs/tree/examples)
 
 ## 💡 Inspirational Resources
 
