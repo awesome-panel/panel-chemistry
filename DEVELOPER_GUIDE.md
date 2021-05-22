@@ -15,8 +15,10 @@ Maybe we also improve it further
 
 ## 🛠️ Prerequisites
 
-- Python >= 3.7
-- Node >= 14
+- conda
+
+Please note that you can also use pip. But then you will have to mess with getting node.js installed which might be a painful process
+if your are in some kind of constrained, enterprise environment.
 
 ## 🏃 Installation
 
@@ -28,19 +30,25 @@ cd panel-chemistry
 Create your virtual environment.
 
 ```bash
-python -m venv .venv
+conda create --name panel-chemistry
 ```
 
 Activate your virtual environment. On Windows with Git Bash it can be done via
 
 ```bash
-source .venv/Scripts/activate # Windows
+conda activate panel-chemistry
 ```
 
 Install the `panel-chemistry` package for editing
 
 ```bash
 pip install -e .[all]
+```
+
+install node.js
+
+```bash
+conda install -c conda-forge nodejs
 ```
 
 ## 🏗️ Bokeh Models build
