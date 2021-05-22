@@ -1,6 +1,6 @@
-"""Module of Invoke tasks regarding CODE QUALITY to be invoked from the command line. Try
+"""Module of Invoke test tasks for testing the CODE QUALITY to be invoked from the command line. Try
 
-invoke --list
+invoke --list=test
 
 from the command line for a list of all available commands.
 """
@@ -8,7 +8,7 @@ from the command line for a list of all available commands.
 from invoke import task
 
 
-@task
+@task()
 def bandit(command):
     """Runs Bandit the security linter from PyCQA."""
     print(
@@ -21,7 +21,7 @@ to identify common security issues in Python code
     command.run("bandit -r ./", echo=True)
 
 
-@task
+@task()
 def black(command):
     """Runs black (autoformatter) on all .py files recursively"""
     print(
@@ -33,7 +33,7 @@ Running Black the Python code formatter
     command.run("black .", echo=True)
 
 
-@task
+@task()
 def isort(command):
     """Runs isort (import sorter) on all .py files recursively"""
     print(
