@@ -6,71 +6,31 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "strictNullChecks": true,
-    "strictBindCallApply": true,
-    "strictFunctionTypes": true,
+    "strictBindCallApply": false,
+    "strictFunctionTypes": false,
     "strictPropertyInitialization": false,
     "alwaysStrict": true,
     "noErrorTruncation": true,
     "noEmitOnError": false,
-    "allowJs": true,
     "declaration": true,
     "sourceMap": true,
-    "declarationMap": true,
     "importHelpers": false,
     "experimentalDecorators": true,
-    "module": "ES2020",
+    "module": "esnext",
     "moduleResolution": "node",
+    "esModuleInterop": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "esModuleInterop": true,
     "target": "ES2017",
-    "lib": [
-      "es2017",
-      "dom",
-      "dom.iterable"
-    ],
+    "lib": ["es2017", "dom", "dom.iterable"],
     "baseUrl": ".",
-    "outDir": "./dist/lib"
+    "outDir": "./dist/lib",
+    "paths": {
+      "@bokehjs/*": [
+        "./node_modules/@bokeh/bokehjs/build/js/lib/*",
+        "./node_modules/@bokeh/bokehjs/build/js/types/*"
+      ]
+    }
   },
-  "include": [
-    "./**/*.ts"
-  ],
-  "default": {
-    "compilerOptions": {
-      "noImplicitAny": true,
-      "noImplicitThis": true,
-      "noImplicitReturns": true,
-      "noUnusedLocals": true,
-      "noUnusedParameters": true,
-      "strictNullChecks": true,
-      "strictBindCallApply": true,
-      "strictFunctionTypes": true,
-      "strictPropertyInitialization": false,
-      "alwaysStrict": true,
-      "noErrorTruncation": true,
-      "noEmitOnError": false,
-      "allowJs": true,
-      "declaration": true,
-      "sourceMap": true,
-      "declarationMap": true,
-      "importHelpers": false,
-      "experimentalDecorators": true,
-      "module": "ES2020",
-      "moduleResolution": "node",
-      "resolveJsonModule": true,
-      "skipLibCheck": true,
-      "esModuleInterop": true,
-      "target": "ES2017",
-      "lib": [
-        "es2017",
-        "dom",
-        "dom.iterable"
-      ],
-      "baseUrl": ".",
-      "outDir": "./dist/lib"
-    },
-    "include": [
-      "./**/*.ts"
-    ]
-  }
+  "include": ["./**/*.ts"]
 }

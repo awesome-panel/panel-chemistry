@@ -6,7 +6,7 @@
   "keywords": [],
   "repository": {},
   "dependencies": {
-    "bokehjs": "^2.3.2"
+    "@bokeh/bokehjs": "^2.3.2"
   },
   "devDependencies": {}
 }
