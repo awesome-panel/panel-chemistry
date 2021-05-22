@@ -129,4 +129,3 @@ dmypy.json
 .pyre/
 test_results
 panel_chemistry/node_modules
-.vscode
