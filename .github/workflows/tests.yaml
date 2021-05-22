@@ -1,0 +1,63 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+    - '*'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
+        python-version: [3.6, 3.7, 3.8, 3.9]
+        exclude:
+          - os: windows-latest
+            python-version: 3.6
+          - os: windows-latest
+            python-version: 3.7
+          - os: windows-latest
+            python-version: 3.9
+          - os: macos-latest
+            python-version: 3.6
+          - os: macos-latest
+            python-version: 3.7
+          - os: macos-latest
+            python-version: 3.9
+
+    env:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .[all]
+      - name: Run Pylint
+        run: |
+          invoke test.pylint
+        if: always()
+      - name: Run MyPy
+        run: |
+          invoke test.mypy
+        if: always()
+      - name: Run Pytest
+        run: |
+          pytest tests --cov=panel_chemistry --cov-report html:test_results/cov_html
+        if: always()
+      - name: Upload Coverage
+        uses: actions/upload-artifact@v2
+        with:
+          name: code-coverage-report
+          path: test_results/cov_html
+        if: always()
