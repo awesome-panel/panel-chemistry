@@ -10,6 +10,8 @@ It was started by the discussion [How to display JSME molecular editor with Pane
 
 ## 🏃 Getting Started
 
+ILLUSTRATIVE ONLY. NOT YET AVAILABLE.
+
 ```bash
 pip install panel_chemistry
 ```
