@@ -51,126 +51,59 @@ install node.js
 conda install -c conda-forge nodejs
 ```
 
-## 🏗️ Bokeh Models build
-
-```bash
-panel build panel_chemistry
-```
-
 ## 📝 Invoke
 
-We use [Python Invoke](http://www.pyinvoke.org/) to easily run build, test etc tasks. You can learn more about the available options via `invoke --list`.
+We use [Python Invoke](http://www.pyinvoke.org/) to easily run build, test etc tasks.
+
+You can learn more about the available options via `invoke --list`. Please note that invoke should run from the root of the project.
+
+The invoke tasks are defined in the [tasks](./tasks/__init__.py) module.
+
+### 🏗️ Build
+
+You can see the build commands via
 
 ```bash
-$ invoke --list
-Available tasks:
+$ invoke --list=build
+Available 'build' tasks:
 
-  test.all (test.pre-commit, test.test)   Runs isort, autoflake, black, pylint, mypy and pytest
-  test.autoflake                          Runs autoflake to remove unused imports on all .py files recursively
-  test.bandit                             Runs Bandit the security linter from PyCQA.
-  test.black                              Runs black (autoformatter) on all .py files recursively
-  test.isort                              Runs isort (import sorter) on all .py files recursively
-  test.mypy                               Runs mypy (static type checker) on all .py files recursively
-  test.pylint                             Runs pylint (linter) on all .py files recursively to identify coding errors
-  test.pytest                             Runs pytest to identify failing tests
+  .bokeh-extensions (.extensions)   Builds the Bokeh extensions
+  .python-package (.package)        Builds the panel-chemistry Python package
 ```
 
-and the `--help` flag. For examples
+For example to build the Bokeh extensions you can write
 
 ```bash
-$ invoke test.pytest --help
-Usage: inv[oke] [--core-opts] test.pytest [--options] [other tasks here ...]
-
-Docstring:
-  Runs pytest to identify failing tests
-
-  Arguments:
-      command {[type]} -- Invoke command object
-
-  Keyword Arguments:
-      root_dir {str} -- The directory from which to run the tests
-      test_files {str} -- A space separated list of folders and files to test. (default: {'tests})
-      integrationtest {bool} -- If True tests marked integrationtest or functionaltest will be
-          run. Otherwise not. (default: {False})
-      test_results {string} -- If not None test reports will be generated in the test_results
-          folder
-      open_results {bool} -- If True test reports in the 'test_results' folder will be opened in
-          a browser
-
-  # Print running pytest
-
-Options:
-  -e STRING, --test-results=STRING
-  -i, --integrationtest
-  -o, --[no-]open-results
-  -t STRING, --test-files=STRING
+invoke build.extensions
 ```
-
-The tasks are defined in the [tasks](./tasks/__init__.py) module.
 
 ## 🧪 Tests
 
-```bash
-invoke test.all
-```
-
-will run `isort`, `autoflake`, `black`, `pylint`, `mypy` and `pytest`. It should look something like
+To see the available options run
 
 ```bash
-$ invoke test.all
+$ invoke --list=test
+Available 'test' tasks:
 
-Running isort the Python code import sorter
-===========================================
-
-isort .
-Skipped 5 files
-
-Running autoflake to remove unused imports on all .py files recursively
-=======================================================================
-
-autoflake --imports=pytest,pandas,numpy,panel,holoviews,hvplot,plotly,urllib3,pathlib --in-place --recursive .
-
-Running Black the Python code formatter
-=======================================
-
-black .
-All done! \u2728 \U0001f370 \u2728
-8 files left unchanged.
-
-Running pylint.
-Pylint looks for programming errors, helps enforcing a coding standard,
-sniffs for code smells and offers simple refactoring suggestions.
-=======================================================================
-
-pylint setup.py tasks panel_chemistry tests
-
---------------------------------------------------------------------
-Your code has been rated at 10.00/10 (previous run: 10.00/10, +0.00)
-
-
-Running mypy for identifying python type errors
-===============================================
-
-mypy setup.py tasks panel_chemistry tests
-Success: no issues found in 5 source files
-
-Running pytest the test framework
-=================================
-
-pytest tests --doctest-modules --cov=panel_chemistry -m "not functionaltest and not integrationtest" --cov-report html:test_results/cov_html
-============================= test session starts =============================
-platform win32 -- Python 3.8.4, pytest-6.2.4, py-1.10.0, pluggy-0.13.1
-rootdir: C:\repos\private\panel-chemistry, configfile: pytest.ini, testpaths: tests
-plugins: anyio-3.1.0, cov-2.12.0
-collected 0 items
-
-
------------ coverage: platform win32, python 3.8.4-final-0 -----------
-Coverage HTML written to dir test_results/cov_html
-
-============================ no tests ran in 0.09s ============================
-Coverage.py warning: No data was collected. (no-data-collected)
+  .all (.pre-commit, .test)   Runs isort, autoflake, black, pylint, mypy and pytest
+  .autoflake                  Runs autoflake to remove unused imports on all .py files recursively
+  .bandit                     Runs Bandit the security linter from PyCQA.
+  .black                      Runs black (autoformatter) on all .py files recursively
+  .isort                      Runs isort (import sorter) on all .py files recursively
+  .mypy                       Runs mypy (static type checker) on all .py files recursively
+  .pylint                     Runs pylint (linter) on all .py files recursively to identify coding errors
+  .pytest                     Runs pytest to identify failing tests
 ```
+
+For example to run pytest you would run `invoke test.pytest`.
+
+All tests are also automatically run via [Github Actions](https://docs.github.com/en/actions) on Pull Requests and merges into the `main` branch. For more info checkout the [tests.yaml](.github/workflows/tests.yaml) configuration file.
+
+## Pull Requests
+
+You are welcome to create Pull Requests on preliminary code.
+
+When you request a review please make sure all tests (i.e. `invoke test.all` pass). Alternatively please just mention that not all tests pass but you would still like a review and the reason why.
 
 ## 🚢 Package Build and Deploy
 
@@ -186,19 +119,13 @@ to build and
 python -m twine upload dist/*0.0.1*
 ```
 
-to deploy the package 📦.
-
-### 🚚 Deploying to Test PyPi
-
-```bash
-python -m twine upload --repository testpypi dist/*0.0.1*
-```
+to deploy the package 📦. If you want to upload to *Test Pypi* first you can do so by adding `--repository testpypi`.
 
 ### 📒 Rebuild the Binder Image
 
 Open Binder to rebuild the package
 
-[Open Binder](https://mybinder.org/v2/gh/MarcSkovMadsen/panel-chemistry/master?urlpath=labs)
+[Open Binder](https://mybinder.org/v2/gh/MarcSkovMadsen/panel-chemistry/main?urlpath=labs)
 
 #### 💻 Build and Run the Binder Image Locally
 
