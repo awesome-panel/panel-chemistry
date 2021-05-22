@@ -2,6 +2,8 @@
 
 The purpose of the `panel-chemistry` project is to make it really easy for you 👨‍🔬 to do **exploratory data analysis** and **build powerful data and viz tools** 📈🛠️ within the domain of **Chemistry** ⚗️ using [Python](https://www.python.org/) 🐍 and [HoloViz Panel](https://panel.holoviz.org/) ❤️.
 
+## Badges
+
 ![Python Versions](https://img.shields.io/badge/python-3.6%20%7C%203.7%20%7C%203.8%20%7C%203.9-blue) ![Style Black](https://warehouse-camo.ingress.cmh1.psfhosted.org/fbfdc7754183ecf079bc71ddeabaf88f6cbc5c00/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f636f64652532307374796c652d626c61636b2d3030303030302e737667) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ![Test Results](https://github.com/MarcSkovMadsen/panel-chemistry/actions/workflows/tests.yaml/badge.svg?branch=main)
