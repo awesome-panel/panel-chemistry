@@ -31,10 +31,10 @@ def _get_apps():
 
 @task()
 def binder(command):
-    """Opens the current branch of the repository on Binder."""
+    """Opens the current branch on Binder."""
     print(
         """
-Opens the main branch of the repository on Binder.
+Opens the current branch on Binder.
 =================================================
 """
     )
@@ -44,10 +44,10 @@ Opens the main branch of the repository on Binder.
 
 @task()
 def github(command):
-    """Opens the current branch of the repository on Github."""
+    """Opens the current branch on Github."""
     print(
         """
-Opens the main branch of the repository on Github.
+Opens the current branch on Github.
 =================================================
 """
     )
@@ -57,12 +57,12 @@ Opens the main branch of the repository on Github.
 
 @task()
 def examples(command):
-    """Panel serves the examples."""
+    """Panel serves the examples notebooks."""
     print(
         """
-Panel serves the examples.
-==========================
+Panel serves the example notebooks.
+===================================
 """
     )
     apps = _get_apps()
-    command.run(f"panel serve {' '.join(apps)}", echo=True)
+    command.run(f"panel serve {' '.join(apps)} --auto --show", echo=True)

@@ -105,7 +105,7 @@ You are welcome to create Pull Requests on preliminary code.
 
 When you request a review please make sure all tests (i.e. `invoke test.all` pass). Alternatively please just mention that not all tests pass but you would still like a review and the reason why.
 
-## 🚢 Package Build and Deploy
+## 🚢 Releasing a New Package
 
 In the `VERSION` file update the `version` number and then run
 
@@ -121,11 +121,22 @@ python -m twine upload dist/*0.0.1*
 
 to deploy the package 📦. If you want to upload to *Test Pypi* first you can do so by adding `--repository testpypi`.
 
-### 📒 Rebuild the Binder Image
+### 📒 Show
 
-Open Binder to rebuild the package
+You can your invoke to easily show Binder or Github for the active branch.
 
-[Open Binder](https://mybinder.org/v2/gh/MarcSkovMadsen/panel-chemistry/main?urlpath=labs)
+You can also use invoke to `panel serve` and show the example notebooks.
+
+Checkout
+
+```bash
+$ invoke --list=show
+Available 'start' tasks:
+
+  .binder     Opens the current branch on Binder.
+  .examples   Panel serves the examples notebooks.
+  .github     Opens the current branch on Github.
+```
 
 #### 💻 Build and Run the Binder Image Locally
 
