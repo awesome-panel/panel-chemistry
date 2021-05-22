@@ -19,7 +19,7 @@ It was started by the discussion [How to display JSME molecular editor with Pane
 ILLUSTRATIVE ONLY. NOT YET AVAILABLE.
 
 ```bash
-pip install panel_chemistry
+pip install panel-chemistry
 ```
 
 ```python

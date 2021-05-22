@@ -153,3 +153,9 @@ jupyter-repo2docker https://github.com/MarcSkovMadsen/panel-chemistry
 ```
 
 Note: Does not work on Windows.
+
+## 🎥 Videos
+
+### Project Structure
+
+[![Basic Project Structure](https://img.youtube.com/vi/2zvXTTo5NcI/maxresdefault.jpg)](https://youtu.be/2zvXTTo5NcI)
