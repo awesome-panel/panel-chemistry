@@ -29,6 +29,7 @@ _tests = [
     "rope",
     "twine",
     "wheel",
+    "codecov",
 ]
 
 _examples = [
