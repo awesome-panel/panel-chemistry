@@ -1,16 +1,18 @@
 # 🧪 Panel-Chemistry
 
-The purpose of the `panel-chemistry` project is to make it really easy for you 👨‍🔬 to do *exploratory data analysis* and build powerful data and viz tools 📈🛠️ within the domain of Chemistry ⚗️.
+The purpose of the `panel-chemistry` project is to make it really easy for you 👨‍🔬 to do **exploratory data analysis** and **build powerful data and viz tools** 📈🛠️ within the domain of **Chemistry** ⚗️.
 
 ## 🏁 Background
 
-THIS PROJECT IS JUST STARTING (2021-05-19) AND NOT MUCH MORE THAN AN IDEA.
+This project is just starting (2021-05-19) and not much more than an idea.
 
 It was started by the discussion [How to display JSME molecular editor with Panel?](https://discourse.holoviz.org/t/how-to-display-jsme-molecular-editor-with-panel/2306/12) in the [Panel Community Forum](https://discourse.holoviz.org/)
 
 ## 🏃 Getting Started
 
-`pip install panel_chemistry`
+```bash
+pip install panel_chemistry
+```
 
 ```python
 import panel_chemistry as pc
