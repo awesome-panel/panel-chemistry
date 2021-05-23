@@ -143,6 +143,12 @@ to deploy the package 📦. If you want to upload to *Test Pypi* first you can d
 
 ## 🎥 Videos
 
-### Project Structure
+**Click the image** to watch.
 
-[![Basic Project Structure](https://img.youtube.com/vi/2zvXTTo5NcI/maxresdefault.jpg)](https://youtu.be/2zvXTTo5NcI)
+### v.0.0.1 - Project Structure
+
+[![v.0.0.1 - Basic Project Structure](https://img.youtube.com/vi/2zvXTTo5NcI/maxresdefault.jpg)](https://youtu.be/2zvXTTo5NcI)
+
+### v.0.0.2 - Init Bokeh Extensions
+
+[![v0.0.2 - Init Bokeh Extensions](https://img.youtube.com/vi/6XVEIiP52UU/maxresdefault.jpg)](https://youtu.be/6XVEIiP52UU)
