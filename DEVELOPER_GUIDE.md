@@ -67,7 +67,8 @@ You can see the build commands via
 $ invoke --list=build
 Available 'build' tasks:
 
-  .bokeh-extensions (.extensions)   Builds the Bokeh extensions
+  .binder-image (.binder)           Builds the panel-chemistry binder image using jupyter-repo2docker
+  .bokeh-extensions (.extensions)   Builds the Bokeh extensions using Node.js
   .python-package (.package)        Builds the panel-chemistry Python package
 ```
 
@@ -99,29 +100,7 @@ For example to run pytest you would run `invoke test.pytest`.
 
 All tests are also automatically run via [Github Actions](https://docs.github.com/en/actions) on Pull Requests and merges into the `main` branch. For more info checkout the [tests.yaml](.github/workflows/tests.yaml) configuration file.
 
-## Pull Requests
-
-You are welcome to create Pull Requests on preliminary code.
-
-When you request a review please make sure all tests (i.e. `invoke test.all` pass). Alternatively please just mention that not all tests pass but you would still like a review and the reason why.
-
-## 🚢 Releasing a New Package
-
-In the `VERSION` file update the `version` number and then run
-
-```bash
-python setup.py sdist bdist_wheel
-```
-
-to build and
-
-```bash
-python -m twine upload dist/*0.0.1*
-```
-
-to deploy the package 📦. If you want to upload to *Test Pypi* first you can do so by adding `--repository testpypi`.
-
-### 📒 Show
+## 📒 Show
 
 You can your invoke to easily show Binder or Github for the active branch.
 
@@ -138,24 +117,38 @@ Available 'start' tasks:
   .github     Opens the current branch on Github.
 ```
 
-#### 💻 Build and Run the Binder Image Locally
+## Pull Requests
 
-In order to test the Binder Image you can install repo2docker
+You are welcome to create Pull Requests on preliminary code.
 
-```python
-python -m pip install jupyter-repo2docker
+When you request a review please make sure all tests, i.e. make sure `invoke test.all` run successfully and without errors.
+
+Alternatively please just mention that not all tests pass, but you would still like a review and the reason why.
+
+## 🚢 Releasing a New Package
+
+In the `VERSION` file update the `version` number and then run
+
+```bash
+invoke build.package
 ```
 
-You can then run
+to build and
 
-```python
-jupyter-repo2docker https://github.com/MarcSkovMadsen/panel-chemistry
+```bash
+python -m twine upload dist/*0.0.1*
 ```
 
-Note: Does not work on Windows.
+to deploy the package 📦. If you want to upload to *Test Pypi* first you can do so by adding `--repository testpypi`.
 
 ## 🎥 Videos
 
-### Project Structure
+**Click the image** to watch.
 
-[![Basic Project Structure](https://img.youtube.com/vi/2zvXTTo5NcI/maxresdefault.jpg)](https://youtu.be/2zvXTTo5NcI)
+### v.0.0.1 - Project Structure
+
+[![v.0.0.1 - Basic Project Structure](https://img.youtube.com/vi/2zvXTTo5NcI/maxresdefault.jpg)](https://youtu.be/2zvXTTo5NcI)
+
+### v.0.0.2 - Init Bokeh Extensions
+
+[![v0.0.2 - Init Bokeh Extensions](https://img.youtube.com/vi/6XVEIiP52UU/maxresdefault.jpg)](https://youtu.be/6XVEIiP52UU)

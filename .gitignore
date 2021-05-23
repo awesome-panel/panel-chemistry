@@ -130,3 +130,4 @@ dmypy.json
 test_results
 panel_chemistry/node_modules
 .vscode
+panel_chemistry/.bokeh
