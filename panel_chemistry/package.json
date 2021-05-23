@@ -15,5 +15,5 @@
   "files": [
     "dist/**/*.{js,js.map,d.ts,json,css}"
   ],
-  "main": "dist/panel-chemistry.js"
+  "main": "dist/panel_chemistry.js"
 }
