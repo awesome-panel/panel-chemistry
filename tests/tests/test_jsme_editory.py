@@ -11,7 +11,12 @@ def test_can_construct():
 
 def test_jsme_editor_app():
     editor = JSMEEditor(height=250)
-    return pn.Column(editor, editor.param.clicks)
+    component = pn.Column(editor, editor.param.clicks)
+    return pn.template.FastListTemplate(
+        site="Panel Chemistry v0.0.3",
+        title="Dummy JSME Editor",
+        main=[component]
+    )
 
 
 if __name__.startswith("bokeh"):
