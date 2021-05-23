@@ -13,9 +13,7 @@ def test_jsme_editor_app():
     editor = JSMEEditor(height=250)
     component = pn.Column(editor, editor.param.clicks)
     return pn.template.FastListTemplate(
-        site="Panel Chemistry v0.0.3",
-        title="Dummy JSME Editor",
-        main=[component]
+        site="Panel Chemistry v0.0.3", title="Dummy JSME Editor", main=[component]
     )
 
 

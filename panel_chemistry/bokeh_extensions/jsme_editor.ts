@@ -52,9 +52,9 @@ export class JSMEEditor extends HTMLBox {
     static init_JSMEEditor(): void {
         this.prototype.default_view = JSMEEditorView;
 
-        this.define<JSMEEditor.Props>({
-            object: [p.String, "<button style='width:100%'>Click Me</button>"],
-            clicks: [p.Int, 0],
-        })
+        this.define<JSMEEditor.Props>(({Int, String}) => ({
+            object: [String, "<button style='width:100%'>Click Me</button>"],
+            clicks: [Int, 0],
+        }))
     }
 }
