@@ -6,7 +6,7 @@
 
 The purpose of the `panel-chemistry` project is to make it really easy for you  to do **exploratory data analysis** and **build powerful data and viz tools** within the domain of **Chemistry** using [Python](https://www.python.org/) and [HoloViz Panel](https://panel.holoviz.org/).
 
-![Panel Chemistry Teaser](assets/panel-chemistry-teaser.gif)
+![Panel Chemistry Teaser](https://raw.githubusercontent.com/MarcSkovMadsen/panel-chemistry/main/assets/panel-chemistry-teaser.gif)
 
 Check out the `panel-chemistry` examples on **Binder**
 
@@ -42,13 +42,13 @@ editor = JSMEEditor(value=smiles, height=500, format="smiles")
 editor.servable()
 ```
 
-![JSME Editor](assets/panel-chemistry-example.png)
+![JSME Editor](https://raw.githubusercontent.com/MarcSkovMadsen/panel-chemistry/main/assets/panel-chemistry-example.png)
 
 ## 👩‍🏫 Examples
 
-Check out the `panel-chemistry` examples on **Binder**
+Check out the `panel-chemistry` **reference guides** on **Binder**
 
-| Component | Jupyter Notebook | Jupyter Labs | Panel Apps |
+| Guide | Jupyter Notebook | Jupyter Labs | Panel Apps |
 | - | - | - | - |
 | JSME Editor | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcskovmadsen/panel-chemistry/HEAD?filepath=examples/reference/JSMEEditor.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcskovmadsen/panel-chemistry/HEAD?urlpath=lab/tree/examples/reference/JSMEEditor.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcskovmadsen/panel-chemistry/HEAD?urlpath=panel/JSMEEditor) |
 
