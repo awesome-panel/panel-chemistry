@@ -1,3 +1,4 @@
+panel build panel_chemistry
 pip install voila>=0.2.10 -U
 conda install -c conda-forge code-server
 code-server --install-extension ms-python.python
