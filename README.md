@@ -44,11 +44,27 @@ editor
 
 ## 💡 Inspirational Resources
 
-- [Dash Bio](https://dash.plotly.com/dash-bio)
 - [Awesome Python Chemistry](https://github.com/lmmentel/awesome-python-chemistry)
+- [Dash Bio](https://dash.plotly.com/dash-bio)
+- [JSME Editor](https://jsme-editor.github.io) and [Test Page](https://jsme-editor.github.io/dist/JSME_test.html)
+- [RDKit](http://www.rdkit.org/)
+- [RDKit IPython Tools](https://github.com/apahl/rdkit_ipynb_tools)
 
 ## 🎁 Contributing
 
 If you want to contribute reach out via [Github Issues](https://github.com/MarcSkovMadsen/panel-chemistry/issues) or in the Contributor Community Forum on Gitter: https://gitter.im/panel-chemistry/community#
 
 For more details see the [Developer Guide](DEVELOPER_GUIDE.md)
+
+## FAQ
+
+### How do I Install with Conda?
+
+You can do
+
+```bash
+conda install pip
+pip install panel-chemistry
+```
+
+You can also include `panel-chemistry` in your `environment.yaml` file as described on [Stack Overflow: Combining conda environment.yml with pip requirements.txt](https://stackoverflow.com/questions/35245401/combining-conda-environment-yml-with-pip-requirements-txt).
