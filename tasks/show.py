@@ -42,7 +42,10 @@ Opens the current branch on Binder.
 """
     )
     branch = _get_active_branch_name()
-    url = f"https://mybinder.org/v2/gh/MarcSkovMadsen/panel-chemistry/{branch}?urlpath=lab"
+    url = (
+        f"https://mybinder.org/v2/gh/MarcSkovMadsen/panel-chemistry/{branch}"
+        "?urlpath=lab/tree/examples"
+    )
     command.run(f"python -m webbrowser {url}", echo=True)
 
 
