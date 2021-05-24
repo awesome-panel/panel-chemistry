@@ -51,10 +51,9 @@ extras_require["all"] = sorted(set(sum(extras_require.values(), [])))
 setuptools.setup(
     name="panel-chemistry",
     version=VERSION,
-    description="""This purpose makes it easy to work with the domains of Chemistry and Molecular
-Biology using Panel""",
-    long_description=long_description,
+    description="This package makes it easy to work with Chemistry using Python and HoloViz Panel",
     long_description_content_type="text/markdown",
+    long_description=long_description,
     author="Marc Skov Madsen et al.",
     author_email="marc.skov.madsen@gmail.com",
     platforms=["Windows", "Mac OS X", "Linux"],

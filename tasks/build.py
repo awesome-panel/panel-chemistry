@@ -39,6 +39,7 @@ Remember to update the version number in the VERSION file!
     )
     command.run("python setup.py sdist bdist_wheel", echo=True)
 
+
 @task(aliases=["binder"])
 def binder_image(command):
     """Builds the panel-chemistry binder image using jupyter-repo2docker

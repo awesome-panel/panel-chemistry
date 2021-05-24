@@ -127,19 +127,21 @@ Alternatively please just mention that not all tests pass, but you would still l
 
 ## 🚢 Releasing a New Package
 
-In the `VERSION` file update the `version` number and then run
+In the [VERSION](VERSION) and [package.json](panel_chemistry/package.json) files update the `version` number. Then run
 
 ```bash
 invoke build.package
 ```
 
-to build and
+to build and then
 
 ```bash
-python -m twine upload dist/*0.0.1*
+python -m twine upload dist/*<VERSION>*
 ```
 
-to deploy the package 📦. If you want to upload to *Test Pypi* first you can do so by adding `--repository testpypi`.
+to deploy the package 📦.
+
+If you want to upload to *Test Pypi* first you can do so by adding `--repository testpypi`.
 
 ## 🎥 Videos
 

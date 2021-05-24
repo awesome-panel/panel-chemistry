@@ -1,19 +1,11 @@
 {
   "name": "panel_chemistry",
-  "version": "0.0.2",
+  "version": "0.0.1",
   "description": "Panel extension for data analysis and data apps within the domain of Chemistry",
   "license": "Apache 2.0",
   "keywords": [],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/MarcSkovMadsen/panel-chemistry.git"
-  },
   "dependencies": {
     "@bokeh/bokehjs": "^2.3.2"
   },
-  "devDependencies": {},
-  "files": [
-    "dist/**/*.{js,js.map,d.ts,json,css}"
-  ],
-  "main": "dist/panel-chemistry.js"
+  "devDependencies": {}
 }
