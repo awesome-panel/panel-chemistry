@@ -74,29 +74,68 @@ class JSMEEditor(Widget):
     }
 
     # Parameters to be mapped to Bokeh model properties
-    value = param.String(default="", doc="""A value definining the structure of the molecule. The
+    value = param.String(
+        default="",
+        doc="""A value definining the structure of the molecule. The
     value provided from Python can be any of the available `format` values. The value returned
-    from the client will be in the specified `format` value.""")
-    format = param.ObjectSelector("jme", objects=VALUE_FORMATS, doc="""
+    from the client will be in the specified `format` value.""",
+    )
+    format = param.ObjectSelector(
+        "jme",
+        objects=VALUE_FORMATS,
+        doc="""
     The format of the structure returned from the client. Can be any of "jme" (default), "smiles",
-    "mol", "mol3000", "sdf\"""")
+    "mol", "mol3000", "sdf\"""",
+    )
     # Note: Could be implemented as a child class of booleans/ checkboxes instead.
-    options = param.ListSelector(objects=OPTIONS, doc="""A list of options to apply to the editor.
-    Default is [], i.e. to use the default settings.""")
-
-    subscriptions = param.ListSelector(default=[],
-    objects=VALUE_FORMATS, doc="""
-    A list of structure formats to "subscribe" to changes of. Can be any of "jme", "smiles",
-    "mol", "mol3000", "sdf". Default is []."""
+    options = param.ListSelector(
+        objects=OPTIONS,
+        doc="""A list of options to apply to the editor.
+    Default is [], i.e. to use the default settings.""",
     )
 
-    jme = param.String(default=NOT_SUBSCRIBED, constant=True, doc="""
-    The structure in jme format""")
-    smiles = param.String(default=NOT_SUBSCRIBED, constant=True, doc="""
-    The structure in smiles format""")
-    mol = param.String(default=NOT_SUBSCRIBED, constant=True, doc="""
-    The structure in mol format""")
-    mol3000 = param.String(default=NOT_SUBSCRIBED, constant=True, doc="""
-    The structure in mol3000 format""")
-    sdf = param.String(default=NOT_SUBSCRIBED, constant=True, label="SDF", doc="""
-    The structure in sdf format""")
+    subscriptions = param.ListSelector(
+        default=[],
+        objects=VALUE_FORMATS,
+        doc="""
+    A list of structure formats to "subscribe" to changes of. Can be any of "jme", "smiles",
+    "mol", "mol3000", "sdf". Default is [].""",
+    )
+
+    jme = param.String(
+        default=NOT_SUBSCRIBED,
+        constant=True,
+        doc="""
+    The structure in jme format""",
+    )
+    smiles = param.String(
+        default=NOT_SUBSCRIBED,
+        constant=True,
+        doc="""
+    The structure in smiles format""",
+    )
+    mol = param.String(
+        default=NOT_SUBSCRIBED,
+        constant=True,
+        doc="""
+    The structure in mol format""",
+    )
+    mol3000 = param.String(
+        default=NOT_SUBSCRIBED,
+        constant=True,
+        doc="""
+    The structure in mol3000 format""",
+    )
+    sdf = param.String(
+        default=NOT_SUBSCRIBED,
+        constant=True,
+        label="SDF",
+        doc="""
+    The structure in sdf format""",
+    )
+
+    guicolor = param.Color(
+        default="#c0c0c0",
+        doc="""
+    Background color of the GUI elements in RGB hex format. Default is "#c0c0c0".""",
+    )

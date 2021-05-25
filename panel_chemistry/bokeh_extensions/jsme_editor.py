@@ -23,3 +23,5 @@ class JSMEEditor(HTMLBox):
     mol = String()
     mol3000 = String()
     sdf = String()
+
+    guicolor = String()

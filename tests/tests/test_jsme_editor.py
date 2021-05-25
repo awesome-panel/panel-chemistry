@@ -16,7 +16,15 @@ def test_jsme_editor_app():
 
     settings = pn.Param(
         editor,
-        parameters=["height", "width", "sizing_mode", "subscriptions", "format", "options"],
+        parameters=[
+            "height",
+            "width",
+            "sizing_mode",
+            "subscriptions",
+            "format",
+            "options",
+            "guicolor",
+        ],
         widgets={
             "options": {"height": 300},
         },

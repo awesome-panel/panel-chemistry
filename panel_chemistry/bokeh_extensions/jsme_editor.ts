@@ -115,6 +115,10 @@ export class JSMEEditorView extends HTMLBoxView {
             console.log("options change", this.model.options)
             this.setJSMEOptions()
         })
+        this.connect(this.model.properties.guicolor.change, () => {
+            console.log("options change", this.model.options)
+            this.setGUIColor()
+        })
     }
 
     render(): void {
@@ -124,16 +128,14 @@ export class JSMEEditorView extends HTMLBoxView {
         const container = div({class: "jsme-editor", id: id});
         this.el.appendChild(container)
         this.jsmeElement = new this.JSME(id, this.getHeight(), this.getWidth(), {
-            // "options": "query,hydrogens,fullScreenIcon",
+            "options": this.model.options.join(","),
+            "guicolor": this.model.guicolor
         });
         this.jsmeElement.readGenericMolecularInput(this.model.value)
         resetOtherModelValues(this.model, this.jsmeElement)
-        this.setJSMEOptions()
+        setModelValues(this.model, this.jsmeElement)
+
         const this_ = this;
-        // function handleTimeOut(){
-        //     this_.valueChanged=false
-        //     setModelValues(this_.model, this_.jsmeElement)
-        // }
         function showEvent(event: any){
             console.log("event", event)
             this_.valueChanging = true
@@ -141,15 +143,18 @@ export class JSMEEditorView extends HTMLBoxView {
             this_.valueChanging = false
         }
         this.jsmeElement.setAfterStructureModifiedCallback(showEvent);
-        setModelValues(this.model, this.jsmeElement)
+
         console.log("render - end")
     }
 
-
+    setGUIColor(){
+        console.log("setGUIColor", this.model.guicolor)
+        this.jsmeElement.setUserInterfaceBackgroundColor(this.model.guicolor)
+    }
 
     setJSMEOptions(){
         const options = this.model.options.join(",")
-        console.log("options", options)
+        console.log("setJSMEOptions", options)
         this.jsmeElement.options(options)
     }
 
@@ -198,6 +203,8 @@ export namespace JSMEEditor {
         sdf: p.Property<string>,
 
         subscriptions: p.Property<string[]>
+
+        guicolor: p.Property<string>,
     }
 }
 
@@ -226,6 +233,7 @@ export class JSMEEditor extends HTMLBox {
             mol3000: [String, ""],
             sdf: [String, ""],
             subscriptions: [ Array(String),   [] ],
+            guicolor: [String, "#c0c0c0"],
         }))
     }
 }
