@@ -1,6 +1,12 @@
 panel build panel_chemistry
 pip install voila>=0.2.10 -U
 conda install -c conda-forge jupyter_contrib_nbextensions
+jupyter nbextension enable codefolding/main
+jupyter nbextension enable collapsible_headings/main
+jupyter nbextension enable comment-uncomment/main
+jupyter nbextension enable hide_input/main
+jupyter nbextension enable scratchpad/main
+jupyter nbextension enable init_cell/main
 conda install -c conda-forge code-server
 code-server --install-extension ms-python.python
 SERVICE_URL=https://open-vsx.org/vscode/gallery ITEM_URL=https://open-vsx.org/vscode/item code-server --install-extension wesbos.theme-cobalt2
