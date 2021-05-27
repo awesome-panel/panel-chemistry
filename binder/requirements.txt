@@ -1,6 +1,5 @@
 -e .['all']
 -e binder/jupyter-panel-apps-server/.
-jupyter_contrib_nbextensions
 holoviews
 hvplot
 colorcet
