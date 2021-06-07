@@ -52,7 +52,7 @@ Check out the `panel-chemistry` **reference guides** on **Binder**
 | - | - | - | - |
 | JSME Editor | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcskovmadsen/panel-chemistry/HEAD?filepath=examples/reference/JSMEEditor.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcskovmadsen/panel-chemistry/HEAD?urlpath=lab/tree/examples/reference/JSMEEditor.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcskovmadsen/panel-chemistry/HEAD?urlpath=panel/JSMEEditor) |
 
-## 💡 Inspirational Resources
+## 💡 Inspiration
 
 - [Awesome Python Chemistry](https://github.com/lmmentel/awesome-python-chemistry)
 - [Dash Bio](https://dash.plotly.com/dash-bio)
