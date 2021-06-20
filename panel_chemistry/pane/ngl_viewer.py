@@ -13,14 +13,19 @@ import param
 from panel.pane.base import PaneBase
 from panel.util import lazy_load, string_types
 from pyviz_comms import JupyterComm
+from panel import extension
+
+# pylint: disable=protected-access
+extension._imports["ngl_viewer"] = "panel_chemistry.bokeh_extensions.ngl_viewer"
+# pylint: enable=protected-access
 
 REPRESENTATIONS = [
+    # "base",
+    # "distance",
     "axes",
     "backbone",
     "ball+stick",
-    # "base",
     "cartoon",
-    # "distance",
     "helixorient",
     "hyperball",
     "label",
@@ -94,13 +99,13 @@ class NGLViewer(PaneBase):
     object = param.String(
         doc="""
         The object to display. For example an url like 'rcsb://3dqb.pdb', 'rcsb://1NKT', '1NKT'.
-        You can also specify a blob string if you define the extension in the blob parameter"""
+        You can also specify a extension string if you define the extension in the extension parameter"""
     )
-    blob = param.ObjectSelector(
+    extension = param.ObjectSelector(
         default="",
-        objects=["", "pdb"],
+        objects=EXTENSIONS,
         doc="""
-        If you specify a blob extension != '', then the object will be loaded as a blob string .
+        If you specify a extension extension != '', then the object will be loaded as a blob string .
         Default is '', i.e. the object is loaded as a url.""",
     )
     representation = param.Selector(
@@ -171,7 +176,7 @@ class NGLViewer(PaneBase):
     def _update(self, ref=None, model=None):
         model.update(
             object=self.object,
-            blob=self.blob,
+            extension=self.extension,
             representation=self.representation,
             color_scheme=self.color_scheme,
             effect=self.effect,

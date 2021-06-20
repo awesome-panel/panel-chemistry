@@ -19,7 +19,7 @@ def test_app():
     viewer = NGLViewer(object="1CRN", background="yellow", height=500)
     parameters = [
         "object",
-        "blob",
+        "extension",
         "representation",
         "color_scheme",
         "custom_color_scheme",
@@ -27,6 +27,7 @@ def test_app():
         "sizing_mode",
         "width",
         "height",
+        "background",
     ]
     settings = pn.Param(
         viewer,

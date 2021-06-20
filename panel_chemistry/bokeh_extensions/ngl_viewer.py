@@ -2,13 +2,12 @@
 from bokeh.core.properties import List, String
 from bokeh.models import LayoutDOM
 
-
 class NGLViewer(LayoutDOM):
     """The [NGL Viewer](https://github.com/nglviewer/ngl) can be used
     to show and analyse pdb molecule structures"""
 
     object = String()
-    blob = String()
+    extension = String()
     representation = String()
     color_scheme = String()
     effect = String()

@@ -91,11 +91,12 @@ export class NGLViewerView extends HTMLBoxView {
     connect_signals(): void {
       super.connect_signals()
       this.connect(this.model.properties.object.change, this.updateStage)
-      this.connect(this.model.properties.blob.change, this.updateStage)
+      this.connect(this.model.properties.extension.change, this.updateStage)
       this.connect(this.model.properties.representation.change, this.updateStage)
       this.connect(this.model.properties.color_scheme.change, this.updateParameters)
       this.connect(this.model.properties.custom_color_scheme.change, this.updateParameters)
       this.connect(this.model.properties.effect.change, this.updateEffect)
+      this.connect(this.model.properties.background.change, this.setBackgroundcolor)
     }
 
     render(): void {
@@ -106,13 +107,17 @@ export class NGLViewerView extends HTMLBoxView {
         const ngl = wn.NGL
 
         this._stage = new ngl.Stage(this.el);
+        this.setBackgroundcolor()
         const stage = this._stage
         this.updateStage();
         window.addEventListener( "resize", function(){
             stage.handleResize();
         }, false );
         }
-
+    setBackgroundcolor(): void {
+      console.log(this.model.background)
+      this._stage.setParameters( { backgroundColor: this.model.background} );
+    }
     after_layout(): void {
       super.after_layout()
       this._stage.handleResize();
@@ -156,8 +161,8 @@ export class NGLViewerView extends HTMLBoxView {
         o.autoView();
       }
 
-      if (model.blob!==""){
-        this._stage.loadFile(new Blob([model.object], {type: 'text/plain'}), { ext: model.blob}).then(finish)
+      if (model.extension!==""){
+        this._stage.loadFile(new Blob([model.object], {type: 'text/plain'}), { ext: model.extension}).then(finish)
       } else if (model.object.includes("://")){
         this._stage.loadFile(model.object).then(finish)
       } else {
@@ -172,7 +177,7 @@ export namespace NGLViewer {
     export type Attrs = p.AttrsOf<Props>
     export type Props = HTMLBox.Props & {
         object: p.Property<string>,
-        blob: p.Property<string>,
+        extension: p.Property<string>,
         representation: p.Property<string>,
         color_scheme: p.Property<string>,
         custom_color_scheme: p.Property<any>,
@@ -195,7 +200,7 @@ export class NGLViewer extends HTMLBox {
 
       this.define<NGLViewer.Props>(({ String, Any }) => ({
         object:             [ String, ""],
-        blob:             [ String, ""],
+        extension:             [ String, ""],
         representation:              [ String, "ribbon"],
         color_scheme:               [ String, "chainid"],
         custom_color_scheme:               [ Any, "chainid"],
