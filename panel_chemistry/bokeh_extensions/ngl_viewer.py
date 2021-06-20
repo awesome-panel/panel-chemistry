@@ -1,5 +1,5 @@
 """A Bokeh Model of the NGLViewer"""
-from bokeh.core.properties import Bool, String
+from bokeh.core.properties import List, String
 from bokeh.models import LayoutDOM
 
 
@@ -8,11 +8,11 @@ class NGLViewer(LayoutDOM):
     to show and analyse pdb molecule structures"""
 
     object = String()
-    object_format = String()
+    blob = String()
     representation = String()
     color_scheme = String()
-    spin = Bool()
-    # color_list = List(String())
+    effect = String()
+    custom_color_scheme = List(List(String))
 
     __javascript__ = [
         "https://unpkg.com/ngl@2.0.0-dev.37/dist/ngl.js",

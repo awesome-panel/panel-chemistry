@@ -15,34 +15,122 @@ from panel.util import lazy_load, string_types
 from pyviz_comms import JupyterComm
 
 REPRESENTATIONS = [
-    "ball+stick",
+    "axes",
     "backbone",
     "ball+stick",
+    # "base",
     "cartoon",
+    # "distance",
+    "helixorient",
     "hyperball",
+    "label",
     "licorice",
+    "line",
+    "point",
     "ribbon",
+    "rocket",
     "rope",
     "spacefill",
     "surface",
+    "trace",
+    "unitcell",
+    # "validation",
 ]
-COLOR_SCHEMES = ["chainid", "residueindex", "chainname"]
+COLOR_SCHEMES = [
+    "atomindex",
+    "bfactor",
+    "chainid",
+    "chainindex",
+    "chainname",
+    "custom",
+    "densityfit",
+    "electrostatic",
+    "element",
+    "entityindex",
+    "entitytype",
+    "geoquality",
+    "hydrophobicity",
+    "modelindex",
+    "moleculetype",
+    "occupancy",
+    "random",
+    "residueindex",
+    "resname",
+    "sstruc",
+    "uniform",
+    "value",
+    "volume",
+]
+EXTENSIONS = [
+    "",
+    "pdb",
+    "cif",
+    "csv",
+    "ent",
+    "gro",
+    "json",
+    "mcif",
+    "mmcif",
+    "mmtf",
+    "mol2",
+    "msgpack",
+    "netcdf",
+    "parm7",
+    "pqr",
+    "prmtop",
+    "psf",
+    "sd",
+    "sdf",
+    "top",
+    "txt",
+    "xml",
+]
 
 
 class NGLViewer(PaneBase):
     """The [NGL Viewer](https://github.com/nglviewer/ngl) can be used
     to show and analyse pdb molecule structures"""
 
-    object = param.String()
-    object_format = param.ObjectSelector(default="rcsb", objects=["rcsb", "pdb_string"])
-    representation = param.Selector(
-        default="ribbon",
-        objects=REPRESENTATIONS,
+    object = param.String(
+        doc="""
+        The object to display. For example an url like 'rcsb://3dqb.pdb', 'rcsb://1NKT', '1NKT'.
+        You can also specify a blob string if you define the extension in the blob parameter"""
     )
-    color_scheme = param.Selector(default="chainid", objects=COLOR_SCHEMES)
-    spin = param.Boolean(default=False)
-    # color_list = param.List(default=[["white", "*"]])
-    # event = param.Dict()
+    blob = param.ObjectSelector(
+        default="",
+        objects=["", "pdb"],
+        doc="""
+        If you specify a blob extension != '', then the object will be loaded as a blob string .
+        Default is '', i.e. the object is loaded as a url.""",
+    )
+    representation = param.Selector(
+        default="ball+stick",
+        objects=REPRESENTATIONS,
+        doc="""
+        A display representation. Default is 'ball+stick'. See
+        http://nglviewer.org/ngl/api/manual/coloring.html#representations
+        """,
+    )
+    color_scheme = param.Selector(
+        default="element",
+        objects=COLOR_SCHEMES,
+        doc="""
+    A predefined or 'custom' color scheme. If 'custom' is specified you need to specify the
+    'custom_color_scheme' parameter. Default is 'element'. See
+    http://nglviewer.org/ngl/api/manual/coloring.html""",
+    )
+    custom_color_scheme = param.List(
+        default=[["white", "*"]],
+        doc="""
+    A custom color scheme. See
+    http://nglviewer.org/ngl/api/manual/coloring.html#custom-coloring.""",
+    )
+    effect = param.Selector(
+        default="",
+        objects=["", "spin", "rock"],
+        doc="""
+    One of '', 'spin' or 'rock'. Default is '', i.e. no effect""",
+    )
 
     priority = None
 
@@ -64,7 +152,8 @@ class NGLViewer(PaneBase):
             self._model_module, self._model, isinstance(comm, JupyterComm)
         )
         props = self._process_param_change(self._init_params())
-        print("get_model", props)
+        if not "object" in props:
+            props["object"] = self.object
         model = _NGLViewer(**props)
         root = root or model
         # self._link_props(
@@ -80,12 +169,11 @@ class NGLViewer(PaneBase):
         return model
 
     def _update(self, ref=None, model=None):
-        print("update", model)
         model.update(
             object=self.object,
-            object_format=self.object_format,
+            blob=self.blob,
             representation=self.representation,
             color_scheme=self.color_scheme,
-            spin=self.spin,
-            # color_list=self.color_list,
+            effect=self.effect,
+            custom_color_scheme=self.custom_color_scheme,
         )
