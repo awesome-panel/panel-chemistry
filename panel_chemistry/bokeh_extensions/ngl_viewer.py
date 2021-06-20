@@ -16,3 +16,14 @@ class NGLViewer(LayoutDOM):
     __javascript__ = [
         "https://unpkg.com/ngl@2.0.0-dev.37/dist/ngl.js",
     ]
+
+    __js_skip__ = {
+        'NGL': __javascript__[:1],
+    }
+
+    __js_require__ = {
+        'paths': {
+            'NGL': "https://unpkg.com/ngl@2.0.0-dev.37/dist/ngl",
+        },
+        'exports': {'NGL': 'NGL'}
+    }
