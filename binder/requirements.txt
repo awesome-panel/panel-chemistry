@@ -8,3 +8,4 @@ pyecharts
 pyarrow
 jupyter_bokeh
 jupyter-vscode-proxy
+py3Dmol

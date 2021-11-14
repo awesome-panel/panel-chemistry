@@ -16,9 +16,7 @@ Check out the `panel-chemistry` examples on **Binder**
 
 ## 🏁 Background
 
-This project is just starting (2021-05-19) and not much more than an idea.
-
-It was started by the discussion [How to display JSME molecular editor with Panel?](https://discourse.holoviz.org/t/how-to-display-jsme-molecular-editor-with-panel/2306/12) in the [Panel Community Forum](https://discourse.holoviz.org/)
+This project was started by the discussion [How to display JSME molecular editor with Panel?](https://discourse.holoviz.org/t/how-to-display-jsme-molecular-editor-with-panel/2306/12) in the [Panel Community Forum](https://discourse.holoviz.org/)
 
 ## 🏃 Getting Started
 
