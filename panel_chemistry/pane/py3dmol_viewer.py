@@ -7,6 +7,7 @@
     """
 import panel as pn
 import param
+import types
 
 try:
     import py3Dmol
@@ -19,7 +20,9 @@ def _clean_html(html):
     start = html.find("width:")
     end = html.find('px">') + 2
     size_str = html[start:end]
-    return html.replace(size_str, "width: 100%; height: 100%")
+    html = html.replace(size_str, "width: 100%; height: 100%")
+
+    return html
 
 class Py3DMol(pn.viewable.Viewer):
     """A Panel Pane to wrap the interactive py3Dmol/ 3Dmol.js viewer in your Panel Application.
@@ -60,8 +63,16 @@ class Py3DMol(pn.viewable.Viewer):
             params (): These parameters are applied to the layout. Could be height, width etc.
         """
         super().__init__(object=object, layout=pn.pane.HTML(**params))
-
+        if "name" in params:
+            with param.edit_constant(self):
+                self.name = params["name"]
+        self._update_name()
         self._update_layout()
+
+    @pn.depends("name", watch=True)
+    def _update_name(self):
+        with param.edit_constant(self.layout):
+            self.layout.name = self.name
 
     @pn.depends("object", watch=True)
     def _update_layout(self):
