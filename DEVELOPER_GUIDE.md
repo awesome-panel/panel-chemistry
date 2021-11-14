@@ -127,9 +127,16 @@ Alternatively please just mention that not all tests pass, but you would still l
 
 ## 🚢 Releasing a New Package
 
+Please make sure you have upgraded bokeh
+
+```bash
+npm update @bokeh/bokehjs --save
+```
+
 In the [VERSION](VERSION) and [package.json](panel_chemistry/package.json) files update the `version` number. Then run
 
 ```bash
+invoke build.extensions
 invoke build.package
 ```
 

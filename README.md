@@ -52,12 +52,14 @@ Check out the `panel-chemistry` **reference guides** on **Binder**
 | - | - | - | - | - | - |
 | JSME Editor | [View](https://nbviewer.org/github/MarcSkovMadsen/panel-chemistry/blob/main/examples/reference/JSMEEditor.ipynb) | [View](https://github.com/MarcSkovMadsen/panel-chemistry/blob/main/examples/reference/JSMEEditor.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcskovmadsen/panel-chemistry/HEAD?filepath=examples/reference/JSMEEditor.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcskovmadsen/panel-chemistry/HEAD?urlpath=lab/tree/examples/reference/JSMEEditor.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcskovmadsen/panel-chemistry/HEAD?urlpath=panel/JSMEEditor) |
 | NGL Viewer | [View](https://nbviewer.org/github/MarcSkovMadsen/panel-chemistry/blob/main/examples/reference/NGLViewer.ipynb) | [View](https://github.com/MarcSkovMadsen/panel-chemistry/blob/main/examples/reference/NGLViewer.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcskovmadsen/panel-chemistry/HEAD?filepath=examples/reference/NGLViewer.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcskovmadsen/panel-chemistry/HEAD?urlpath=lab/tree/examples/reference/NGLViewer.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcskovmadsen/panel-chemistry/HEAD?urlpath=panel/NGLViewer) |
+| Py3DMol Pane | [View](https://nbviewer.org/github/MarcSkovMadsen/panel-chemistry/blob/main/examples/reference/Py3DMol.ipynb) | [View](https://github.com/MarcSkovMadsen/panel-chemistry/blob/main/examples/reference/Py3DMol.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcskovmadsen/panel-chemistry/HEAD?filepath=examples/reference/Py3DMol.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcskovmadsen/panel-chemistry/HEAD?urlpath=lab/tree/examples/reference/Py3DMol.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcskovmadsen/panel-chemistry/HEAD?urlpath=panel/Py3DMol) |
 
 ## 💡 Inspiration
 
 - [Awesome Python Chemistry](https://github.com/lmmentel/awesome-python-chemistry)
 - [Dash Bio](https://dash.plotly.com/dash-bio)
 - [JSME Editor](https://jsme-editor.github.io) and [Test Page](https://jsme-editor.github.io/dist/JSME_test.html)
+- [3DMol.js](https://3dmol.csb.pitt.edu/) and [py3Dmol](https://colab.research.google.com/drive/1T2zR59TXyWRcNxRgOAiqVPJWhep83NV_?usp=sharing)
 - [RDKit](http://www.rdkit.org/)
 - [RDKit IPython Tools](https://github.com/apahl/rdkit_ipynb_tools)
 
@@ -79,3 +81,7 @@ pip install panel-chemistry
 ```
 
 You can also include `panel-chemistry` in your `environment.yaml` file as described on [Stack Overflow: Combining conda environment.yml with pip requirements.txt](https://stackoverflow.com/questions/35245401/combining-conda-environment-yml-with-pip-requirements-txt).
+
+## 📰 Change Log
+
+- 0.0.9: Add Py3DMol pane. Update to Panel 0.12.4.

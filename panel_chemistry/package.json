@@ -1,6 +1,6 @@
 {
   "name": "panel_chemistry",
-  "version": "0.0.1",
+  "version": "0.0.9",
   "description": "Panel extension for data analysis and data apps within the domain of Chemistry",
   "license": "Apache 2.0",
   "keywords": [],
