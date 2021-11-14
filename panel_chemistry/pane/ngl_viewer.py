@@ -10,10 +10,10 @@ Author: https://github.com/Jhsmit
 from typing import Dict
 
 import param
+from panel import extension
 from panel.pane.base import PaneBase
 from panel.util import lazy_load, string_types
 from pyviz_comms import JupyterComm
-from panel import extension
 
 # pylint: disable=protected-access
 extension._imports["ngl_viewer"] = "panel_chemistry.bokeh_extensions.ngl_viewer"

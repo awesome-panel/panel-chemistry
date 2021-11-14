@@ -1,16 +1,19 @@
 """Tests of the NGLViewer"""
 import panel as pn
 
-from panel_chemistry.pane import NGLViewer
 from panel_chemistry.bokeh_extensions.ngl_viewer import NGLViewer as _BkNGLViewer
+from panel_chemistry.pane import NGLViewer
 
 
 def test_can_create():
     """Test of the NGLViewer constructor"""
     NGLViewer(object="1CRN", background="yellow", height=500)
 
+
 def test_has_bokeh_model():
+    """Test that the NGL Viewer Exists"""
     assert _BkNGLViewer
+
 
 def test_app():
     """Returns an app for manually testing the NGL Molecule Viewer"""

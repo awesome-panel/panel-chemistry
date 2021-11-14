@@ -2,6 +2,7 @@
 from bokeh.core.properties import List, String
 from bokeh.models import LayoutDOM
 
+
 class NGLViewer(LayoutDOM):
     """The [NGL Viewer](https://github.com/nglviewer/ngl) can be used
     to show and analyse pdb molecule structures"""
@@ -18,12 +19,12 @@ class NGLViewer(LayoutDOM):
     ]
 
     __js_skip__ = {
-        'NGL': __javascript__[:1],
+        "NGL": __javascript__[:1],
     }
 
     __js_require__ = {
-        'paths': {
-            'NGL': "https://unpkg.com/ngl@2.0.0-dev.37/dist/ngl",
+        "paths": {
+            "NGL": "https://unpkg.com/ngl@2.0.0-dev.37/dist/ngl",
         },
-        'exports': {'NGL': 'NGL'}
+        "exports": {"NGL": "NGL"},
     }

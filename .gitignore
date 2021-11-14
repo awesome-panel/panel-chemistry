@@ -131,3 +131,4 @@ test_results
 panel_chemistry/node_modules
 .vscode
 panel_chemistry/.bokeh
+panel_chemistry/pane/py3dmol_viewer.py
