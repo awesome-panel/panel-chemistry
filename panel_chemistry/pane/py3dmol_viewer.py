@@ -8,11 +8,14 @@
 import panel as pn
 import param
 import types
+from dataclasses import dataclass
 
 try:
     import py3Dmol
 except ModuleNotFoundError:
-    pass
+    @dataclass
+    class py3Dmol:
+        view: str = 'mock_view' # allow to import the file
 
 
 def _clean_html(html):
