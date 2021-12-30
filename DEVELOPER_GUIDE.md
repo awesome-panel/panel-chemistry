@@ -136,12 +136,20 @@ npm update @bokeh/bokehjs --save
 
 In the [VERSION](VERSION) and [package.json](panel_chemistry/package.json) files update the `version` number. Then run
 
+Please make sure all tests pass
+
+```bash
+invoke test.all
+```
+
+Then you can build
+
 ```bash
 invoke build.extensions
 invoke build.package
 ```
 
-to build and then
+and upload
 
 ```bash
 python -m twine upload dist/*<VERSION>*
