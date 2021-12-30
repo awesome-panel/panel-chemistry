@@ -36,6 +36,7 @@ _tests = [
 _examples = [
     "notebook",
     "jupyterlab",
+    "py3Dmol",
 ]
 
 _doc: List[str] = []
