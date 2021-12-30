@@ -11,8 +11,9 @@ ROOT = pathlib.Path.cwd()
 VERSION = (ROOT / "VERSION").read_text().strip()
 
 install_requires = [
-    "panel==0.12.4",
-    "bokeh==2.4.1",
+    "panel==0.12.6",
+    "bokeh==2.4.2",
+    "param>=1.12.0",
 ]
 
 _recommended: List[str] = []

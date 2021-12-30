@@ -130,6 +130,7 @@ Alternatively please just mention that not all tests pass, but you would still l
 Please make sure you have upgraded bokeh
 
 ```bash
+cd panel_chemistry
 npm update @bokeh/bokehjs --save
 ```
 
