@@ -82,5 +82,6 @@ You can also include `panel-chemistry` in your `environment.yaml` file as descri
 
 ## 📰 Change Log
 
+- 0.0.11: Add LICENSE and VERSION files to package
 - 0.0.10: Update to Panel 0.12.6.
 - 0.0.9: Add Py3DMol pane. Update to Panel 0.12.4.
