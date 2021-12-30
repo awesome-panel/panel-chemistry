@@ -3,6 +3,8 @@ include panel_chemistry/*.json
 include panel_chemistry/bokeh_extensions/*.ts
 include panel_chemistry/index.ts
 include README.md
+include VERSION
+include LICENSE
 global-exclude *.ipynb_checkpoints/*
 global-exclude *.py[co]
 global-exclude *~
