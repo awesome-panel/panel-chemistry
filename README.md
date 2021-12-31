@@ -24,6 +24,12 @@ This project was started by the discussion [How to display JSME molecular editor
 pip install panel-chemistry
 ```
 
+or with `conda`
+
+```bash
+conda install -c conda-forge panel-chemistry
+```
+
 Run the below in a Notebook or using `panel serve NAME_OF_SCRIPT.py`.
 
 ```python
