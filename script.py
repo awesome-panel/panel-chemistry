@@ -1,11 +1,9 @@
 import panel as pn
-import py3Dmol
+pn.extension()
 
-p = py3Dmol.view(query="mmtf:1ycr")
-p.setStyle({"cartoon": {"color": "spectrum"}})
+def f(x):
+    return pn.pane.Markdown(x, sizing_mode="stretch_width")
 
-from panel_chemistry.pane import Py3DMol
-
-viewer = Py3DMol(p, height=200, width=200, sizing_mode="stretch_both")
-
-pn.Row(viewer, viewer.layout.controls()).servable()
+layout = pn.interact(f, x="Hi there!", )
+layout.sizing_mode="stretch_width"
+layout.servable()

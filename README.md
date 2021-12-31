@@ -75,19 +75,8 @@ For more details see the [Developer Guide](DEVELOPER_GUIDE.md)
 
 ## FAQ
 
-### How do I Install with Conda?
-
-You can do
-
-```bash
-conda install pip
-pip install panel-chemistry
-```
-
-You can also include `panel-chemistry` in your `environment.yaml` file as described on [Stack Overflow: Combining conda environment.yml with pip requirements.txt](https://stackoverflow.com/questions/35245401/combining-conda-environment-yml-with-pip-requirements-txt).
-
 ## 📰 Change Log
 
-- 0.0.11: Add LICENSE and VERSION files to package
+- 0.0.11: Add LICENSE and VERSION files to package. Now available on conda-forge
 - 0.0.10: Update to Panel 0.12.6.
 - 0.0.9: Add Py3DMol pane. Update to Panel 0.12.4.
