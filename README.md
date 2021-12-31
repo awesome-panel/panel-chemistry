@@ -24,6 +24,12 @@ This project was started by the discussion [How to display JSME molecular editor
 pip install panel-chemistry
 ```
 
+or with `conda`
+
+```bash
+conda install -c conda-forge panel-chemistry
+```
+
 Run the below in a Notebook or using `panel serve NAME_OF_SCRIPT.py`.
 
 ```python
@@ -69,17 +75,8 @@ For more details see the [Developer Guide](DEVELOPER_GUIDE.md)
 
 ## FAQ
 
-### How do I Install with Conda?
-
-You can do
-
-```bash
-conda install pip
-pip install panel-chemistry
-```
-
-You can also include `panel-chemistry` in your `environment.yaml` file as described on [Stack Overflow: Combining conda environment.yml with pip requirements.txt](https://stackoverflow.com/questions/35245401/combining-conda-environment-yml-with-pip-requirements-txt).
-
 ## 📰 Change Log
 
+- 0.0.11: Add LICENSE and VERSION files to package. Now available on conda-forge
+- 0.0.10: Update to Panel 0.12.6.
 - 0.0.9: Add Py3DMol pane. Update to Panel 0.12.4.

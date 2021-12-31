@@ -99,7 +99,8 @@ class NGLViewer(PaneBase):
     object = param.String(
         doc="""
         The object to display. For example an url like 'rcsb://3dqb.pdb', 'rcsb://1NKT', '1NKT'.
-        You can also specify a extension string if you define the extension in the extension parameter"""
+        You can also specify a extension string if you define the extension 
+        in the extension parameter"""
     )
     extension = param.ObjectSelector(
         default="",

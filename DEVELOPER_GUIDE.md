@@ -130,17 +130,26 @@ Alternatively please just mention that not all tests pass, but you would still l
 Please make sure you have upgraded bokeh
 
 ```bash
+cd panel_chemistry
 npm update @bokeh/bokehjs --save
 ```
 
 In the [VERSION](VERSION) and [package.json](panel_chemistry/package.json) files update the `version` number. Then run
+
+Please make sure all tests pass
+
+```bash
+invoke test.all
+```
+
+Then you can build
 
 ```bash
 invoke build.extensions
 invoke build.package
 ```
 
-to build and then
+and upload
 
 ```bash
 python -m twine upload dist/*<VERSION>*

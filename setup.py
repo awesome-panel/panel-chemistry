@@ -11,8 +11,9 @@ ROOT = pathlib.Path.cwd()
 VERSION = (ROOT / "VERSION").read_text().strip()
 
 install_requires = [
-    "panel==0.12.4",
-    "bokeh==2.4.1",
+    "panel==0.12.6",
+    "bokeh==2.4.2",
+    "param>=1.12.0",
 ]
 
 _recommended: List[str] = []
@@ -35,6 +36,7 @@ _tests = [
 _examples = [
     "notebook",
     "jupyterlab",
+    "py3Dmol",
 ]
 
 _doc: List[str] = []
@@ -67,10 +69,10 @@ setuptools.setup(
         "License :: OSI Approved :: Apache Software License",
         "Development Status :: 3 - Alpha",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
         "Operating System :: OS Independent",
         "Intended Audience :: Developers",
         "Intended Audience :: Education",

@@ -5,17 +5,15 @@
     - [3DMol.js](https://3dmol.org/index.html)
     - [Colab](https://colab.research.google.com/drive/1T2zR59TXyWRcNxRgOAiqVPJWhep83NV_?usp=sharing)
     """
+
 import panel as pn
 import param
-import types
-from dataclasses import dataclass
 
 try:
     import py3Dmol
 except ModuleNotFoundError:
-    @dataclass
-    class py3Dmol:
-        view: str = 'mock_view' # allow to import the file
+    class py3Dmol(param.Parameterized):
+        view = param.String('mock_view') # allow to import the file
 
 
 def _clean_html(html):
