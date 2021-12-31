@@ -1,0 +1,15 @@
+<!-- Required for IE11 -->
+<script src="https://cdn.jsdelivr.net/npm/babel-polyfill/dist/polyfill.min.js"></script>
+<!-- Web component polyfill (only loads what it needs) -->
+<script src="https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs/webcomponents-lite.js" charset="utf-8"></script>
+<!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+<script src="https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js" charset="utf-8"></script>
+
+<!-- CSS -->
+<link rel="stylesheet" type="text/css" href="https://www.ebi.ac.uk/pdbe/pdb-component-library/css/pdbe-molstar${theme}-1.2.1.css">
+
+<!-- JS -->
+<script type="text/javascript" src="https://www.ebi.ac.uk/pdbe/pdb-component-library/js/pdbe-molstar-component-1.2.1.js"></script>
+<div id="pdbemolstarcomponent" style="width:100%; height:100%;">
+<pdbe-molstar $component_spec></pdbe-molstar>
+</div>
