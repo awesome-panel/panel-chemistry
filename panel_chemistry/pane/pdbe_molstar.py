@@ -1,28 +1,21 @@
 """A Panel Pane to wrap the PDBe implementation of the Mol* ('MolStar') viewer.
 
-    The PBBe viewer is available both as a webcomponent or interactive plugin.
+Check out
 
-    Check out
+- [PDBe Mol*](https://github.com/PDBeurope/pdbe-molstar)
+- [Mol*](https://molstar.org/)
+- [Mol* GitHub](https://github.com/molstar/molstar)
 
-    - [PDBe Mol*](https://github.com/PDBeurope/pdbe-molstar)
-    - [Mol*](https://molstar.org/)
-    - [Mol* GitHub](https://github.com/molstar/molstar)
+Cite Mol*:
+David Sehnal, Sebastian Bittrich, Mandar Deshpande, Radka Svobodová, Karel Berka,
+Václav Bazgier, Sameer Velankar, Stephen K Burley, Jaroslav Koča, Alexander S Rose:
+Mol* Viewer: modern web app for 3D visualization and analysis of large biomolecular structures,
+Nucleic Acids Research, 2021; https://doi.org/10.1093/nar/gkab314.
+"""
 
-    Cite Mol*:
-    David Sehnal, Sebastian Bittrich, Mandar Deshpande, Radka Svobodová, Karel Berka, 
-    Václav Bazgier, Sameer Velankar, Stephen K Burley, Jaroslav Koča, Alexander S Rose: 
-    Mol* Viewer: modern web app for 3D visualization and analysis of large biomolecular structures, 
-    Nucleic Acids Research, 2021; https://doi.org/10.1093/nar/gkab314.
-
-    """
-
+import panel as pn
 import param
 from panel.reactive import ReactiveHTML
-from panel.pane import HTML
-import panel as pn
-from pathlib import Path
-from string import Template
-
 
 REPRESENTATIONS = [
     "cartoon",
@@ -37,250 +30,274 @@ REPRESENTATIONS = [
     "spacefill",
 ]
 
+# See https://embed.plnkr.co/plunk/m3GxFYx9cBjIanBp for an example JS implementation
+class PdbeMolStar(ReactiveHTML):
+    """PDBe MolStar structure viewer.
 
-class PdbeMolStarWebComponent(HTML):
-    """Web component implementation of the PDBe MolStar structure viewer.
-    
+    Set one of `molecule_id`, `custom_data` and `ligand_view`.
+
     For more information:
-    https://github.com/PDBeurope/pdbe-molstar/wiki
-    
-    This is an implementation of the Molstar viewer: https://molstar.org/
-    
+
+    - https://github.com/PDBeurope/pdbe-molstar/wiki
+    - https://molstar.org/
+
+    The implementation is based on the js Plugin. See
+
+    - https://github.com/PDBeurope/pdbe-molstar/wiki/1.-PDBe-Molstar-as-JS-plugin
+
     """
 
-    molecule_id = param.String(
-        default=None,
-        doc="PDB id to load"
+    molecule_id = param.String(default=None, doc="PDB id to load. Example: '1qyn' or '1cbs'")
+    custom_data = param.Dict(
+        doc="""Load data from a specific data source. Example: 
+        { "url": "https://www.ebi.ac.uk/pdbe/coordinates/1cbs/chains?entityId=1&asymId=A&encoding=bcif", "format": "cif", "binary": True }
+        """
     )
-    
-    custom_data_url = param.String(
-        default=None,
-        doc="Data url for loading custom data. Incompatible with `molecule_id`"
-    )
-
-    custom_data_binary = param.Boolean(
-        default=None)
-
-    custom_data_format = param.String(
-        default=None,
-        doc="Format for custom data, for example 'cif'"
-    )
-
-    ligand_label_comp_id = param.String(
-        default=None,
-        doc=""
-    )
-
-    ligand_auth_asym_Id = param.String(
-        default=None,
-    )
-
-    ligand_auth_seq_id = param.Number(
-        default=None,
-    )
-
-    ligand_hydrogens = param.Boolean(
-        default=None
+    ligand_view = param.Dict(
+        doc="""This option can be used to display the PDBe ligand page 3D view like https://www.ebi.ac.uk/pdbe/entry/pdb/1cbs/bound/REA.
+        Example: {"label_comp_id": "REA"}
+        """
     )
 
     alphafold_view = param.Boolean(
-        default=None,
-        doc="Applies AlphaFold confidence score colouring theme for alphafold model"
+        default=False, doc="Applies AlphaFold confidence score colouring theme for alphafold model"
     )
 
-    assembly_id = param.Number(
-        default=None,
-        doc="Specify assembly"
-    )
+    assembly_id = param.String(doc="Specify assembly")
 
+    # Todo: figure out if `background` could/ should be used
     bg_color = param.Color(
-        default=None,
-        allow_named=False,
-        doc="Color of the background. If `None`, colors default is chosen depending on the color theme"
+        "black",
+        doc="Color of the background. If `None`, colors default is chosen depending on the color theme",
     )
 
-    highlight_color = param.Color(
-        default=None,
-        allow_named=False,
-        doc='Color for mouseover highlighting'
-    )
+    highlight_color = param.Color(default="#ff6699", doc="Color for mouseover highlighting")
 
-    select_color = param.Color(
-        default=None,
-        allow_named=False, 
-        doc='Color for selections'
-    )
+    select_color = param.Color(default="#0c0d11", doc="Color for selections")
 
-    visual_style = param.Selector(
-        default=None,
-        objects=[None] + REPRESENTATIONS,
-        doc="Visual styling"
-    )
+    visual_style = param.Selector(objects=REPRESENTATIONS, doc="Visual styling")
 
-    theme = param.Selector(
-        default='dark',
-        objects=['light', 'dark'],
-        doc="CSS theme to use"
-    )
+    # Todo: Determine if it should be default or light theme
+    theme = param.Selector(default="dark", objects=["default", "dark"], doc="CSS theme to use")
 
-    hide_polymer = param.Boolean(
-        default=None,
-        doc="Hide polymer"
+    hide_structure = param.ListSelector(
+        objects=["polymer", "het", "water", "carbs", "nonStandard", "coarse"],
+        doc="""Molstar renders Polymer, HET, Water and Carbohydrates visuals by default. This option is to exclude 
+        any of these default visuals. Expected value is a list with 'polymer', 'het', 'water', 'carbs', 'nonStandard', 'coarse' keywords. 
+        For example hideStructure: ['water'] will not render water visual in the 3D view.
+        """,
     )
-
-    hide_water = param.Boolean(
-        default=None,
-        doc="Hide water"
-    )
-
-    hide_het = param.Boolean(
-        default=None, 
-        doc="Hide het"
-    )
-
-    hide_carbs = param.Boolean(
-        default=None,
-        doc="Hide carbs"
-    )
-
-    hide_non_standard = param.Boolean(
-        default=None,
-        doc="Hide non standard"
-    )
-
-    hide_coarse = param.Boolean(
-        default=None,
-        doc="Hide coarse"
+    hide_canvas_controls = param.ListSelector(
+        objects=["expand", "selection", "animation", "controlToggle", "controlInfo"],
+        doc="""Hide Expand, Selection and Animations Control Icons. Expected value is a list with 
+        'expand', 'selection', 'animation', 'controlToggle', 'controlInfo' keywords.
+        """,
     )
 
     pdbe_url = param.String(
-        default=None,
-        doc="Url for PDB data. Mostly used for internal testing"
+        default=None, constant=True, doc="Url for PDB data. Mostly used for internal testing"
     )
 
     load_maps = param.Boolean(
-        default=None,
-        doc="Load electron density maps from the pdb volume server"
+        default=False, doc="Load electron density maps from the pdb volume server"
     )
 
     validation_annotation = param.Boolean(
-        default=None,
-        doc="Adds 'annotation' control in the menu"
+        default=False, doc="Adds 'annotation' control in the menu"
     )
 
-    domain_annotations = param.Boolean(
-        default=None,
-        doc="Adds 'annotation' control in the menu"
+    domain_annotation = param.Boolean(default=False, doc="Adds 'annotation' control in the menu")
+
+    low_precision_coords = param.Boolean(
+        default=False, doc="Load low precision coordinates from the model server"
     )
 
-    low_precision = param.Boolean(
-        default=None,
-        doc="Load low precision coordinates from the model server"
-    )
+    hide_controls = param.Boolean(default=True, doc="Hide the control menu")
 
-    expanded = param.Boolean(
-        default=None,
-        doc="Display full-screen by default on load"
-    )
-
-    hide_controls = param.Boolean(
-        default=True,
-        doc="Hide the control menu"
-    )
+    expanded = param.Boolean(default=False, doc="""Display full-screen by default on load""")
 
     landscape = param.Boolean(
-        default=None
+        default=True,  # Changed to True because it works best with Panel currently
+        doc="""Set landscape view. The controls will similar to the full-screen view""",
     )
 
     select_interaction = param.Boolean(
-        default=None, 
-        doc="Switch on or off the default selection interaction behaviour"
+        default=True, doc="Switch on or off the default selection interaction behaviour"
     )
 
     lighting = param.Selector(
-        default='matte',
-        objects=['flat', 'matte', 'glossy', 'metallic', 'plastic'],
-        doc="Set the lighting"
+        default="matte",
+        objects=["flat", "matte", "glossy", "metallic", "plastic"],
+        doc="Set the lighting",
     )
 
     default_preset = param.Selector(
-        default='default',
-        objects=['default', 'unitcell', 'all-models', 'supercell'],
-        doc="Set the preset view"
+        default="default",
+        objects=["default", "unitcell", "all-models", "supercell"],
+        doc="Set the preset view",
     )
 
-    pdbe_link = param.Selector(
-        default=None,
-        doc="Show the PDBe entry link at in the top right corner"
+    pdbe_link = param.Boolean(
+        default=True, doc="Show the PDBe entry link at in the top right corner"
     )
 
-    hide_expand_icon = param.Boolean(
-        default=None,
-        doc="Hide the expand icon"
-    )
-    
-    hide_selection_icon = param.Boolean(
-        default=None, # Default False, set False/True for True
-        doc="Hide the selection icon"
-    )
+    _template = """
+<link id="molstarTheme" rel="stylesheet" type="text/css" href="https://www.ebi.ac.uk/pdbe/pdb-component-library/css/pdbe-molstar-1.2.0.css"/>
+<div id="container" style="width:100%; height: 100%;"><div id="pdbeViewer"></div></div>
+"""
+    __javascript__ = [
+        "https://www.ebi.ac.uk/pdbe/pdb-component-library/js/pdbe-molstar-plugin-1.2.0.js",
+    ]
 
-    hide_animation_icon = param.Boolean(
-        default=None,
-        doc="Hide the animation icon"
-    )
+    _scripts = {
+        "render": """
+function standardize_color(str){
+    var ctx = document.createElement("canvas").getContext("2d");
+    ctx.fillStyle = str;
+    return ctx.fillStyle;
+}
+function toRgb(color) {
+  var hex = standardize_color(color)
+  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result ? {
+    r: parseInt(result[1], 16),
+    g: parseInt(result[2], 16),
+    b: parseInt(result[3], 16)
+  } : null;
+}
+state.toRgb = toRgb
 
+function getOptions(){
+    var options = {
+        moleculeId: data.molecule_id,
+        customData: data.custom_data,
+        ligandView: data.ligand_view,
+        alphafoldView: data.alphafold_view,
+        assemblyId: data.assembly_id,
+        visualStyle: data.visual_style,
+        bgColor: toRgb(data.bg_color),
+        highlightColor: toRgb(data.highlight_color),
+        selectColor: toRgb(data.select_color),
+        hideStructure: data.hide_structure,
+        hideCanvasControls: data.hide_canvas_controls,
+        loadMaps: data.load_maps,
+        validationAnnotation: data.validation_annotation,
+        domainAnnotation: data.domain_annotation,
+        lowPrecisionCoords: data.low_precision_coords,
+        expanded: data.expanded,
+        hideControls: data.hide_controls,
+        landscape: data.landscape,
+        selectInteraction: data.select_interaction,
+        lighting: data.lighting,
+        defaultPreset: data.default_preset,
+        pdbeLink: data.pdbe_link,
+    }
+    if (data.pdbe_url!==null){
+        options["pdbeUrl"]=data.pdbe_url
+    }
+    console.log(options)
+    return options
+}
+state.getOptions=getOptions
+
+self.theme()
+
+state.viewerInstance = new PDBeMolstarPlugin();
+state.viewerInstance.render(pdbeViewer, state.getOptions());    
+""",
+        "rerender": """
+state.viewerInstance.visual.update(state.getOptions(), fullLoad=true)
+console.log("rerender")
+""",
+        "molecule_id": "state.viewerInstance.visual.update({moleculeId:data.molecule_id})",
+        "custom_data": "state.viewerInstance.visual.update({customData:data.custom_data})",
+        "ligand_view": "state.viewerInstance.visual.update({ligandView:data.ligand_view})",
+        "alphafold_view": "state.viewerInstance.visual.update({alphafoldView:data.alphafold_view})",
+        "assembly_id": "state.viewerInstance.visual.update({assembly_id:data.assembly_id})",
+        "visual_style": "self.rerender()",
+        "bg_color": "state.viewerInstance.canvas.setBgColor(state.toRgb(data.bg_color))",
+        "highlight_color": "state.viewerInstance.visual.setColor({highlight: state.toRgb(data.highlight_color)})",
+        "select_color": "state.viewerInstance.visual.setColor({select: state.toRgb(data.select_color)})",
+        "theme": """
+if (data.theme==="dark"){
+    molstarTheme.href="https://www.ebi.ac.uk/pdbe/pdb-component-library/css/pdbe-molstar-1.2.0.css"
+} else {
+    molstarTheme.href="https://www.ebi.ac.uk/pdbe/pdb-component-library/css/pdbe-molstar-light-1.2.0.css"
+}
+""",
+        "hide_structure": "state.viewerInstance.visual.update({hideStructure:data.hide_structure})",
+        "hide_canvas_controls": "state.viewerInstance.visual.update({hideCanvasControls:data.hide_canvas_controls})",
+        "load_maps": "self.rerender()",
+        "validation_annotation": "self.rerender()",
+        "domain_annotation": "self.rerender()",
+        "low_precision_coords": "self.rerender()",
+        "expanded": "state.viewerInstance.canvas.toggleExpanded(data.expanded)",
+        "landscape": "self.rerender()",
+        "select_interaction": "self.rerender()",
+        "lighting": "self.rerender()",
+        "default_preset": "self.rerender()",
+        "pdbe_link": "self.rerender()",
+        "hide_controls": "state.viewerInstance.canvas.toggleControls(!data.hide_controls);" "",
+    }
 
     def __init__(self, **params):
         super().__init__(**params)
 
-        skip = {
-            'theme', 
-            'name',
-            'bg_color'
-        }
 
-        # Find class attributes defined only on this subclass
-        attrs = self.__class__.__dict__.keys() - HTML.__class__.__dict__.keys() - skip
-        attrs = [a for a in attrs if not a.startswith('_')]
+if __name__.startswith("bokeh"):
+    pn.extension(sizing_mode="stretch_width")
 
-        elements = []
-        for attr in attrs:
-            val = getattr(self, attr)
-            if val is None:
-                continue
-            elif isinstance(val, bool):
-                val = 'true' if val else 'false'
-            else:
-                val = f'"{val}"'
-            
-            name = attr.replace('_', '-')
-            elem = f'{name}={val}'
-            elements.append(elem)
-        
-        
-        bg_default = 'F7F7F7' if self.theme == 'light' else '000000'
-        self.bg_color = self.bg_color or bg_default
+    parameters = [
+        "molecule_id",
+        "custom_data",
+        "ligand_view",
+        "alphafold_view",
+        "assembly_id",
+        "visual_style",
+        "bg_color",
+        "highlight_color",
+        "select_color",
+        "hide_structure",
+        "hide_canvas_controls",
+        "load_maps",
+        "validation_annotation",
+        "domain_annotation",
+        "low_precision_coords",
+        "expanded",
+        "hide_controls",
+        "landscape",
+        "select_interaction",
+        "lighting",
+        "default_preset",
+        "pdbe_link",
+        "pdbe_url",
+        "sizing_mode",
+        "height",
+        "width",
+    ]
 
-        # Split color options into rgb components
-        color_options = ['bg_color', 'highlight_color', 'select_color']
-        for option in color_options:
-            hex_val = getattr(self, option)
-            if hex_val is None:
-                continue
-            hex_val = hex_val.lstrip('#')
-            name = option.replace('_', '-')
-            for i, c in enumerate(['r', 'g', 'b']):
-                val = int(hex_val[2*i:2*i+2], 16)
-                elem = f'{name}-{c}="{val}"'
-                elements.append(elem)
-
-        component_spec = ' '.join(elements)
-        
-        theme = '-light' if self.theme == 'light' else ''
-        html_string = (Path(__file__).parent / 'molstar_webcomponent.html').read_text()
-        html_template = Template(html_string)
-
-        self.object = html_template.substitute(
-            component_spec=component_spec,
-            theme=theme
-        )
+    pdbe = PdbeMolStar(
+        molecule_id="1qyn",
+        # custom_data= { "url": "https://www.ebi.ac.uk/pdbe/coordinates/1cbs/chains?entityId=1&asymId=A&encoding=bcif", "format": "cif", "binary": True },
+        # ligand_view={"label_comp_id": "REA"},
+        alphafold_view=False,
+        min_height=500,
+        # theme='default',
+        # lighting='metallic',
+        # hide_expand_icon=True,
+        # highlight_color='#d1fa07',
+        # bg_color='#eeece7',
+        # hide_canvas_controls=["selection", "animation", "controlToggle", "controlInfo"],
+        # validation_annotation=True,
+        domain_annotation=True,
+        visual_style="cartoon",  # , "ball-and-stick",
+        # highlight_color="blue",
+        expanded=True,
+        sizing_mode="stretch_both",
+    )
+    pn.template.FastListTemplate(
+        site="Panel Chemistry",
+        title="Pdbe Molstar Viewer",
+        sidebar=[pn.Param(pdbe, parameters=parameters)],
+        main=[pdbe],
+    ).servable()
