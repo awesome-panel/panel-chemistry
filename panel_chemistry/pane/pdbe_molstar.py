@@ -323,7 +323,7 @@ if (data.theme==="dark"){
         "hide_controls_icon": """self.rerender()""",  #Todo: I dont think .update() looks as hideCanvasControls
         "hide_expand_icon": """self.rerender()""",  #Todo expand can be turned of but not updated on rerender
         "hide_settings_icon": """self.rerender()""",
-        "hide_selection_icon": """self.rerender()""",
+        "hide_selection_icon": """self.rerender()""", #Todo selection can be turned of but not updated on rerender
         "hide_animation_icon": """self.rerender()""",
         "load_maps": "self.rerender()",
         "validation_annotation": "self.rerender()",
