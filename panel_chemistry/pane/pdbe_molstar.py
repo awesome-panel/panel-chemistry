@@ -111,13 +111,26 @@ class PdbeMolStar(ReactiveHTML):
         doc="Hide coarse"
     )
 
-    hide_canvas_controls = param.ListSelector(
-        objects=["expand", "selection", "animation", "controlToggle", "controlInfo"],
-        doc="""Hide Expand, Selection and Animations Control Icons. Expected value is a list with 
-        'expand', 'selection', 'animation', 'controlToggle', 'controlInfo' keywords.
-        """,
+    hide_controls_icon = param.Boolean(default=False, doc="Hide the control menu")
+
+    hide_expand_icon = param.Boolean(
+        default=False,
+        doc="Hide the expand icon"
+    )
+    
+    hide_settings_icon = param.Boolean(default=False, doc="Hide the settings menu")
+    
+    hide_selection_icon = param.Boolean(
+        default=False, # Default False, set False/True for True
+        doc="Hide the selection icon"
     )
 
+    # Todo requires testing with a trajectory file
+    hide_animation_icon = param.Boolean(
+        default=False,
+        doc="Hide the animation icon"
+    )
+   
     pdbe_url = param.String(
         default=None, constant=True, doc="Url for PDB data. Mostly used for internal testing"
     )
@@ -191,6 +204,54 @@ function toRgb(color) {
 }
 state.toRgb = toRgb
 
+function getHideStructure(){
+    var hideStructure = [];
+
+    if (data.hide_polymer){
+        hideStructure.push("polymer")
+    }
+    if (data.hide_water){
+        hideStructure.push("water")
+    }
+    if (data.hide_heteroatoms){
+        hideStructure.push("het")
+    }
+    if (data.hide_carbs){
+        hideStructure.push("carbs")
+    }
+    if (data.hide_non_standard){
+        hideStructure.push("nonStandard")
+    }
+    if (data.hide_coarse){
+        hideStructure.push("coarse")
+    }
+
+    return hideStructure
+}
+
+function getHideCanvasControls(){
+    var hideCanvasControls = [];
+    if (data.hide_controls_icon){
+        hideCanvasControls.push("controlToggle")
+    }
+    if (data.hide_expand_icon){
+        hideCanvasControls.push("expand")
+    }
+    if (data.hide_settings_icon){
+        hideCanvasControls.push("controlInfo")
+    }
+    if (data.hide_selection_icon){
+        hideCanvasControls.push('selection')
+    }
+    if (data.hide_animation_icon){
+        hideCanvasControls.push("animation")
+    }
+
+    return hideCanvasControls
+}
+
+state.getHideCanvasControls = getHideCanvasControls
+
 function getOptions(){
     var options = {
         moleculeId: data.molecule_id,
@@ -201,8 +262,8 @@ function getOptions(){
         bgColor: toRgb(data.bg_color),
         highlightColor: toRgb(data.highlight_color),
         selectColor: toRgb(data.select_color),
-        hideStructure: data.hide_structure,
-        hideCanvasControls: data.hide_canvas_controls,
+        hideStructure: getHideStructure(),
+        hideCanvasControls: getHideCanvasControls(),
         loadMaps: data.load_maps,
         validationAnnotation: data.validation_annotation,
         domainAnnotation: data.domain_annotation,
@@ -258,7 +319,11 @@ if (data.theme==="dark"){
         "hide_carbs": "state.viewerInstance.visual.visibility({carbs:!data.hide_carbs})",
         "hide_non_standard": "state.viewerInstance.visual.visibility({nonStandard:!data.hide_non_standard})",
         "hide_coarse": "state.viewerInstance.visual.visibility({coarse:!data.hide_coarse})",
-        "hide_canvas_controls": "state.viewerInstance.visual.update({hideCanvasControls:data.hide_canvas_controls})",
+        "hide_controls_icon": """self.rerender()""",  #Todo: I dont think .update() looks as hideCanvasControls
+        "hide_expand_icon": """self.rerender()""",  #Todo expand can be turned of but not updated on rerender
+        "hide_settings_icon": """self.rerender()""",
+        "hide_selection_icon": """self.rerender()""",
+        "hide_animation_icon": """self.rerender()""",
         "load_maps": "self.rerender()",
         "validation_annotation": "self.rerender()",
         "domain_annotation": "self.rerender()",
@@ -272,38 +337,16 @@ if (data.theme==="dark"){
         "hide_controls": "state.viewerInstance.canvas.toggleControls(!data.hide_controls);" "",
     }
 
+
+
     def __init__(self, **params):
         super().__init__(**params)
     	
-    @property
-    def hide_structure(self):
-        hide_structure = []
-        if self.hide_polymer:
-            hide_structure.append('polymer')
-        if self.hide_water:
-            hide_structure.append('water')
-        if self.hide_heteroatoms:
-            hide_structure.append('het')
-        if self.hide_carbs:
-            hide_structure.append('carbs')
-        if self.hide_non_standard:
-            hide_structure.append('nonStandard')
-        if self.hide_coarse:
-            hide_structure.append('coarse')
-
-        return hide_structure
-
-
-
-    @param.depends('hide_structure', watch=True)
-    def _hide_structure_updated(self):
-        print('howdoe')
-        print(self.hide_structure)
-
 if __name__.startswith("bokeh"):
     pn.extension(sizing_mode="stretch_width")
 
     parameters = [
+        "theme",
         "molecule_id",
         "custom_data",
         "ligand_view",
@@ -313,13 +356,17 @@ if __name__.startswith("bokeh"):
         "bg_color",
         "highlight_color",
         "select_color",
+        "hide_controls_icon",
+        "hide_expand_icon",
+        "hide_settings_icon", 
+        "hide_selection_icon",
+        "hide_animation_icon", 
         "hide_polymer",
         "hide_water",
         "hide_heteroatoms",
         "hide_carbs", 
         "hide_non_standard",
         "hide_coarse",
-        "hide_canvas_controls",
         "load_maps",
         "validation_annotation",
         "domain_annotation",
@@ -343,7 +390,7 @@ if __name__.startswith("bokeh"):
         # ligand_view={"label_comp_id": "REA"},
         alphafold_view=False,
         min_height=500,
-        # theme='default',
+        theme='default',
         # lighting='metallic',
         # hide_expand_icon=True,
         # highlight_color='#d1fa07',
@@ -351,9 +398,11 @@ if __name__.startswith("bokeh"):
         # hide_canvas_controls=["selection", "animation", "controlToggle", "controlInfo"],
         # validation_annotation=True,
         domain_annotation=True,
-        visual_style="cartoon",  # , "ball-and-stick",
+        hide_expand_icon=True,
+        hide_selection_icon=True,
+        #visual_style="cartoon",  # , "ball-and-stick",
         # highlight_color="blue",
-        expanded=True,
+        #expanded=True,
         sizing_mode="stretch_both",
     )
     pn.template.FastListTemplate(
