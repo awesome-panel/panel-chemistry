@@ -75,18 +75,42 @@ class PdbeMolStar(ReactiveHTML):
 
     select_color = param.Color(default="#0c0d11", doc="Color for selections")
 
-    visual_style = param.Selector(objects=REPRESENTATIONS, doc="Visual styling")
+    visual_style = param.Selector(default=None, 
+            objects=[None] + REPRESENTATIONS, doc="Visual styling")
 
     # Todo: Determine if it should be default or light theme
     theme = param.Selector(default="dark", objects=["default", "dark"], doc="CSS theme to use")
 
-    hide_structure = param.ListSelector(
-        objects=["polymer", "het", "water", "carbs", "nonStandard", "coarse"],
-        doc="""Molstar renders Polymer, HET, Water and Carbohydrates visuals by default. This option is to exclude 
-        any of these default visuals. Expected value is a list with 'polymer', 'het', 'water', 'carbs', 'nonStandard', 'coarse' keywords. 
-        For example hideStructure: ['water'] will not render water visual in the 3D view.
-        """,
+    hide_polymer = param.Boolean(
+        default=False,
+        doc="Hide polymer"
     )
+
+    hide_water = param.Boolean(
+        default=False,
+        doc="Hide water"
+    )
+
+    hide_heteroatoms = param.Boolean(
+        default=False, 
+        doc="Hide het"
+    )
+
+    hide_carbs = param.Boolean(
+        default=False,
+        doc="Hide carbs"
+    )
+
+    hide_non_standard = param.Boolean(
+        default=False,
+        doc="Hide non standard"
+    )
+
+    hide_coarse = param.Boolean(
+        default=False,
+        doc="Hide coarse"
+    )
+
     hide_canvas_controls = param.ListSelector(
         objects=["expand", "selection", "animation", "controlToggle", "controlInfo"],
         doc="""Hide Expand, Selection and Animations Control Icons. Expected value is a list with 
@@ -174,7 +198,6 @@ function getOptions(){
         ligandView: data.ligand_view,
         alphafoldView: data.alphafold_view,
         assemblyId: data.assembly_id,
-        visualStyle: data.visual_style,
         bgColor: toRgb(data.bg_color),
         highlightColor: toRgb(data.highlight_color),
         selectColor: toRgb(data.select_color),
@@ -192,6 +215,10 @@ function getOptions(){
         defaultPreset: data.default_preset,
         pdbeLink: data.pdbe_link,
     }
+    console.log(data.visual_style)
+    if (data.visual_style!==null){
+        options["visualStyle"]=data.visual_style
+    }
     if (data.pdbe_url!==null){
         options["pdbeUrl"]=data.pdbe_url
     }
@@ -199,7 +226,7 @@ function getOptions(){
     return options
 }
 state.getOptions=getOptions
-
+console.log('hoidoei')
 self.theme()
 
 state.viewerInstance = new PDBeMolstarPlugin();
@@ -225,7 +252,12 @@ if (data.theme==="dark"){
     molstarTheme.href="https://www.ebi.ac.uk/pdbe/pdb-component-library/css/pdbe-molstar-light-1.2.0.css"
 }
 """,
-        "hide_structure": "state.viewerInstance.visual.update({hideStructure:data.hide_structure})",
+        "hide_polymer": "state.viewerInstance.visual.visibility({polymer:!data.hide_polymer})",
+        "hide_water": "state.viewerInstance.visual.visibility({water:!data.hide_water})",
+        "hide_heteroatoms": "state.viewerInstance.visual.visibility({het:!data.hide_heteroatoms})",
+        "hide_carbs": "state.viewerInstance.visual.visibility({carbs:!data.hide_carbs})",
+        "hide_non_standard": "state.viewerInstance.visual.visibility({nonStandard:!data.hide_non_standard})",
+        "hide_coarse": "state.viewerInstance.visual.visibility({coarse:!data.hide_coarse})",
         "hide_canvas_controls": "state.viewerInstance.visual.update({hideCanvasControls:data.hide_canvas_controls})",
         "load_maps": "self.rerender()",
         "validation_annotation": "self.rerender()",
@@ -242,7 +274,31 @@ if (data.theme==="dark"){
 
     def __init__(self, **params):
         super().__init__(**params)
+    	
+    @property
+    def hide_structure(self):
+        hide_structure = []
+        if self.hide_polymer:
+            hide_structure.append('polymer')
+        if self.hide_water:
+            hide_structure.append('water')
+        if self.hide_heteroatoms:
+            hide_structure.append('het')
+        if self.hide_carbs:
+            hide_structure.append('carbs')
+        if self.hide_non_standard:
+            hide_structure.append('nonStandard')
+        if self.hide_coarse:
+            hide_structure.append('coarse')
 
+        return hide_structure
+
+
+
+    @param.depends('hide_structure', watch=True)
+    def _hide_structure_updated(self):
+        print('howdoe')
+        print(self.hide_structure)
 
 if __name__.startswith("bokeh"):
     pn.extension(sizing_mode="stretch_width")
@@ -257,7 +313,12 @@ if __name__.startswith("bokeh"):
         "bg_color",
         "highlight_color",
         "select_color",
-        "hide_structure",
+        "hide_polymer",
+        "hide_water",
+        "hide_heteroatoms",
+        "hide_carbs", 
+        "hide_non_standard",
+        "hide_coarse",
         "hide_canvas_controls",
         "load_maps",
         "validation_annotation",
