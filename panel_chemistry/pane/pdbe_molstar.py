@@ -13,9 +13,15 @@ Mol* Viewer: modern web app for 3D visualization and analysis of large biomolecu
 Nucleic Acids Research, 2021; https://doi.org/10.1093/nar/gkab314.
 """
 
+import numpy as np
 import panel as pn
 import param
 from panel.reactive import ReactiveHTML
+
+try: 
+    import pandas as pd
+except ModuleNotFoundError:
+    pd = None
 
 REPRESENTATIONS = [
     "cartoon",
@@ -178,6 +184,13 @@ class PdbeMolStar(ReactiveHTML):
         default=True, doc="Show the PDBe entry link at in the top right corner"
     )
 
+
+    _select = param.Dict(
+        doc="Dictionary used for selections and coloring these selections"
+    )
+
+    test = param.Boolean(default=False)
+
     _template = """
 <link id="molstarTheme" rel="stylesheet" type="text/css" href="https://www.ebi.ac.uk/pdbe/pdb-component-library/css/pdbe-molstar-1.2.1.css"/>
 <div id="container" style="width:100%; height: 100%;"><div id="pdbeViewer"></div></div>
@@ -336,14 +349,78 @@ if (data.theme==="dark"){
         "lighting": "self.rerender()",
         "default_preset": "self.rerender()",
         "pdbe_link": "self.rerender()",
-        "hide_controls": "state.viewerInstance.canvas.toggleControls(!data.hide_controls);" "",
+        "hide_controls": "state.viewerInstance.canvas.toggleControls(!data.hide_controls);",
+        "test": """
+state.viewerInstance.visual.select({data: [
+    {entity_id: '1', struct_asym_id: 'A', start_residue_number: 10, end_residue_number: 15, color:{r:255,g:0,b:0}, focus: false},
+    {entity_id: '1', struct_asym_id: 'A', start_residue_number: 16, end_residue_number: 25, color:{r:0,g:255,b:0}, focus: false}
+], nonSelectedColor: null})
+    """,
+        "_select": """
+        state.viewerInstance.visual.select(data._select);
+        
+        """
     }
-
-
 
     def __init__(self, **params):
         super().__init__(**params)
-    	
+
+    def color_residues(
+        self, 
+        color: tuple,
+        entity_id: int=1,
+        chain: str='A',
+        residue_number: int=None,
+        start_residue_number: int=None,
+        end_residue_number: int=None,
+        non_selected_color=None, 
+        focus:bool=False):
+
+        bools = [v is None for v in [residue_number, start_residue_number, end_residue_number]]
+        if not(bools[0] ^ (bools[1] or bools[2])):
+            raise ValueError("Must set either 'residue_number' or 'start_residue_number and 'end_residue_number'")
+
+        # todo perhaps color should be input as hex values
+        color = to_rgb(color, output='dict')
+        if non_selected_color:
+            non_selected_color = to_rgb(non_selected_color, output='dict')
+        data = {
+            'entity_id': str(entity_id),
+            'struct_asym_id': chain,
+            'color': color,
+            'focus': focus
+            }
+        if residue_number is not None:
+            data['residue_number'] = residue_number
+        else:
+            data['start_residue_number'] = start_residue_number
+            data['end_residue_number'] = end_residue_number
+
+        select = {'data':[data], 'nonSelectedColor': non_selected_color}
+
+        self._select = select
+        
+    
+    def apply_colors(colors, chains=None, entities=None, non_selected_color='#ffffff'):
+        chains = chains or ['A']
+        entities = entities or [1]
+
+        if isinstance(colors, (list, np.ndarray)):
+            r_number = np.arange(len(colors)) + 1
+        elif pd and isinstance(colors, pd.Series):
+            r_number = colors.index.to_numpy()
+
+#todo perhaps should be somewhere in utils.py 
+def to_rgb(hex_val, output='dict'):        
+    hex_val = hex_val.lstrip('#')
+    if output == 'dict':
+        return {c: int(hex_val[2*i:2*i+2], 16) for i, c in enumerate('rgb')}
+    elif output == 'tuple':
+        return tuple(int(hex_val[2*i:2*i+2], 16) for i in range(3))
+    else:
+        raise ValueError(f"Invalid value for 'output', got {output!r}, must be 'dict' or 'tuple'")
+    
+
 if __name__.startswith("bokeh"):
     pn.extension(sizing_mode="stretch_width")
 
@@ -407,9 +484,44 @@ if __name__.startswith("bokeh"):
         #expanded=True,
         sizing_mode="stretch_both",
     )
+
+
+    def callback(event):
+        #pdbe.color_residues('#f305d7', start_residue_number=20, end_residue_number=50)
+        pdbe.color_residues('#f305d7', residue_number=70)
+
+    btn = pn.widgets.Button()
+    btn.on_click(callback)
+
+
     pn.template.FastListTemplate(
         site="Panel Chemistry",
         title="Pdbe Molstar Viewer",
-        sidebar=[pn.Param(pdbe, parameters=parameters)],
+        sidebar=[btn, pn.Param(pdbe, parameters=parameters)],
         main=[pdbe],
     ).servable()
+
+
+
+
+if __name__ == '__main__':
+
+    pdbe = PdbeMolStar(
+        molecule_id="1qyn",
+        alphafold_view=False,
+        min_height=500,
+        theme='default',
+        domain_annotation=True,
+        hide_expand_icon=True,
+        hide_selection_icon=True,
+        sizing_mode="stretch_both",
+    )
+
+
+    def callback(event):
+        pdbe.color_residues('#f305d7', start_residue_number=20, end_residue_number=50)
+
+    btn = pn.widgets.Button()
+    btn.on_click(callback)
+
+    callback('test')
