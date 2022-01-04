@@ -67,7 +67,7 @@ class PdbeMolStar(ReactiveHTML):
 
     # Todo: figure out if `background` could/ should be used
     bg_color = param.Color(
-        "black",
+        '#F7F7F7',
         doc="Color of the background. If `None`, colors default is chosen depending on the color theme",
     )
 
@@ -79,7 +79,7 @@ class PdbeMolStar(ReactiveHTML):
             objects=[None] + REPRESENTATIONS, doc="Visual styling")
 
     # Todo: Determine if it should be default or light theme
-    theme = param.Selector(default="dark", objects=["default", "dark"], doc="CSS theme to use")
+    theme = param.Selector(default="default", objects=["default", "dark"], doc="CSS theme to use")
 
     hide_polymer = param.Boolean(
         default=False,
