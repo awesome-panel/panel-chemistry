@@ -13,6 +13,7 @@ Mol* Viewer: modern web app for 3D visualization and analysis of large biomolecu
 Nucleic Acids Research, 2021; https://doi.org/10.1093/nar/gkab314.
 """
 
+import itertools
 import numpy as np
 import panel as pn
 import param
@@ -352,11 +353,24 @@ if (data.theme==="dark"){
         "hide_controls": "state.viewerInstance.canvas.toggleControls(!data.hide_controls);",
         "test": """
 state.viewerInstance.visual.select({data: [
-    {entity_id: '1', struct_asym_id: 'A', start_residue_number: 10, end_residue_number: 15, color:{r:255,g:0,b:0}, focus: false},
-    {entity_id: '1', struct_asym_id: 'A', start_residue_number: 16, end_residue_number: 25, color:{r:0,g:255,b:0}, focus: false}
+    {entity_id: null, struct_asym_id: null, start_residue_number: 10, end_residue_number: 15, color:{r:255,g:0,b:0}, focus: false},
+    {entity_id: '1', struct_asym_id: 'A', start_residue_number: 16, end_residue_number: 25, color:{r:0,g:255,b:0}, focus: false},
+        {
+      "color": {
+        "b": 20,
+        "g": 96,
+        "r": 242
+      },
+      "end_residue_number": 154,
+      "entity_id": null,
+      "focus": false,
+      "start_residue_number": 154,
+      "struct_asym_id": null
+    },
 ], nonSelectedColor: null})
     """,
         "_select": """
+        console.log(data._select)
         state.viewerInstance.visual.select(data._select);
         
         """
@@ -365,11 +379,12 @@ state.viewerInstance.visual.select({data: [
     def __init__(self, **params):
         super().__init__(**params)
 
-    def color_residues(
+    
+    def set_color_residues(
         self, 
         color: tuple,
-        entity_id: int=1,
-        chain: str='A',
+        entity_id: str=None,
+        chain: str=None,
         residue_number: int=None,
         start_residue_number: int=None,
         end_residue_number: int=None,
@@ -380,12 +395,12 @@ state.viewerInstance.visual.select({data: [
         if not(bools[0] ^ (bools[1] or bools[2])):
             raise ValueError("Must set either 'residue_number' or 'start_residue_number and 'end_residue_number'")
 
-        # todo perhaps color should be input as hex values
         color = to_rgb(color, output='dict')
         if non_selected_color:
             non_selected_color = to_rgb(non_selected_color, output='dict')
+
         data = {
-            'entity_id': str(entity_id),
+            'entity_id': entity_id,
             'struct_asym_id': chain,
             'color': color,
             'focus': focus
@@ -399,24 +414,82 @@ state.viewerInstance.visual.select({data: [
         select = {'data':[data], 'nonSelectedColor': non_selected_color}
 
         self._select = select
-        
     
-    def apply_colors(colors, chains=None, entities=None, non_selected_color='#ffffff'):
-        chains = chains or ['A']
-        entities = entities or [1]
+    #TODO not 100% happy with these function names
+    def set_colors_residues(
+        self, 
+        colors,  # list or ndarray or pd.Series
+        r_numbers=None, # optional list/ndarray of resi
+        entity_id: str=None, 
+        chain: str=None,
+        start_residue_number: int=None,
+        end_residue_number: int=None,
+        non_selected_color=None, 
+        focus:bool=False):
 
         if isinstance(colors, (list, np.ndarray)):
-            r_number = np.arange(len(colors)) + 1
+            r_numbers = np.arange(len(colors)) + 1
         elif pd and isinstance(colors, pd.Series):
-            r_number = colors.index.to_numpy()
+            r_numbers = colors.index.to_numpy()
+
+        # optionally provide a custom interval where to apply colors
+        if start_residue_number is not None and end_residue_number is not None:
+            r_numbers = np.arange(start_residue_number, end_residue_number + 1)
+        if len(r_numbers) != len(colors):
+            raise ValueError(
+                f"""Length of residue number interval must match length of colors, 
+                color length is {len(colors)}, residue number length is {len(r_numbers)}""")
+
+        i = 0
+        colors_dict = {}
+        colors = [to_rgb(c, output='tuple') for c in colors]  # in case of colors being 2D ndarray
+        for key, grp in itertools.groupby(colors):
+            size = sum(1 for x in grp)
+            elem = colors_dict.get(key, [])
+            interval = (r_numbers[i], r_numbers[i+size-1])
+            elem.append(interval)
+            colors_dict[key] = elem
+            i += size
+        
+        data_list = []
+        for color_value, intervals in colors_dict.items():
+            for interval in intervals:
+                start, end = interval
+                data_dict = {
+                    'entity_id': entity_id,
+                    'struct_asym_id': chain,
+                    'color': to_rgb(color_value),
+                    'start_residue_number': start,
+                    'end_residue_number': end,
+                    'focus': focus,
+                }
+                data_list.append(data_dict)
+
+
+        select = {'data':data_list, 'nonSelectedColor': non_selected_color}
+        print(select)
+        self._select = select
+
 
 #todo perhaps should be somewhere in utils.py 
-def to_rgb(hex_val, output='dict'):        
-    hex_val = hex_val.lstrip('#')
+def to_rgb(color, output='dict'):
+    if isinstance(color, str):
+        color = color.lstrip('#')
+        color_tuple = tuple(int(color[2*i:2*i+2], 16) for i in range(3))
+    elif isinstance(color, (list, np.ndarray)):
+        color_tuple = tuple(color)
+    elif isinstance(color, tuple):
+        color_tuple = color
+    else:
+        raise TypeError("Invalid type for 'color', must be hex string or tuple")
+    
+    if len(color_tuple) not in [3, 4]:
+        raise ValueError(f"Color must have length 3 or 4, got {len(color_tuple)}")
+
     if output == 'dict':
-        return {c: int(hex_val[2*i:2*i+2], 16) for i, c in enumerate('rgb')}
-    elif output == 'tuple':
-        return tuple(int(hex_val[2*i:2*i+2], 16) for i in range(3))
+        return {c: v for c, v in zip('rgb', color_tuple)}
+    elif output == 'tuple':  # Todo tuple output not currently used
+        return color_tuple[:3]
     else:
         raise ValueError(f"Invalid value for 'output', got {output!r}, must be 'dict' or 'tuple'")
     
@@ -463,6 +536,8 @@ if __name__.startswith("bokeh"):
         "width",
     ]
 
+    parameters = ['test']
+
     pdbe = PdbeMolStar(
         molecule_id="1qyn",
         # custom_data= { "url": "https://www.ebi.ac.uk/pdbe/coordinates/1cbs/chains?entityId=1&asymId=A&encoding=bcif", "format": "cif", "binary": True },
@@ -487,8 +562,46 @@ if __name__.startswith("bokeh"):
 
 
     def callback(event):
-        #pdbe.color_residues('#f305d7', start_residue_number=20, end_residue_number=50)
-        pdbe.color_residues('#f305d7', residue_number=70)
+        pdbe.set_color_residues('#f305d7', entity_id='1', start_residue_number=20, end_residue_number=20)
+        #pdbe.color_residues('#f305d7', residue_number=70)
+
+        colors = [
+            '#ffccdd',#0
+            '#ffccdd',#1
+            '#ffccdd',#2
+            '#ffccdd',#3
+            '#fdaabb',#4
+            '#fdaabb',#5
+            '#fdaabb',#6
+            '#fdaabb',#7
+            '#ffccdd',#8
+            '#ffccdd',#9
+            '#ffccdd',#10
+            '#ffccdd',#11
+        ]
+
+        pdbe.set_colors_residues(colors, start_residue_number=50, end_residue_number=50+len(colors)-1)
+        c_term = 80
+
+        wavelength = np.pi
+        phase = 0
+
+        t = np.linspace(0, 2 * np.pi, num=c_term, endpoint=True)
+        f = 1./wavelength
+        s = np.sin(2*np.pi*f*t + phase)
+
+        from matplotlib import pyplot as plt
+
+        norm = plt.Normalize(vmin=-1, vmax=1)
+        cmap = plt.get_cmap('jet')
+
+        colors = cmap(norm(s), bytes=True)
+
+        # if selection includes residues numbers not in the pdb file the coloring will fail
+        # large color jobs doesnt have great performance
+        pdbe.set_colors_residues(colors, start_residue_number=50, end_residue_number=50+len(colors)-1, non_selected_color='#f7f7f7')
+
+
 
     btn = pn.widgets.Button()
     btn.on_click(callback)
@@ -519,7 +632,25 @@ if __name__ == '__main__':
 
 
     def callback(event):
-        pdbe.color_residues('#f305d7', start_residue_number=20, end_residue_number=50)
+        #pdbe.color_residues('#f305d7', start_residue_number=20, end_residue_number=50)
+
+        colors = [
+            '#ffccdd',#0 50
+            '#ffccdd',#1
+            '#ffccdd',#2
+            '#ffccdd',#3
+            '#fdaabb',#4
+            '#fdaabb',#5
+            '#fdaabb',#6
+            '#fdaabb',#7
+            '#ffccdd',#8
+            '#ffccdd',#9
+            '#ffccdd',#10
+            '#ffccdd',#11
+        ]
+
+        pdbe.set_colors_residues(colors, start_residue_number=50, end_residue_number=50+len(colors)-1)
+
 
     btn = pn.widgets.Button()
     btn.on_click(callback)
