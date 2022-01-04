@@ -179,11 +179,11 @@ class PdbeMolStar(ReactiveHTML):
     )
 
     _template = """
-<link id="molstarTheme" rel="stylesheet" type="text/css" href="https://www.ebi.ac.uk/pdbe/pdb-component-library/css/pdbe-molstar-1.2.0.css"/>
+<link id="molstarTheme" rel="stylesheet" type="text/css" href="https://www.ebi.ac.uk/pdbe/pdb-component-library/css/pdbe-molstar-1.2.1.css"/>
 <div id="container" style="width:100%; height: 100%;"><div id="pdbeViewer"></div></div>
 """
     __javascript__ = [
-        "https://www.ebi.ac.uk/pdbe/pdb-component-library/js/pdbe-molstar-plugin-1.2.0.js",
+        "https://www.ebi.ac.uk/pdbe/pdb-component-library/js/pdbe-molstar-plugin-1.2.1.js",
     ]
 
     _scripts = {
@@ -294,6 +294,7 @@ state.viewerInstance = new PDBeMolstarPlugin();
 state.viewerInstance.render(pdbeViewer, state.getOptions());    
 """,
         "rerender": """
+console.log(state.getOptions())
 state.viewerInstance.visual.update(state.getOptions(), fullLoad=true)
 console.log("rerender")
 """,
@@ -308,9 +309,9 @@ console.log("rerender")
         "select_color": "state.viewerInstance.visual.setColor({select: state.toRgb(data.select_color)})",
         "theme": """
 if (data.theme==="dark"){
-    molstarTheme.href="https://www.ebi.ac.uk/pdbe/pdb-component-library/css/pdbe-molstar-1.2.0.css"
+    molstarTheme.href="https://www.ebi.ac.uk/pdbe/pdb-component-library/css/pdbe-molstar-1.2.1.css"
 } else {
-    molstarTheme.href="https://www.ebi.ac.uk/pdbe/pdb-component-library/css/pdbe-molstar-light-1.2.0.css"
+    molstarTheme.href="https://www.ebi.ac.uk/pdbe/pdb-component-library/css/pdbe-molstar-light-1.2.1.css"
 }
 """,
         "hide_polymer": "state.viewerInstance.visual.visibility({polymer:!data.hide_polymer})",
