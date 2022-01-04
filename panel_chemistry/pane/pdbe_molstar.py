@@ -380,7 +380,7 @@ state.viewerInstance.visual.select({data: [
         super().__init__(**params)
 
     
-    def set_color_residues(
+    def single_color_residues(
         self, 
         color: tuple,
         entity_id: str=None,
@@ -415,8 +415,7 @@ state.viewerInstance.visual.select({data: [
 
         self._select = select
     
-    #TODO not 100% happy with these function names
-    def set_colors_residues(
+    def multi_color_residues(
         self, 
         colors,  # list or ndarray or pd.Series
         r_numbers=None, # optional list/ndarray of resi
@@ -562,7 +561,7 @@ if __name__.startswith("bokeh"):
 
 
     def callback(event):
-        pdbe.set_color_residues('#f305d7', entity_id='1', start_residue_number=20, end_residue_number=20)
+        pdbe.single_color_residues('#f305d7', entity_id='1', start_residue_number=20, end_residue_number=20)
         #pdbe.color_residues('#f305d7', residue_number=70)
 
         colors = [
@@ -580,7 +579,7 @@ if __name__.startswith("bokeh"):
             '#ffccdd',#11
         ]
 
-        pdbe.set_colors_residues(colors, start_residue_number=50, end_residue_number=50+len(colors)-1)
+        pdbe.multi_color_residues(colors, start_residue_number=50, end_residue_number=50+len(colors)-1)
         c_term = 80
 
         wavelength = np.pi
@@ -599,7 +598,7 @@ if __name__.startswith("bokeh"):
 
         # if selection includes residues numbers not in the pdb file the coloring will fail
         # large color jobs doesnt have great performance
-        pdbe.set_colors_residues(colors, start_residue_number=50, end_residue_number=50+len(colors)-1, non_selected_color='#f7f7f7')
+        pdbe.multi_color_residues(colors, start_residue_number=50, end_residue_number=50+len(colors)-1, non_selected_color='#f7f7f7')
 
 
 
@@ -649,7 +648,7 @@ if __name__ == '__main__':
             '#ffccdd',#11
         ]
 
-        pdbe.set_colors_residues(colors, start_residue_number=50, end_residue_number=50+len(colors)-1)
+        pdbe.multi_color_residues(colors, start_residue_number=50, end_residue_number=50+len(colors)-1)
 
 
     btn = pn.widgets.Button()
