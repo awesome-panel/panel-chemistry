@@ -287,11 +287,12 @@ function getOptions(){
     return options
 }
 state.getOptions=getOptions
-console.log('hoidoei')
 self.theme()
 
 state.viewerInstance = new PDBeMolstarPlugin();
-state.viewerInstance.render(pdbeViewer, state.getOptions());    
+state.viewerInstance.render(pdbeViewer, state.getOptions());
+
+
 """,
         "rerender": """
 console.log(state.getOptions())
