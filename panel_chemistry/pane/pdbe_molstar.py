@@ -13,9 +13,6 @@ Mol* Viewer: modern web app for 3D visualization and analysis of large biomolecu
 Nucleic Acids Research, 2021; https://doi.org/10.1093/nar/gkab314.
 """
 
-import itertools
-import numpy as np
-import panel as pn
 import param
 from panel.reactive import ReactiveHTML
 
@@ -38,7 +35,7 @@ REPRESENTATIONS = [
 ]
 
 # See https://embed.plnkr.co/plunk/m3GxFYx9cBjIanBp for an example JS implementation
-class PdbeMolStar(ReactiveHTML):
+class PDBeMolStar(ReactiveHTML):
     """PDBe MolStar structure viewer.
 
     Set one of `molecule_id`, `custom_data` and `ligand_view`.
@@ -334,17 +331,17 @@ state.viewerInstance.render(pdbeViewer, state.getOptions());
         "rerender": """
 state.viewerInstance.visual.update(state.getOptions(), fullLoad=true)
 """,
-        "molecule_id": "state.viewerInstance.visual.update({moleculeId:data.molecule_id})",
-        "custom_data": "state.viewerInstance.visual.update({customData:data.custom_data})",
-        "ligand_view": "state.viewerInstance.visual.update({ligandView:data.ligand_view})",
-        "alphafold_view": "state.viewerInstance.visual.update({alphafoldView:data.alphafold_view})",
-        "assembly_id": "state.viewerInstance.visual.update({assembly_id:data.assembly_id})",
-        "visual_style": "self.rerender()",
+        "molecule_id": """self.rerender()""",  # rerender otherwise other settings also change (eg theme)
+        "custom_data": """self.rerender()""",
+        "ligand_view": """self.rerender()""",
+        "alphafold_view": """self.rerender()""",
+        "assembly_id": """self.rerender()""",
+        "visual_style": """self.rerender()""",
         "bg_color": "state.viewerInstance.canvas.setBgColor(state.toRgb(data.bg_color))",
         "highlight_color": "state.viewerInstance.visual.setColor({highlight: state.toRgb(data.highlight_color)})",
         "select_color": "state.viewerInstance.visual.setColor({select: state.toRgb(data.select_color)})",
         "theme": """
-if (data.theme==="dark"){
+    if (data.theme==="dark"){
     molstarTheme.href="https://www.ebi.ac.uk/pdbe/pdb-component-library/css/pdbe-molstar-1.2.1.css"
 } else {
     molstarTheme.href="https://www.ebi.ac.uk/pdbe/pdb-component-library/css/pdbe-molstar-light-1.2.1.css"
@@ -359,21 +356,20 @@ if (data.theme==="dark"){
         "hide_controls_icon": """self.rerender()""",  #Todo: I dont think .update() looks as hideCanvasControls
         "hide_expand_icon": """self.rerender()""",  #Todo expand can be turned of but not updated on rerender
         "hide_settings_icon": """self.rerender()""",
-        "hide_selection_icon": """self.rerender()""", #Todo selection can be turned of but not updated on rerender
+        "hide_selection_icon": """self.rerender()""", #Todo selection can be turned off but not updated on rerender
         "hide_animation_icon": """self.rerender()""",
         "load_maps": "self.rerender()",
-        "validation_annotation": "self.rerender()",
-        "domain_annotation": "self.rerender()",
-        "low_precision_coords": "self.rerender()",
+        "validation_annotation": """self.rerender()""",
+        "domain_annotation": """self.rerender()""",
+        "low_precision_coords": """self.rerender()""",
         "expanded": "state.viewerInstance.canvas.toggleExpanded(data.expanded)",
-        "landscape": "self.rerender()",
-        "select_interaction": "self.rerender()",
-        "lighting": "self.rerender()",
-        "default_preset": "self.rerender()",
-        "pdbe_link": "self.rerender()",
+        "landscape": """self.rerender()""",
+        "select_interaction": """self.rerender()""",
+        "lighting": """self.rerender()""",
+        "default_preset": """self.rerender()""",
+        "pdbe_link": """self.rerender()""",
         "hide_controls": "state.viewerInstance.canvas.toggleControls(!data.hide_controls);",
-        "spin": """
-        state.viewerInstance.visual.toggleSpin(data.spin);""",
+        "spin": """state.viewerInstance.visual.toggleSpin(data.spin);""",
         "_select": """
         if(data._select) {
         state.viewerInstance.visual.select(data._select);
@@ -458,4 +454,3 @@ if (data.theme==="dark"){
 
         self._args = {'data': data}
         self._reset = not self._reset
-
