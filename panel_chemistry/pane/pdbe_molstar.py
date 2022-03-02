@@ -79,7 +79,7 @@ class PDBeMolStar(ReactiveHTML):
     select_color = param.Color(default="#0c0d11", doc="Color for selections")
 
     visual_style = param.Selector(default=None, 
-            objects=[None] + REPRESENTATIONS, doc="Visual styling")
+            objects=[None, *REPRESENTATIONS], doc="Visual styling")
 
     # Todo: Determine if it should be default or light theme
     theme = param.Selector(default="default", objects=["default", "dark"], doc="CSS theme to use")

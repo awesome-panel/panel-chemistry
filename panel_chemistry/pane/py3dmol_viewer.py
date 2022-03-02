@@ -12,8 +12,8 @@ import param
 try:
     import py3Dmol
 except ModuleNotFoundError:
-    class py3Dmol(param.Parameterized):
-        view = param.String('mock_view') # allow to import the file
+    class py3Dmol(param.Parameterized):  # type: ignore
+        view = param.String('mock_view')  # allow to import the file
 
 
 def _clean_html(html):
