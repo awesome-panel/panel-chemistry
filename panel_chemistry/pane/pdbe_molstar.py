@@ -48,13 +48,16 @@ class PdbeMolStar(ReactiveHTML):
     - https://github.com/PDBeurope/pdbe-molstar/wiki
     - https://molstar.org/
 
-    The implementation is based on the js Plugin. See
 
+    The implementation is based on the JS Plugin. See
     - https://github.com/PDBeurope/pdbe-molstar/wiki/1.-PDBe-Molstar-as-JS-plugin
+    For documentation on the helper methods:
+    - https://github.com/molstar/pdbe-molstar/wiki/3.-Helper-Methods
 
     """
 
     molecule_id = param.String(default=None, doc="PDB id to load. Example: '1qyn' or '1cbs'")
+
     custom_data = param.Dict(
         doc="""Load data from a specific data source. Example: 
         { "url": "https://www.ebi.ac.uk/pdbe/coordinates/1cbs/chains?entityId=1&asymId=A&encoding=bcif", "format": "cif", "binary": True }
@@ -185,10 +188,32 @@ class PdbeMolStar(ReactiveHTML):
         default=True, doc="Show the PDBe entry link at in the top right corner"
     )
 
+    spin = param.Boolean(
+        default=False, doc="Toggle spin"
+    )
+
+    _clear_highlight = param.Boolean(
+        doc="Event to trigger clearing of highlights"
+
+    )
 
     _select = param.Dict(
         doc="Dictionary used for selections and coloring these selections"
     )
+
+    _clear_selection = param.Boolean(
+        doc="Clear selection event trigger"
+    )
+
+    _highlight = param.Dict(
+        doc="Dictionary used for selections and coloring these selections"
+    )
+
+    _reset = param.Boolean(
+        doc="Reset event trigger"
+    )
+
+    _args = param.Dict(doc="Dictionary with function call arguments")
 
     test = param.Boolean(default=False)
 
@@ -290,14 +315,12 @@ function getOptions(){
         defaultPreset: data.default_preset,
         pdbeLink: data.pdbe_link,
     }
-    console.log(data.visual_style)
     if (data.visual_style!==null){
         options["visualStyle"]=data.visual_style
     }
     if (data.pdbe_url!==null){
         options["pdbeUrl"]=data.pdbe_url
     }
-    console.log(options)
     return options
 }
 state.getOptions=getOptions
@@ -309,9 +332,7 @@ state.viewerInstance.render(pdbeViewer, state.getOptions());
 
 """,
         "rerender": """
-console.log(state.getOptions())
 state.viewerInstance.visual.update(state.getOptions(), fullLoad=true)
-console.log("rerender")
 """,
         "molecule_id": "state.viewerInstance.visual.update({moleculeId:data.molecule_id})",
         "custom_data": "state.viewerInstance.visual.update({customData:data.custom_data})",
@@ -351,307 +372,90 @@ if (data.theme==="dark"){
         "default_preset": "self.rerender()",
         "pdbe_link": "self.rerender()",
         "hide_controls": "state.viewerInstance.canvas.toggleControls(!data.hide_controls);",
-        "test": """
-state.viewerInstance.visual.select({data: [
-    {entity_id: null, struct_asym_id: null, start_residue_number: 10, end_residue_number: 15, color:{r:255,g:0,b:0}, focus: false},
-    {entity_id: '1', struct_asym_id: 'A', start_residue_number: 16, end_residue_number: 25, color:{r:0,g:255,b:0}, focus: false},
-        {
-      "color": {
-        "b": 20,
-        "g": 96,
-        "r": 242
-      },
-      "end_residue_number": 154,
-      "entity_id": null,
-      "focus": false,
-      "start_residue_number": 154,
-      "struct_asym_id": null
-    },
-], nonSelectedColor: null})
-    """,
+        "spin": """
+        state.viewerInstance.visual.toggleSpin(data.spin);""",
         "_select": """
-        console.log(data._select)
+        if(data._select) {
         state.viewerInstance.visual.select(data._select);
-        
-        """
+        }
+        """,
+        "_clear_selection": """
+        state.viewerInstance.visual.clearSelection(data._args['number']);
+        """,
+        "_highlight": """
+        if(data._highlight) {
+            state.viewerInstance.visual.highlight(data._highlight);
+        };           
+        """,
+        "_clear_highlight": """
+        state.viewerInstance.visual.clearHighlight();
+        """,
+        "_reset": """
+        state.viewerInstance.visual.reset(data._args['data'])""",
+        "resize": "state.viewerInstance.canvas.handleResize()"
     }
 
     def __init__(self, **params):
         super().__init__(**params)
 
-    
-    def single_color_residues(
-        self, 
-        color: tuple,
-        entity_id: str=None,
-        chain: str=None,
-        residue_number: int=None,
-        start_residue_number: int=None,
-        end_residue_number: int=None,
-        non_selected_color=None, 
-        focus:bool=False):
+    def color(self, data, non_selected_color=None):
+        """
+        Alias for PDBE Molstar's `select` method.
 
-        bools = [v is None for v in [residue_number, start_residue_number, end_residue_number]]
-        if not(bools[0] ^ (bools[1] or bools[2])):
-            raise ValueError("Must set either 'residue_number' or 'start_residue_number and 'end_residue_number'")
+        See https://github.com/molstar/pdbe-molstar/wiki/3.-Helper-Methods for parameter
+        details
 
-        color = to_rgb(color, output='dict')
-        if non_selected_color:
-            non_selected_color = to_rgb(non_selected_color, output='dict')
+        :param data: List of dicts
+        :param non_selected_color: Dict of color example: {'r':255, 'g':215, 'b': 0}
+        :return: None
+        """
 
-        data = {
-            'entity_id': entity_id,
-            'struct_asym_id': chain,
-            'color': color,
-            'focus': focus
-            }
-        if residue_number is not None:
-            data['residue_number'] = residue_number
-        else:
-            data['start_residue_number'] = start_residue_number
-            data['end_residue_number'] = end_residue_number
+        self._select = {'data': data, 'nonSelectedColor': non_selected_color}
+        self._select = None
 
-        select = {'data':[data], 'nonSelectedColor': non_selected_color}
+    def clear_selection(self, structure_number=None):
+        """
+        Clear selection
 
-        self._select = select
-    
-    def multi_color_residues(
-        self, 
-        colors,  # list or ndarray or pd.Series
-        r_numbers=None, # optional list/ndarray of resi
-        entity_id: str=None, 
-        chain: str=None,
-        start_residue_number: int=None,
-        end_residue_number: int=None,
-        non_selected_color=None, 
-        focus:bool=False):
+        See https://github.com/molstar/pdbe-molstar/wiki/3.-Helper-Methods for parameter
+        details.
 
-        if isinstance(colors, (list, np.ndarray)):
-            r_numbers = np.arange(len(colors)) + 1
-        elif pd and isinstance(colors, pd.Series):
-            r_numbers = colors.index.to_numpy()
+        :param structure_number: Optional integer to specify structure number
+        :return:
+        """
 
-        # optionally provide a custom interval where to apply colors
-        if start_residue_number is not None and end_residue_number is not None:
-            r_numbers = np.arange(start_residue_number, end_residue_number + 1)
-        if len(r_numbers) != len(colors):
-            raise ValueError(
-                f"""Length of residue number interval must match length of colors, 
-                color length is {len(colors)}, residue number length is {len(r_numbers)}""")
+        self._args = {'number': structure_number}
+        self._clear_selection = not self._clear_selection
 
-        i = 0
-        colors_dict = {}
-        colors = [to_rgb(c, output='tuple') for c in colors]  # in case of colors being 2D ndarray
-        for key, grp in itertools.groupby(colors):
-            size = sum(1 for x in grp)
-            elem = colors_dict.get(key, [])
-            interval = (r_numbers[i], r_numbers[i+size-1])
-            elem.append(interval)
-            colors_dict[key] = elem
-            i += size
-        
-        data_list = []
-        for color_value, intervals in colors_dict.items():
-            for interval in intervals:
-                start, end = interval
-                data_dict = {
-                    'entity_id': entity_id,
-                    'struct_asym_id': chain,
-                    'color': to_rgb(color_value),
-                    'start_residue_number': start,
-                    'end_residue_number': end,
-                    'focus': focus,
-                }
-                data_list.append(data_dict)
+    def highlight(self, data):
+        """
+        Trigger highlight
 
+        See https://github.com/molstar/pdbe-molstar/wiki/3.-Helper-Methods for parameter
+        details.
 
-        select = {'data':data_list, 'nonSelectedColor': non_selected_color}
-        print(select)
-        self._select = select
+        :param data: List of dicts
+        :return: None
+        """
 
+        self._highlight = {'data': data}
+        self._highlight = None
 
-#todo perhaps should be somewhere in utils.py 
-def to_rgb(color, output='dict'):
-    if isinstance(color, str):
-        color = color.lstrip('#')
-        color_tuple = tuple(int(color[2*i:2*i+2], 16) for i in range(3))
-    elif isinstance(color, (list, np.ndarray)):
-        color_tuple = tuple(color)
-    elif isinstance(color, tuple):
-        color_tuple = color
-    else:
-        raise TypeError("Invalid type for 'color', must be hex string or tuple")
-    
-    if len(color_tuple) not in [3, 4]:
-        raise ValueError(f"Color must have length 3 or 4, got {len(color_tuple)}")
+    def clear_highlight(self):
+        """Clears the current highlight"""
+        self._clear_highlight = not self._clear_highlight
 
-    if output == 'dict':
-        return {c: v for c, v in zip('rgb', color_tuple)}
-    elif output == 'tuple':  # Todo tuple output not currently used
-        return color_tuple[:3]
-    else:
-        raise ValueError(f"Invalid value for 'output', got {output!r}, must be 'dict' or 'tuple'")
-    
+    def reset(self, data):
+        """
+        Reset to defaults
 
-if __name__.startswith("bokeh"):
-    pn.extension(sizing_mode="stretch_width")
+        See https://github.com/molstar/pdbe-molstar/wiki/3.-Helper-Methods for parameter
+        details.
 
-    parameters = [
-        "theme",
-        "molecule_id",
-        "custom_data",
-        "ligand_view",
-        "alphafold_view",
-        "assembly_id",
-        "visual_style",
-        "bg_color",
-        "highlight_color",
-        "select_color",
-        "hide_controls_icon",
-        "hide_expand_icon",
-        "hide_settings_icon", 
-        "hide_selection_icon",
-        "hide_animation_icon", 
-        "hide_polymer",
-        "hide_water",
-        "hide_heteroatoms",
-        "hide_carbs", 
-        "hide_non_standard",
-        "hide_coarse",
-        "load_maps",
-        "validation_annotation",
-        "domain_annotation",
-        "low_precision_coords",
-        "expanded",
-        "hide_controls",
-        "landscape",
-        "select_interaction",
-        "lighting",
-        "default_preset",
-        "pdbe_link",
-        "pdbe_url",
-        "sizing_mode",
-        "height",
-        "width",
-    ]
+        :param data: Dictionary of options to reset to defaults
+        :return:
+        """
 
-    parameters = ['test']
+        self._args = {'data': data}
+        self._reset = not self._reset
 
-    pdbe = PdbeMolStar(
-        molecule_id="1qyn",
-        # custom_data= { "url": "https://www.ebi.ac.uk/pdbe/coordinates/1cbs/chains?entityId=1&asymId=A&encoding=bcif", "format": "cif", "binary": True },
-        # ligand_view={"label_comp_id": "REA"},
-        alphafold_view=False,
-        min_height=500,
-        theme='default',
-        # lighting='metallic',
-        # hide_expand_icon=True,
-        # highlight_color='#d1fa07',
-        # bg_color='#eeece7',
-        # hide_canvas_controls=["selection", "animation", "controlToggle", "controlInfo"],
-        # validation_annotation=True,
-        domain_annotation=True,
-        hide_expand_icon=True,
-        hide_selection_icon=True,
-        #visual_style="cartoon",  # , "ball-and-stick",
-        # highlight_color="blue",
-        #expanded=True,
-        sizing_mode="stretch_both",
-    )
-
-
-    def callback(event):
-        pdbe.single_color_residues('#f305d7', entity_id='1', start_residue_number=20, end_residue_number=20)
-        #pdbe.color_residues('#f305d7', residue_number=70)
-
-        colors = [
-            '#ffccdd',#0
-            '#ffccdd',#1
-            '#ffccdd',#2
-            '#ffccdd',#3
-            '#fdaabb',#4
-            '#fdaabb',#5
-            '#fdaabb',#6
-            '#fdaabb',#7
-            '#ffccdd',#8
-            '#ffccdd',#9
-            '#ffccdd',#10
-            '#ffccdd',#11
-        ]
-
-        pdbe.multi_color_residues(colors, start_residue_number=50, end_residue_number=50+len(colors)-1)
-        c_term = 80
-
-        wavelength = np.pi
-        phase = 0
-
-        t = np.linspace(0, 2 * np.pi, num=c_term, endpoint=True)
-        f = 1./wavelength
-        s = np.sin(2*np.pi*f*t + phase)
-
-        from matplotlib import pyplot as plt
-
-        norm = plt.Normalize(vmin=-1, vmax=1)
-        cmap = plt.get_cmap('jet')
-
-        colors = cmap(norm(s), bytes=True)
-
-        # if selection includes residues numbers not in the pdb file the coloring will fail
-        # large color jobs doesnt have great performance
-        pdbe.multi_color_residues(colors, start_residue_number=50, end_residue_number=50+len(colors)-1, non_selected_color='#f7f7f7')
-
-
-
-    btn = pn.widgets.Button()
-    btn.on_click(callback)
-
-
-    pn.template.FastListTemplate(
-        site="Panel Chemistry",
-        title="Pdbe Molstar Viewer",
-        sidebar=[btn, pn.Param(pdbe, parameters=parameters)],
-        main=[pdbe],
-    ).servable()
-
-
-
-
-if __name__ == '__main__':
-
-    pdbe = PdbeMolStar(
-        molecule_id="1qyn",
-        alphafold_view=False,
-        min_height=500,
-        theme='default',
-        domain_annotation=True,
-        hide_expand_icon=True,
-        hide_selection_icon=True,
-        sizing_mode="stretch_both",
-    )
-
-
-    def callback(event):
-        #pdbe.color_residues('#f305d7', start_residue_number=20, end_residue_number=50)
-
-        colors = [
-            '#ffccdd',#0 50
-            '#ffccdd',#1
-            '#ffccdd',#2
-            '#ffccdd',#3
-            '#fdaabb',#4
-            '#fdaabb',#5
-            '#fdaabb',#6
-            '#fdaabb',#7
-            '#ffccdd',#8
-            '#ffccdd',#9
-            '#ffccdd',#10
-            '#ffccdd',#11
-        ]
-
-        pdbe.multi_color_residues(colors, start_residue_number=50, end_residue_number=50+len(colors)-1)
-
-
-    btn = pn.widgets.Button()
-    btn.on_click(callback)
-
-    callback('test')
