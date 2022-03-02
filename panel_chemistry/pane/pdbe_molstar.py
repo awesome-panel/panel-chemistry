@@ -16,10 +16,6 @@ Nucleic Acids Research, 2021; https://doi.org/10.1093/nar/gkab314.
 import param
 from panel.reactive import ReactiveHTML
 
-try: 
-    import pandas as pd
-except ModuleNotFoundError:
-    pd = None
 
 REPRESENTATIONS = [
     "cartoon",
