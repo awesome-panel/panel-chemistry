@@ -10,7 +10,7 @@ def test_can_create():
 
 
 def test_app():
-    """Returns an app for manually testing the NGL Molecule Viewer"""
+    """Returns an app for manually testing the PDBe Mol* Viewer"""
     pn.extension(sizing_mode="stretch_width")
     # 1NKT, 2GQ5, 3UOG and 5TXH
     viewer = PDBeMolStar(molecule_id="1qyn", lighting='metallic', height=500, width=500)
