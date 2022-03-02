@@ -9,6 +9,46 @@ def test_can_create():
     PDBeMolStar(molecule_id="1qyn", lighting="metallic", height=300, width=300)
 
 
+def test_functions():
+    """
+    Tests PDBeMolStar helper functions.
+
+    This only tests if they do not raise any errors, and does not check for the
+    desired result.
+
+    """
+    viewer = PDBeMolStar(molecule_id="1qyn", lighting="metallic", height=300, width=300)
+
+    data = {
+        'start_residue_number': 10,
+        'end_residue_number': 30,
+        'struct_asym_id': 'A',
+        'color': {'r': 255, 'g': 215, 'b': 0},
+        'focus': False,
+    }
+
+    viewer.color([data], non_selected_color={'r': 0, 'g': 87, 'b': 183})
+    viewer.clear_selection()
+
+    data = {
+        'start_residue_number': 10,
+        'end_residue_number': 20,
+        'struct_asym_id': 'B',
+        'color': {'r': 255, 'g': 105, 'b': 180},
+        'focus': True,
+    }
+
+    viewer.highlight([data])
+    viewer.clear_highlight()
+    data = {
+        'camera': True,
+        'theme': True,  # reset theme doesnt seem to work
+        'highlightcolor': True,
+        'selectColor': True
+    }
+    viewer.reset(data)
+
+
 def test_app():
     """Returns an app for manually testing the PDBe Mol* Viewer"""
     pn.extension(sizing_mode="stretch_width")
