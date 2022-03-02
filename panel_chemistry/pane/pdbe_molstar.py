@@ -16,7 +16,6 @@ Nucleic Acids Research, 2021; https://doi.org/10.1093/nar/gkab314.
 import param
 from panel.reactive import ReactiveHTML
 
-
 REPRESENTATIONS = [
     "cartoon",
     "ball-and-stick",
@@ -350,8 +349,6 @@ state.viewerInstance.visual.update(state.getOptions(), fullLoad=true)
         "resize": "state.viewerInstance.canvas.handleResize()",
     }
 
-    def __init__(self, **params):
-        super().__init__(**params)
 
     def color(self, data, non_selected_color=None):
         """
