@@ -25,6 +25,7 @@ def _clean_html(html):
 
     return html
 
+
 class Py3DMol(pn.viewable.Viewer):
     """A Panel Pane to wrap the interactive py3Dmol/ 3Dmol.js viewer in your Panel Application.
 
