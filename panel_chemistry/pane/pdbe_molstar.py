@@ -182,139 +182,141 @@ class PDBeMolStar(ReactiveHTML):
 
     _scripts = {
         "render": """
-function standardize_color(str){
-    var ctx = document.createElement("canvas").getContext("2d");
-    ctx.fillStyle = str;
-    return ctx.fillStyle;
-}
-function toRgb(color) {
-  var hex = standardize_color(color)
-  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  return result ? {
-    r: parseInt(result[1], 16),
-    g: parseInt(result[2], 16),
-    b: parseInt(result[3], 16)
-  } : null;
-}
-state.toRgb = toRgb
-
-function getHideStructure(){
-    var hideStructure = [];
-
-    if (data.hide_polymer){
-        hideStructure.push("polymer")
-    }
-    if (data.hide_water){
-        hideStructure.push("water")
-    }
-    if (data.hide_heteroatoms){
-        hideStructure.push("het")
-    }
-    if (data.hide_carbs){
-        hideStructure.push("carbs")
-    }
-    if (data.hide_non_standard){
-        hideStructure.push("nonStandard")
-    }
-    if (data.hide_coarse){
-        hideStructure.push("coarse")
-    }
-
-    return hideStructure
-}
-
-function getHideCanvasControls(){
-    var hideCanvasControls = [];
-    if (data.hide_controls_icon){
-        hideCanvasControls.push("controlToggle")
-    }
-    if (data.hide_expand_icon){
-        hideCanvasControls.push("expand")
-    }
-    if (data.hide_settings_icon){
-        hideCanvasControls.push("controlInfo")
-    }
-    if (data.hide_selection_icon){
-        hideCanvasControls.push('selection')
-    }
-    if (data.hide_animation_icon){
-        hideCanvasControls.push("animation")
-    }
-
-    return hideCanvasControls
-}
-
-state.getHideCanvasControls = getHideCanvasControls
-
-function getOptions(){
-    var options = {
-        moleculeId: data.molecule_id,
-        customData: data.custom_data,
-        ligandView: data.ligand_view,
-        alphafoldView: data.alphafold_view,
-        assemblyId: data.assembly_id,
-        bgColor: toRgb(data.bg_color),
-        highlightColor: toRgb(data.highlight_color),
-        selectColor: toRgb(data.select_color),
-        hideStructure: getHideStructure(),
-        hideCanvasControls: getHideCanvasControls(),
-        loadMaps: data.load_maps,
-        validationAnnotation: data.validation_annotation,
-        domainAnnotation: data.domain_annotation,
-        lowPrecisionCoords: data.low_precision_coords,
-        expanded: data.expanded,
-        hideControls: data.hide_controls,
-        landscape: data.landscape,
-        selectInteraction: data.select_interaction,
-        lighting: data.lighting,
-        defaultPreset: data.default_preset,
-        pdbeLink: data.pdbe_link,
-    }
-    if (data.visual_style!==null){
-        options["visualStyle"]=data.visual_style
-    }
-    if (data.pdbe_url!==null){
-        options["pdbeUrl"]=data.pdbe_url
-    }
-    return options
-}
-state.getOptions=getOptions
-self.theme()
-
-state.viewerInstance = new PDBeMolstarPlugin();
-state.viewerInstance.render(pdbeViewer, state.getOptions());
-
-
-""",
+        function standardize_color(str){
+            var ctx = document.createElement("canvas").getContext("2d");
+            ctx.fillStyle = str;
+            return ctx.fillStyle;
+        }
+        function toRgb(color) {
+          var hex = standardize_color(color)
+          var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+          return result ? {
+            r: parseInt(result[1], 16),
+            g: parseInt(result[2], 16),
+            b: parseInt(result[3], 16)
+          } : null;
+        }
+        state.toRgb = toRgb
+        
+        function getHideStructure(){
+            var hideStructure = [];
+        
+            if (data.hide_polymer){
+                hideStructure.push("polymer")
+            }
+            if (data.hide_water){
+                hideStructure.push("water")
+            }
+            if (data.hide_heteroatoms){
+                hideStructure.push("het")
+            }
+            if (data.hide_carbs){
+                hideStructure.push("carbs")
+            }
+            if (data.hide_non_standard){
+                hideStructure.push("nonStandard")
+            }
+            if (data.hide_coarse){
+                hideStructure.push("coarse")
+            }
+        
+            return hideStructure
+        }
+        
+        function getHideCanvasControls(){
+            var hideCanvasControls = [];
+            if (data.hide_controls_icon){
+                hideCanvasControls.push("controlToggle")
+            }
+            if (data.hide_expand_icon){
+                hideCanvasControls.push("expand")
+            }
+            if (data.hide_settings_icon){
+                hideCanvasControls.push("controlInfo")
+            }
+            if (data.hide_selection_icon){
+                hideCanvasControls.push('selection')
+            }
+            if (data.hide_animation_icon){
+                hideCanvasControls.push("animation")
+            }
+        
+            return hideCanvasControls
+        }
+        
+        state.getHideCanvasControls = getHideCanvasControls
+        
+        function getOptions(){
+            var options = {
+                moleculeId: data.molecule_id,
+                customData: data.custom_data,
+                ligandView: data.ligand_view,
+                alphafoldView: data.alphafold_view,
+                assemblyId: data.assembly_id,
+                bgColor: toRgb(data.bg_color),
+                highlightColor: toRgb(data.highlight_color),
+                selectColor: toRgb(data.select_color),
+                hideStructure: getHideStructure(),
+                hideCanvasControls: getHideCanvasControls(),
+                loadMaps: data.load_maps,
+                validationAnnotation: data.validation_annotation,
+                domainAnnotation: data.domain_annotation,
+                lowPrecisionCoords: data.low_precision_coords,
+                expanded: data.expanded,
+                hideControls: data.hide_controls,
+                landscape: data.landscape,
+                selectInteraction: data.select_interaction,
+                lighting: data.lighting,
+                defaultPreset: data.default_preset,
+                pdbeLink: data.pdbe_link,
+            }
+            if (data.visual_style!==null){
+                options["visualStyle"]=data.visual_style
+            }
+            if (data.pdbe_url!==null){
+                options["pdbeUrl"]=data.pdbe_url
+            }
+            return options
+        }
+        state.getOptions=getOptions
+        self.theme()
+        
+        state.viewerInstance = new PDBeMolstarPlugin();
+        state.viewerInstance.render(pdbeViewer, state.getOptions());
+        
+        
+        """,
         "rerender": """
-state.viewerInstance.visual.update(state.getOptions(), fullLoad=true)
-""",
-        "molecule_id": """self.rerender()""",  # rerender otherwise other settings also change (eg theme)
+        state.viewerInstance.visual.update(state.getOptions(), fullLoad=true)
+        """,
+        "molecule_id": """self.rerender()""",
         "custom_data": """self.rerender()""",
         "ligand_view": """self.rerender()""",
         "alphafold_view": """self.rerender()""",
         "assembly_id": """self.rerender()""",
         "visual_style": """self.rerender()""",
         "bg_color": "state.viewerInstance.canvas.setBgColor(state.toRgb(data.bg_color))",
-        "highlight_color": "state.viewerInstance.visual.setColor({highlight: state.toRgb(data.highlight_color)})",
-        "select_color": "state.viewerInstance.visual.setColor({select: state.toRgb(data.select_color)})",
+        "highlight_color": """
+        state.viewerInstance.visual.setColor({highlight: state.toRgb(data.highlight_color)})""",
+        "select_color": """
+        state.viewerInstance.visual.setColor({select: state.toRgb(data.select_color)})""",
         "theme": """
-    if (data.theme==="dark"){
-    molstarTheme.href="https://www.ebi.ac.uk/pdbe/pdb-component-library/css/pdbe-molstar-1.2.1.css"
-} else {
-    molstarTheme.href="https://www.ebi.ac.uk/pdbe/pdb-component-library/css/pdbe-molstar-light-1.2.1.css"
-}
-""",
+        if (data.theme==="dark"){
+            molstarTheme.href="https://www.ebi.ac.uk/pdbe/pdb-component-library/css/pdbe-molstar-1.2.1.css"
+        } else {
+            molstarTheme.href="https://www.ebi.ac.uk/pdbe/pdb-component-library/css/pdbe-molstar-light-1.2.1.css"
+        }
+        """,
         "hide_polymer": "state.viewerInstance.visual.visibility({polymer:!data.hide_polymer})",
         "hide_water": "state.viewerInstance.visual.visibility({water:!data.hide_water})",
         "hide_heteroatoms": "state.viewerInstance.visual.visibility({het:!data.hide_heteroatoms})",
         "hide_carbs": "state.viewerInstance.visual.visibility({carbs:!data.hide_carbs})",
         "hide_non_standard": "state.viewerInstance.visual.visibility({nonStandard:!data.hide_non_standard})",
         "hide_coarse": "state.viewerInstance.visual.visibility({coarse:!data.hide_coarse})",
-        "hide_controls_icon": """self.rerender()""",  # Todo: I dont think .update() looks as hideCanvasControls
-        "hide_expand_icon": """self.rerender()""",  # Todo expand can be turned of but not updated on rerender
+        "hide_controls_icon": """self.rerender()""",
+        "hide_expand_icon": """self.rerender()""",
         "hide_settings_icon": """self.rerender()""",
-        "hide_selection_icon": """self.rerender()""",  # Todo selection can be turned off but not updated on rerender
+        "hide_selection_icon": """self.rerender()""",
         "hide_animation_icon": """self.rerender()""",
         "load_maps": "self.rerender()",
         "validation_annotation": """self.rerender()""",
@@ -348,7 +350,6 @@ state.viewerInstance.visual.update(state.getOptions(), fullLoad=true)
         state.viewerInstance.visual.reset(data._args['data'])""",
         "resize": "state.viewerInstance.canvas.handleResize()",
     }
-
 
     def color(self, data, non_selected_color=None):
         """
