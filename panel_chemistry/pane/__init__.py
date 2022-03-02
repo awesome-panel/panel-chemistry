@@ -5,4 +5,4 @@
 """
 from .ngl_viewer import NGLViewer
 from .py3dmol_viewer import Py3DMol
-from .pdbe_molstar import PdbeMolStar
+from .pdbe_molstar import PDBeMolStar
