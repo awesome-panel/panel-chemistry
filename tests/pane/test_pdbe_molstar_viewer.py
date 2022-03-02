@@ -6,14 +6,14 @@ from panel_chemistry.pane import PDBeMolStar
 
 def test_can_create():
     """Test of the PDBeMolStar constructor"""
-    PDBeMolStar(molecule_id="1qyn", lighting='metallic', height=300, width=300)
+    PDBeMolStar(molecule_id="1qyn", lighting="metallic", height=300, width=300)
 
 
 def test_app():
     """Returns an app for manually testing the PDBe Mol* Viewer"""
     pn.extension(sizing_mode="stretch_width")
     # 1NKT, 2GQ5, 3UOG and 5TXH
-    viewer = PDBeMolStar(molecule_id="1qyn", lighting='metallic', height=500, width=500)
+    viewer = PDBeMolStar(molecule_id="1qyn", lighting="metallic", height=500, width=500)
     parameters = [
         "theme",
         "molecule_id",
@@ -53,18 +53,9 @@ def test_app():
         "height",
         "width",
     ]
-    settings = pn.Param(
-        viewer,
-        parameters=parameters,
-    )
-    return pn.Row(
-        pn.WidgetBox(
-            settings,
-            width=300,
-            sizing_mode="fixed",
-        ),
-        viewer
-    )
+    settings = pn.Param(viewer, parameters=parameters,)
+    return pn.Row(pn.WidgetBox(settings, width=300, sizing_mode="fixed",), viewer)
+
 
 if __name__.startswith("bokeh"):
     test_app().servable()

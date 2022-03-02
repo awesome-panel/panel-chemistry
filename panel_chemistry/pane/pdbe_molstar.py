@@ -70,7 +70,7 @@ class PDBeMolStar(ReactiveHTML):
 
     # Todo: figure out if `background` could/ should be used
     bg_color = param.Color(
-        '#F7F7F7',
+        "#F7F7F7",
         doc="Color of the background. If `None`, colors default is chosen depending on the color theme",
     )
 
@@ -78,62 +78,38 @@ class PDBeMolStar(ReactiveHTML):
 
     select_color = param.Color(default="#0c0d11", doc="Color for selections")
 
-    visual_style = param.Selector(default=None, 
-            objects=[None, *REPRESENTATIONS], doc="Visual styling")
+    visual_style = param.Selector(
+        default=None, objects=[None, *REPRESENTATIONS], doc="Visual styling"
+    )
 
     # Todo: Determine if it should be default or light theme
     theme = param.Selector(default="default", objects=["default", "dark"], doc="CSS theme to use")
 
-    hide_polymer = param.Boolean(
-        default=False,
-        doc="Hide polymer"
-    )
+    hide_polymer = param.Boolean(default=False, doc="Hide polymer")
 
-    hide_water = param.Boolean(
-        default=False,
-        doc="Hide water"
-    )
+    hide_water = param.Boolean(default=False, doc="Hide water")
 
-    hide_heteroatoms = param.Boolean(
-        default=False, 
-        doc="Hide het"
-    )
+    hide_heteroatoms = param.Boolean(default=False, doc="Hide het")
 
-    hide_carbs = param.Boolean(
-        default=False,
-        doc="Hide carbs"
-    )
+    hide_carbs = param.Boolean(default=False, doc="Hide carbs")
 
-    hide_non_standard = param.Boolean(
-        default=False,
-        doc="Hide non standard"
-    )
+    hide_non_standard = param.Boolean(default=False, doc="Hide non standard")
 
-    hide_coarse = param.Boolean(
-        default=False,
-        doc="Hide coarse"
-    )
+    hide_coarse = param.Boolean(default=False, doc="Hide coarse")
 
     hide_controls_icon = param.Boolean(default=False, doc="Hide the control menu")
 
-    hide_expand_icon = param.Boolean(
-        default=False,
-        doc="Hide the expand icon"
-    )
-    
+    hide_expand_icon = param.Boolean(default=False, doc="Hide the expand icon")
+
     hide_settings_icon = param.Boolean(default=False, doc="Hide the settings menu")
-    
+
     hide_selection_icon = param.Boolean(
-        default=False, # Default False, set False/True for True
-        doc="Hide the selection icon"
+        default=False, doc="Hide the selection icon"  # Default False, set False/True for True
     )
 
     # Todo requires testing with a trajectory file
-    hide_animation_icon = param.Boolean(
-        default=False,
-        doc="Hide the animation icon"
-    )
-   
+    hide_animation_icon = param.Boolean(default=False, doc="Hide the animation icon")
+
     pdbe_url = param.String(
         default=None, constant=True, doc="Url for PDB data. Mostly used for internal testing"
     )
@@ -181,30 +157,17 @@ class PDBeMolStar(ReactiveHTML):
         default=True, doc="Show the PDBe entry link at in the top right corner"
     )
 
-    spin = param.Boolean(
-        default=False, doc="Toggle spin"
-    )
+    spin = param.Boolean(default=False, doc="Toggle spin")
 
-    _clear_highlight = param.Boolean(
-        doc="Event to trigger clearing of highlights"
+    _clear_highlight = param.Boolean(doc="Event to trigger clearing of highlights")
 
-    )
+    _select = param.Dict(doc="Dictionary used for selections and coloring these selections")
 
-    _select = param.Dict(
-        doc="Dictionary used for selections and coloring these selections"
-    )
+    _clear_selection = param.Boolean(doc="Clear selection event trigger")
 
-    _clear_selection = param.Boolean(
-        doc="Clear selection event trigger"
-    )
+    _highlight = param.Dict(doc="Dictionary used for selections and coloring these selections")
 
-    _highlight = param.Dict(
-        doc="Dictionary used for selections and coloring these selections"
-    )
-
-    _reset = param.Boolean(
-        doc="Reset event trigger"
-    )
+    _reset = param.Boolean(doc="Reset event trigger")
 
     _args = param.Dict(doc="Dictionary with function call arguments")
 
@@ -349,10 +312,10 @@ state.viewerInstance.visual.update(state.getOptions(), fullLoad=true)
         "hide_carbs": "state.viewerInstance.visual.visibility({carbs:!data.hide_carbs})",
         "hide_non_standard": "state.viewerInstance.visual.visibility({nonStandard:!data.hide_non_standard})",
         "hide_coarse": "state.viewerInstance.visual.visibility({coarse:!data.hide_coarse})",
-        "hide_controls_icon": """self.rerender()""",  #Todo: I dont think .update() looks as hideCanvasControls
-        "hide_expand_icon": """self.rerender()""",  #Todo expand can be turned of but not updated on rerender
+        "hide_controls_icon": """self.rerender()""",  # Todo: I dont think .update() looks as hideCanvasControls
+        "hide_expand_icon": """self.rerender()""",  # Todo expand can be turned of but not updated on rerender
         "hide_settings_icon": """self.rerender()""",
-        "hide_selection_icon": """self.rerender()""", #Todo selection can be turned off but not updated on rerender
+        "hide_selection_icon": """self.rerender()""",  # Todo selection can be turned off but not updated on rerender
         "hide_animation_icon": """self.rerender()""",
         "load_maps": "self.rerender()",
         "validation_annotation": """self.rerender()""",
@@ -384,7 +347,7 @@ state.viewerInstance.visual.update(state.getOptions(), fullLoad=true)
         """,
         "_reset": """
         state.viewerInstance.visual.reset(data._args['data'])""",
-        "resize": "state.viewerInstance.canvas.handleResize()"
+        "resize": "state.viewerInstance.canvas.handleResize()",
     }
 
     def __init__(self, **params):
@@ -402,7 +365,7 @@ state.viewerInstance.visual.update(state.getOptions(), fullLoad=true)
         :return: None
         """
 
-        self._select = {'data': data, 'nonSelectedColor': non_selected_color}
+        self._select = {"data": data, "nonSelectedColor": non_selected_color}
         self._select = None
 
     def clear_selection(self, structure_number=None):
@@ -416,7 +379,7 @@ state.viewerInstance.visual.update(state.getOptions(), fullLoad=true)
         :return:
         """
 
-        self._args = {'number': structure_number}
+        self._args = {"number": structure_number}
         self._clear_selection = not self._clear_selection
 
     def highlight(self, data):
@@ -430,7 +393,7 @@ state.viewerInstance.visual.update(state.getOptions(), fullLoad=true)
         :return: None
         """
 
-        self._highlight = {'data': data}
+        self._highlight = {"data": data}
         self._highlight = None
 
     def clear_highlight(self):
@@ -448,5 +411,5 @@ state.viewerInstance.visual.update(state.getOptions(), fullLoad=true)
         :return:
         """
 
-        self._args = {'data': data}
+        self._args = {"data": data}
         self._reset = not self._reset
