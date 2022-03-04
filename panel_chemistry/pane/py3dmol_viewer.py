@@ -12,8 +12,8 @@ import param
 try:
     import py3Dmol
 except ModuleNotFoundError:
-    class py3Dmol(param.Parameterized):
-        view = param.String('mock_view') # allow to import the file
+    class py3Dmol(param.Parameterized):  # type: ignore
+        view = param.String('mock_view')  # allow to import the file
 
 
 def _clean_html(html):
@@ -24,6 +24,7 @@ def _clean_html(html):
     html = html.replace(size_str, "width: 100%; height: 100%")
 
     return html
+
 
 class Py3DMol(pn.viewable.Viewer):
     """A Panel Pane to wrap the interactive py3Dmol/ 3Dmol.js viewer in your Panel Application.

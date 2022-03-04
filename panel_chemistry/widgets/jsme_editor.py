@@ -6,7 +6,8 @@ It is a wrapper of the free javascript JSME Molecule Editor. See https://jsme-ed
 import param
 from panel.widgets.base import Widget
 
-from panel_chemistry.bokeh_extensions.jsme_editor import JSMEEditor as _BkJSMEEditor
+from panel_chemistry.bokeh_extensions.jsme_editor import \
+    JSMEEditor as _BkJSMEEditor
 
 NOT_SUBSCRIBED = "Not Subscribed"
 VALUE_FORMATS = ["jme", "smiles", "mol", "mol3000", "sdf"]
