@@ -158,6 +158,8 @@ class PDBeMolStar(ReactiveHTML):
 
     spin = param.Boolean(default=False, doc="Toggle spin")
 
+    temp_color = param.Boolean()
+
     _clear_highlight = param.Boolean(doc="Event to trigger clearing of highlights")
 
     _select = param.Dict(doc="Dictionary used for selections and coloring these selections")
@@ -281,10 +283,16 @@ class PDBeMolStar(ReactiveHTML):
         state.getOptions=getOptions
         self.theme()
         
+        var color_dict = { data: [{start_residue_number: 10, end_residue_number: 15, color:{r:255,g:0,b:0}, focus: true}], nonSelectedColor: {r:255,g:255,b:255} }
+        state.color_dict = color_dict
+        
         state.viewerInstance = new PDBeMolstarPlugin();
+        state.viewerInstance.events.loadComplete.subscribe(() => state.viewerInstance.visual.select(color_dict));
         state.viewerInstance.render(pdbeViewer, state.getOptions());
         
-        
+        """,
+        "temp_color": """
+        state.viewerInstance.visual.select(state.color_dict);
         """,
         "rerender": """
         state.viewerInstance.visual.update(state.getOptions(), fullLoad=true)
