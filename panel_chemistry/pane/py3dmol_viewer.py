@@ -1,10 +1,10 @@
 """A Panel Pane to wrap the interactive py3Dmol/ 3Dmol.js viewer in your Panel Application.
 
-    Check out
+Check out
 
-    - [3DMol.js](https://3dmol.org/index.html)
-    - [Colab](https://colab.research.google.com/drive/1T2zR59TXyWRcNxRgOAiqVPJWhep83NV_?usp=sharing)
-    """
+- [3DMol.js](https://3dmol.org/index.html)
+- [Colab](https://colab.research.google.com/drive/1T2zR59TXyWRcNxRgOAiqVPJWhep83NV_?usp=sharing)
+"""
 
 import panel as pn
 import param
@@ -12,7 +12,9 @@ import param
 try:
     import py3Dmol
 except ModuleNotFoundError:
+    # pylint: disable=invalid-name
     class py3Dmol(param.Parameterized):  # type: ignore
+        """Dummy py3Dmol class"""
         view = param.String('mock_view')  # allow to import the file
 
 

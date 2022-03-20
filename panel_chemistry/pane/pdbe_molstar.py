@@ -51,12 +51,13 @@ class PDBeMolStar(ReactiveHTML):
     molecule_id = param.String(default=None, doc="PDB id to load. Example: '1qyn' or '1cbs'")
 
     custom_data = param.Dict(
-        doc="""Load data from a specific data source. Example: 
+        doc="""Load data from a specific data source. Example:
         { "url": "https://www.ebi.ac.uk/pdbe/coordinates/1cbs/chains?entityId=1&asymId=A&encoding=bcif", "format": "cif", "binary": True }
         """
     )
     ligand_view = param.Dict(
-        doc="""This option can be used to display the PDBe ligand page 3D view like https://www.ebi.ac.uk/pdbe/entry/pdb/1cbs/bound/REA.
+        doc="""This option can be used to display the PDBe ligand page 3D view
+        like https://www.ebi.ac.uk/pdbe/entry/pdb/1cbs/bound/REA.
         Example: {"label_comp_id": "REA"}
         """
     )
@@ -67,10 +68,10 @@ class PDBeMolStar(ReactiveHTML):
 
     assembly_id = param.String(doc="Specify assembly")
 
-    # Todo: figure out if `background` could/ should be used
     bg_color = param.Color(
         "#F7F7F7",
-        doc="Color of the background. If `None`, colors default is chosen depending on the color theme",
+        doc="""Color of the background. If `None`, colors default is chosen
+        depending on the color theme""",
     )
 
     highlight_color = param.Color(default="#ff6699", doc="Color for mouseover highlighting")
@@ -81,7 +82,6 @@ class PDBeMolStar(ReactiveHTML):
         default=None, objects=[None, *REPRESENTATIONS], doc="Visual styling"
     )
 
-    # Todo: Determine if it should be default or light theme
     theme = param.Selector(default="default", objects=["default", "dark"], doc="CSS theme to use")
 
     hide_polymer = param.Boolean(default=False, doc="Hide polymer")
@@ -106,7 +106,6 @@ class PDBeMolStar(ReactiveHTML):
         default=False, doc="Hide the selection icon"  # Default False, set False/True for True
     )
 
-    # Todo requires testing with a trajectory file
     hide_animation_icon = param.Boolean(default=False, doc="Hide the animation icon")
 
     pdbe_url = param.String(
@@ -181,7 +180,7 @@ class PDBeMolStar(ReactiveHTML):
     ]
 
     _scripts = {
-        "render": """
+        "render": r"""
         function standardize_color(str){
             var ctx = document.createElement("canvas").getContext("2d");
             ctx.fillStyle = str;
@@ -311,7 +310,9 @@ class PDBeMolStar(ReactiveHTML):
         "hide_water": "state.viewerInstance.visual.visibility({water:!data.hide_water})",
         "hide_heteroatoms": "state.viewerInstance.visual.visibility({het:!data.hide_heteroatoms})",
         "hide_carbs": "state.viewerInstance.visual.visibility({carbs:!data.hide_carbs})",
+        # pylint: disable=line-too-long
         "hide_non_standard": "state.viewerInstance.visual.visibility({nonStandard:!data.hide_non_standard})",
+        # pylint: enable=line-too-long
         "hide_coarse": "state.viewerInstance.visual.visibility({coarse:!data.hide_coarse})",
         "hide_controls_icon": """self.rerender()""",
         "hide_expand_icon": """self.rerender()""",
