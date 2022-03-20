@@ -2,6 +2,7 @@ graft panel_chemistry/dist
 include panel_chemistry/*.json
 include panel_chemistry/bokeh_extensions/*.ts
 include panel_chemistry/index.ts
+include panel_chemistry/py.typed
 include README.md
 include VERSION
 include LICENSE
