@@ -17,7 +17,7 @@ DONT_SERVE: List[str] = []
 def _get_active_branch_name():
 
     head_dir = Path(".") / ".git" / "HEAD"
-    with head_dir.open("r") as file:
+    with head_dir.open("r", encoding="utf-8") as file:
         content = file.read().splitlines()
 
     for line in content:

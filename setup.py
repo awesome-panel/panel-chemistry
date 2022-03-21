@@ -4,11 +4,11 @@ from typing import List
 
 import setuptools
 
-with open("README.md", "r", encoding="utf8") as fh:
+with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 ROOT = pathlib.Path.cwd()
-VERSION = (ROOT / "VERSION").read_text().strip()
+VERSION = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
 
 install_requires = [
     "numpy",
