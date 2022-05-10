@@ -12,7 +12,8 @@ from typing import Dict
 import param
 from panel import extension
 from panel.pane.base import PaneBase
-from panel.util import lazy_load, string_types
+from panel.util import lazy_load
+from six import string_types
 from pyviz_comms import JupyterComm
 
 # pylint: disable=protected-access
