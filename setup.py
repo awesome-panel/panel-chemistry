@@ -1,4 +1,4 @@
-"""Setup file for the Awesome Panel Extensions"""
+"""Setup file for the Panel Chemistry"""
 import pathlib
 from typing import List
 
@@ -12,9 +12,9 @@ VERSION = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
 
 install_requires = [
     "numpy",
-    "panel==0.12.6",
-    "bokeh==2.4.2",
-    "param>=1.12.0",
+    "panel>=0.12.7,<0.14",
+    "bokeh=>2.4.2,<3.0",
+    "param>=1.12.1",
 ]
 
 _recommended: List[str] = []
