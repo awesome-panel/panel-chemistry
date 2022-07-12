@@ -12,7 +12,7 @@ from typing import Dict
 import param
 from panel import extension
 from panel.pane.base import PaneBase
-from panel.util import lazy_load, string_types
+from panel.util import lazy_load
 from pyviz_comms import JupyterComm
 
 # pylint: disable=protected-access
@@ -149,7 +149,7 @@ class NGLViewer(PaneBase):
 
     @classmethod
     def applies(cls, obj):
-        if isinstance(obj, (dict, string_types)):
+        if isinstance(obj, (dict, str)):
             return 0
         return False
 
