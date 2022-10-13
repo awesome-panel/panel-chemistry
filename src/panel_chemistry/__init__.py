@@ -2,4 +2,4 @@
 develop high-quality [Panel](https://awesome-panel.org) **data apps** within the domain of
 **chemistry**.
 """
-VERSION = "0.0.13"
+VERSION = "0.0.14"
