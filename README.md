@@ -10,7 +10,8 @@
 
 We want to
 
-- make it super simple to do **exploratory data analysis** and develop high-quality [Panel](https://awesome-panel.org) **data apps** within the domain of **chemistry**.
+- make it super simple to do **exploratory data analysis** and develop high-quality
+[Panel](https://awesome-panel.org) **data apps** within the domain of **chemistry**.
 
 We provide
 
@@ -70,7 +71,7 @@ or `conda`
 conda install -c conda-forge panel-chemistry
 ```
 
-### 👩‍🏫 Explore the examples
+### 👩‍🏫 Explore the examples online
 
 Check out the `panel-chemistry` **reference guides** on **Binder**
 
@@ -80,6 +81,16 @@ Check out the `panel-chemistry` **reference guides** on **Binder**
 | NGL Viewer | [View](https://nbviewer.org/github/MarcSkovMadsen/panel-chemistry/blob/main/examples/reference/NGLViewer.ipynb) | [View](https://github.com/MarcSkovMadsen/panel-chemistry/blob/main/examples/reference/NGLViewer.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcskovmadsen/panel-chemistry/HEAD?filepath=examples/reference/NGLViewer.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcskovmadsen/panel-chemistry/HEAD?urlpath=lab/tree/examples/reference/NGLViewer.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcskovmadsen/panel-chemistry/HEAD?urlpath=panel/NGLViewer) |
 | PDBe_MolStar | [View](https://nbviewer.org/github/MarcSkovMadsen/panel-chemistry/blob/main/examples/reference/PDBe_MolStar.ipynb) | [View](https://github.com/MarcSkovMadsen/panel-chemistry/blob/main/examples/reference/PDBe_MolStar.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcskovmadsen/panel-chemistry/HEAD?filepath=examples/reference/PDBe_MolStar.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcskovmadsen/panel-chemistry/HEAD?urlpath=lab/tree/examples/reference/PDBe_MolStar.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcskovmadsen/panel-chemistry/HEAD?urlpath=panel/PDBe_MolStar) |
 | Py3DMol Pane | [View](https://nbviewer.org/github/MarcSkovMadsen/panel-chemistry/blob/main/examples/reference/Py3DMol.ipynb) | [View](https://github.com/MarcSkovMadsen/panel-chemistry/blob/main/examples/reference/Py3DMol.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcskovmadsen/panel-chemistry/HEAD?filepath=examples/reference/Py3DMol.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcskovmadsen/panel-chemistry/HEAD?urlpath=lab/tree/examples/reference/Py3DMol.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcskovmadsen/panel-chemistry/HEAD?urlpath=panel/Py3DMol) |
+
+### How to explore the examples locally
+
+This assumes you have run `pip install panel-chemistry[all]`.
+
+```bash
+git clone https://github.com/awesome-panel/panel-chemistry.git
+cd panel-chemistry/examples
+jupyter lab
+```
 
 ### 🏃 Serve a data app
 

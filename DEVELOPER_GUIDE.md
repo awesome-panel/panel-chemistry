@@ -51,12 +51,12 @@ Please run this command and fix any failing tests if possible before you `git pu
 Please make sure you have upgraded bokeh
 
 ```bash
-cd panel_chemistry
+cd src/panel_chemistry
 npm update @bokeh/bokehjs --save
 ```
 
 Update the version number in the [__init__.py](panel_chemistry/__init__.py) and
-[package.json](panel_chemistry/package.json) files.
+[package.json](src/panel_chemistry/package.json) files.
 
 Then run
 
@@ -67,6 +67,7 @@ pn test all
 Then you can build
 
 ```bash
+cd ..
 panel build panel_chemistry
 pn build package
 ```
