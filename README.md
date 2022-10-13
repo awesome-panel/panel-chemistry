@@ -1,3 +1,5 @@
+# 🧪 Panel-Chemistry
+
 ![Python Versions](https://img.shields.io/badge/python-3.7%20%7C%203.8%20%7C%203.9%20%7C%203.10-blue)
 ![Style Black](https://warehouse-camo.ingress.cmh1.psfhosted.org/fbfdc7754183ecf079bc71ddeabaf88f6cbc5c00/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f636f64652532307374796c652d626c61636b2d3030303030302e737667)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) 
@@ -5,8 +7,6 @@
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/awesome-panel/panel-chemistry/feature/binder)
 [![Follow on Twitter](https://img.shields.io/twitter/follow/MarcSkovMadsen.svg?style=social)](https://twitter.com/MarcSkovMadsen)
 [![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/marcskovmadsen)
-
-# 🧪 Panel-Chemistry
 
 We want to
 
@@ -82,14 +82,27 @@ Check out the `panel-chemistry` **reference guides** on **Binder**
 | PDBe_MolStar | [View](https://nbviewer.org/github/MarcSkovMadsen/panel-chemistry/blob/main/examples/reference/PDBe_MolStar.ipynb) | [View](https://github.com/MarcSkovMadsen/panel-chemistry/blob/main/examples/reference/PDBe_MolStar.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcskovmadsen/panel-chemistry/HEAD?filepath=examples/reference/PDBe_MolStar.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcskovmadsen/panel-chemistry/HEAD?urlpath=lab/tree/examples/reference/PDBe_MolStar.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcskovmadsen/panel-chemistry/HEAD?urlpath=panel/PDBe_MolStar) |
 | Py3DMol Pane | [View](https://nbviewer.org/github/MarcSkovMadsen/panel-chemistry/blob/main/examples/reference/Py3DMol.ipynb) | [View](https://github.com/MarcSkovMadsen/panel-chemistry/blob/main/examples/reference/Py3DMol.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcskovmadsen/panel-chemistry/HEAD?filepath=examples/reference/Py3DMol.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcskovmadsen/panel-chemistry/HEAD?urlpath=lab/tree/examples/reference/Py3DMol.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcskovmadsen/panel-chemistry/HEAD?urlpath=panel/Py3DMol) |
 
-### How to explore the examples locally
+### 👩‍🏫 Explore the examples locally
 
-This assumes you have run `pip install panel-chemistry[all]`.
+Run
 
 ```bash
+pip install pip -U
+pip install panel-chemistry[all]
 git clone https://github.com/awesome-panel/panel-chemistry.git
 cd panel-chemistry/examples
+```
+
+Then run
+
+```bash
 jupyter lab
+```
+
+or
+
+```bash
+panel serve reference/*.ipynb
 ```
 
 ### 🏃 Serve a data app
