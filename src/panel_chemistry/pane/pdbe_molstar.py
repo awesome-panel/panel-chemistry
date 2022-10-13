@@ -30,7 +30,7 @@ REPRESENTATIONS = [
 ]
 
 # See https://embed.plnkr.co/plunk/m3GxFYx9cBjIanBp for an example JS implementation
-class PDBeMolStar(ReactiveHTML):
+class PDBeMolStar(ReactiveHTML):  # pylint: disable=too-many-ancestors
     """PDBe MolStar structure viewer.
 
     Set one of `molecule_id`, `custom_data` and `ligand_view`.
