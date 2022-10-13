@@ -128,7 +128,6 @@ dmypy.json
 # Pyre type checker
 .pyre/
 test_results
-panel_chemistry/node_modules
+src/panel_chemistry/node_modules
 .vscode
-panel_chemistry/.bokeh
-panel_chemistry/pane/py3dmol_viewer.py
+src/panel_chemistry/.bokeh

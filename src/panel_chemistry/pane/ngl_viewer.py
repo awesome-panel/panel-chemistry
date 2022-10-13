@@ -7,7 +7,6 @@ Source: Discussion on [Discourse 583]\
 Author: https://github.com/Jhsmit
 """
 
-from typing import Dict
 
 import param
 from panel import extension
@@ -92,7 +91,7 @@ EXTENSIONS = [
 ]
 
 
-class NGLViewer(PaneBase):
+class NGLViewer(PaneBase):  # pylint: disable=too-many-ancestors
     """The [NGL Viewer](https://github.com/nglviewer/ngl) can be used
     to show and analyse pdb molecule structures"""
 
@@ -140,7 +139,7 @@ class NGLViewer(PaneBase):
 
     priority = None
 
-    _rename: Dict[str, str] = {}
+    _rename = {}
 
     _updates = True
 

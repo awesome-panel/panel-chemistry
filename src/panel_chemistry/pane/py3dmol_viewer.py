@@ -15,7 +15,8 @@ except ModuleNotFoundError:
     # pylint: disable=invalid-name
     class py3Dmol(param.Parameterized):  # type: ignore
         """Dummy py3Dmol class"""
-        view = param.String('mock_view')  # allow to import the file
+
+        view = param.String("mock_view")  # allow to import the file
 
 
 def _clean_html(html):
@@ -53,7 +54,7 @@ class Py3DMol(pn.viewable.Viewer):
     """,
     )
 
-    def __init__(self, object: py3Dmol.view = None, **params): # pylint: disable=redefined-builtin
+    def __init__(self, object: py3Dmol.view = None, **params):  # pylint: disable=redefined-builtin
         """A Panel Pane to wrap the interactive py3Dmol/ 3Dmol.js viewer in your Panel Application.
 
         Check out

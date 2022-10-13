@@ -58,7 +58,7 @@ OPTIONS = [
 # fmt: on
 
 
-class JSMEEditor(Widget):
+class JSMEEditor(Widget):  # pylint: disable=too-many-ancestors
     """The panel-chemistry JSME Molecule Editor enables you to draw and edit molecules using Python
     and Panel.
     It is a wrapper of the free javascript JSME Molecule Editor.
