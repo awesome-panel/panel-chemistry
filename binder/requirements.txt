@@ -1,6 +1,4 @@
--e .['all']
+-e .[all]
 -e binder/jupyter-panel-apps-server/.
 hvplot
 jupyter_bokeh
-py3Dmol
-voila

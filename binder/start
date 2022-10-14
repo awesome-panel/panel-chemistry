@@ -1,6 +1,6 @@
 #!/bin/bash
-export BOKEH_ALLOW_WS_ORIGIN=*.org
+export BOKEH_ALLOW_WS_ORIGIN=*
 echo '' >> panel/template/base.py
 echo 'BasicTemplate.param.site_url.default="./"' >> panel/template/base.py
-jupyter trust examples/*.ipynb
+jupyter trust examples/reference/*.ipynb
 exec "$@"

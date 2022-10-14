@@ -12,8 +12,6 @@ classifiers = [
     "Programming Language :: Python :: 3.9"
 ]
 dependencies = [
-    "hvplot",
-    "pandas",
     "panel",
 ]
 dynamic = ["version"]
@@ -24,7 +22,7 @@ authors = [
 
 [project.optional-dependencies]
 dev = ["awesome-panel-cli"]
-all = ["jupyter", "jupyterlab", "awesome-panel-cli", "py3Dmol"]
+all = ["jupyter", "jupyterlab", "awesome-panel-cli", "py3Dmol", ]
 
 [project.urls]
 repository = "https://github.com/awesome-panel/panel-chemistry"

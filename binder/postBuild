@@ -1,4 +1,7 @@
 panel build src/panel_chemistry
+pip install pip -U
+pip uninstall panel-chemistry -y
+pip install .[all] -U
 conda install -c conda-forge jupyter_contrib_nbextensions code-server
 jupyter nbextension enable codefolding/main
 jupyter nbextension enable collapsible_headings/main
@@ -6,8 +9,3 @@ jupyter nbextension enable comment-uncomment/main
 jupyter nbextension enable hide_input/main
 jupyter nbextension enable scratchpad/main
 jupyter nbextension enable init_cell/main
-code-server --install-extension ms-python.python
-SERVICE_URL=https://open-vsx.org/vscode/gallery ITEM_URL=https://open-vsx.org/vscode/item code-server --install-extension wesbos.theme-cobalt2
-SERVICE_URL=https://open-vsx.org/vscode/gallery ITEM_URL=https://open-vsx.org/vscode/item code-server --install-extension RandomFractalsInc.vscode-data-preview
-SERVICE_URL=https://open-vsx.org/vscode/gallery ITEM_URL=https://open-vsx.org/vscode/item code-server --install-extension RandomFractalsInc.geo-data-viewer
-SERVICE_URL=https://open-vsx.org/vscode/gallery ITEM_URL=https://open-vsx.org/vscode/item code-server --install-extension ritwickdey.liveserver
