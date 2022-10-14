@@ -1,14 +1,6 @@
 -e .['all']
-colorcet
-holoviews
+-e binder/jupyter-panel-apps-server/.
 hvplot
-jedi-language-server
 jupyter_bokeh
-jupyter_bokeh
-jupyter-vscode-proxy
 py3Dmol
-pyarrow
-pydeck
-pyecharts
-pyright
 voila
