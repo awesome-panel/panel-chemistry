@@ -5,7 +5,6 @@ holoviews
 hvplot
 jedi-language-server
 jupyter_bokeh
-jupyter_bokeh
 jupyter-vscode-proxy
 py3Dmol
 pyarrow
