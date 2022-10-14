@@ -79,3 +79,18 @@ pn release package <VERSION>
 ```
 
 to release the package 📦. To upload to *Test Pypi* first, you can add the `--test` flag.
+
+### Release the package to conda-forge
+
+Follow [Conda | example workflow for updating a package](https://conda-forge.org/docs/maintainer/updating_pkgs.html#example-workflow-for-updating-a-package) for the [`panel-chemistry-feedstock`](https://github.com/conda-forge/panel-chemistry-feedstock).
+
+Remember to
+
+```bash
+conda install -c conda-forge conda-smithy
+conda smithy rerender -c auto
+```
+
+Remember to update the SHA! You can find it on Pypi
+
+![Pypi SHA](assets/conda-forge-sha.png)

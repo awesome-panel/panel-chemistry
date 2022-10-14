@@ -17,7 +17,7 @@ We provide
 - the `panel-chemistry` python package of chemistry components for Panel.
 - example notebooks and data apps.
 
-You can install and create a new *app* as simple as
+You can install and use the package as simple as.
 
 ```bash
 pip install panel-chemistry
