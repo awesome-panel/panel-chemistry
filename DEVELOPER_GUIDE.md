@@ -2,7 +2,7 @@
 
 Welcome. We are so happy that you want to contribute.
 
-## 🛠️ Prerequisites
+## 🧳 Prerequisites
 
 - A `conda` environment.
 - [Git CLI](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git).

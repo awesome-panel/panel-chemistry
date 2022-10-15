@@ -8,6 +8,8 @@ Author: https://github.com/Jhsmit
 """
 
 
+from typing import Dict
+
 import param
 from panel import extension
 from panel.pane.base import PaneBase
@@ -139,7 +141,7 @@ class NGLViewer(PaneBase):  # pylint: disable=too-many-ancestors
 
     priority = None
 
-    _rename = {}
+    _rename: Dict = {}
 
     _updates = True
 
