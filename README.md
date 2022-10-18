@@ -31,10 +31,11 @@ pn hello panel-chemistry
 
 You can now find the *reference* notebooks in the `examples/awesome-panel/panel-chemistry` folder. Check them out by running `jupyter lab`.
 
-## 📒 Get started on Binder
+## 📒 Explore the examples online
 
-Click the button
+Click one of the buttons
 
+[![nbviewer](https://raw.githubusercontent.com/jupyter/design/master/logos/Badges/nbviewer_badge.svg)](https://nbviewer.org/github/awesome-panel/panel-chemistry/tree/main/examples/reference/)
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/awesome-panel/panel-chemistry/HEAD)
 
 ## 🏃 Serve a data app
