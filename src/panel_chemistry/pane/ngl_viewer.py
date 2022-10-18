@@ -141,8 +141,6 @@ class NGLViewer(PaneBase):  # pylint: disable=too-many-ancestors
 
     priority = None
 
-    _rename: Dict = {}
-
     _updates = True
 
     _model_module = "panel_chemistry.bokeh_extensions.ngl_viewer"

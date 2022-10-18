@@ -75,8 +75,7 @@ pn test all
 Then you can build
 
 ```bash
-cd ..
-panel build panel_chemistry
+panel build src/panel_chemistry
 pn build package
 ```
 
