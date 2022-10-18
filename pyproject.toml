@@ -43,8 +43,13 @@ authors = [
 ]
 
 [project.optional-dependencies]
-dev = ["awesome-panel-cli"]
-all = ["jupyter", "jupyterlab", "awesome-panel-cli", "py3Dmol", ]
+dev = ["awesome-panel-cli[dev]"]
+examples = [
+    "notebook",
+    "jupyterlab",
+    "awesome-panel-cli",
+    "py3Dmol", 
+]
 
 [project.urls]
 repository = "https://github.com/awesome-panel/panel-chemistry"

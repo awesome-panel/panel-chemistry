@@ -44,7 +44,13 @@ You can run all tests via
 pn test all
 ```
 
-Please run this command and fix any failing tests if possible before you `git push`.
+Please always run this command and fix any failing tests if possible before you `git push`.
+
+### Build the Bokeh models
+
+```bash
+panel build src/panel_chemistry
+```
 
 ### 🚢 Release a new package on Pypi
 
@@ -53,9 +59,11 @@ Please make sure you have upgraded bokeh
 ```bash
 cd src/panel_chemistry
 npm update @bokeh/bokehjs --save
+npm audit fix
+cd ../..
 ```
 
-Update the version number in the [__init__.py](panel_chemistry/__init__.py) and
+Update the version number in the [__init__.py](src/panel_chemistry/__init__.py) and
 [package.json](src/panel_chemistry/package.json) files.
 
 Then run

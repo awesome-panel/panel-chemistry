@@ -1,11 +1,7 @@
-![Python Versions](https://img.shields.io/badge/python-3.7%20%7C%203.8%20%7C%203.9%20%7C%203.10-blue)
-[![License](https://img.shields.io/badge/License-MIT%202.0-blue.svg)](https://opensource.org/licenses/MIT)
-![Test Results](https://github.com/MarcSkovMadsen/panel-chemistry/actions/workflows/tests.yaml/badge.svg?branch=main)
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/awesome-panel/panel-chemistry/HEAD)
-[![Follow on Twitter](https://img.shields.io/twitter/follow/MarcSkovMadsen.svg?style=social)](https://twitter.com/MarcSkovMadsen)
-[![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/marcskovmadsen)
-
 # 🧪 Panel-Chemistry
+
+[![Follow on Twitter](https://img.shields.io/twitter/follow/MarcSkovMadsen.svg?style=social)](https://twitter.com/MarcSkovMadsen)
+[![Follow on LinkedIn](https://img.shields.io/badge/linked-in-blue)](https://www.linkedin.com/in/marcskovmadsen)
 
 We want to
 
@@ -17,22 +13,55 @@ We provide
 - the `panel-chemistry` python package of chemistry components for Panel.
 - example notebooks and data apps.
 
-You can install and use the package as simple as.
+![Panel Chemistry Intro](https://raw.githubusercontent.com/MarcSkovMadsen/panel-chemistry/main/assets/panel-chemistry-intro.gif)
+
+## 🚀 Get started in under a minute
+
+You can install the package with `pip`
 
 ```bash
-pip install panel-chemistry
+pip install panel-chemistry[examples]
 ```
+
+Explore the sample apps
+
+```bash
+pn hello panel-chemistry
+```
+
+You can now find the *reference* notebooks in the `examples/awesome-panel/panel-chemistry` folder. Check them out by running `jupyter lab`.
+
+## 📒 Get started on Binder
+
+Click the button
+
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/awesome-panel/panel-chemistry/HEAD)
+
+## 🏃 Serve a data app
+
+Add the below to a python file or notebook
 
 ```python
-import panel as pn 
-from panel_chemistry.pane import NGLViewer # panel_chemistry needs to be imported before you run pn.extension()
+import panel as pn
+from panel_chemistry.widgets import JSMEEditor
 
-pn.extension("ngl_viewer", sizing_mode="stretch_width", template="fast")
+pn.extension("jsme", sizing_mode="stretch_width")
 
-NGLViewer(object="1CRN", background="#F7F7F7", min_height=700, sizing_mode="stretch_both").servable()
+smiles="N[C@@H](CCC(=O)N[C@@H](CS)C(=O)NCC(=O)O)C(=O)O"
+editor = JSMEEditor(value=smiles, height=500, format="smiles")
+
+editor.servable()
 ```
 
-![Panel Chemistry Teaser](https://raw.githubusercontent.com/MarcSkovMadsen/panel-chemistry/main/assets/panel-chemistry-teaser.gif)
+Run `panel serve name_of_app.py` or `panel_serve name_of_notebook.ipynb`.
+
+![JSME Editor](https://raw.githubusercontent.com/MarcSkovMadsen/panel-chemistry/main/assets/panel-chemistry-example.png)
+
+## Install with conda
+
+```bash
+conda install -c conda-forge panel-chemistry
+```
 
 ## ⭐ Support
 
@@ -52,74 +81,11 @@ I would love to support and receive your contributions. Thanks.
 
 [![Hacktober Fest](https://github.blog/wp-content/uploads/2022/10/hacktoberfestbanner.jpeg?fit=1200%2C630)](https://github.com/awesome-panel/panel-chemistry/issues).
 
-## 📙 How to
+## 🖥️ Monitor
 
-Below we describe how to install and use this project.
-
-### 🚀 Install for usage
-
-You can install the package with `pip`
-
-```bash
-pip install panel-chemistry
-```
-
-or `conda`
-
-```bash
-conda install -c conda-forge panel-chemistry
-```
-
-### 👩‍🏫 Explore the examples online
-
-Check out the `panel-chemistry` **reference guides** on **Binder**
-
-| Guide | NB Viewer | Github Notebook | Jupyter Notebook | Jupyter Labs | Panel Apps |
-| - | - | - | - | - | - |
-| JSME Editor | [View](https://nbviewer.org/github/MarcSkovMadsen/panel-chemistry/blob/main/examples/reference/JSMEEditor.ipynb) | [View](https://github.com/MarcSkovMadsen/panel-chemistry/blob/main/examples/reference/JSMEEditor.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcskovmadsen/panel-chemistry/HEAD?filepath=examples/reference/JSMEEditor.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcskovmadsen/panel-chemistry/HEAD?urlpath=lab/tree/examples/reference/JSMEEditor.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcskovmadsen/panel-chemistry/HEAD?urlpath=panel/JSMEEditor) |
-| NGL Viewer | [View](https://nbviewer.org/github/MarcSkovMadsen/panel-chemistry/blob/main/examples/reference/NGLViewer.ipynb) | [View](https://github.com/MarcSkovMadsen/panel-chemistry/blob/main/examples/reference/NGLViewer.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcskovmadsen/panel-chemistry/HEAD?filepath=examples/reference/NGLViewer.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcskovmadsen/panel-chemistry/HEAD?urlpath=lab/tree/examples/reference/NGLViewer.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcskovmadsen/panel-chemistry/HEAD?urlpath=panel/NGLViewer) |
-| PDBe_MolStar | [View](https://nbviewer.org/github/MarcSkovMadsen/panel-chemistry/blob/main/examples/reference/PDBe_MolStar.ipynb) | [View](https://github.com/MarcSkovMadsen/panel-chemistry/blob/main/examples/reference/PDBe_MolStar.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcskovmadsen/panel-chemistry/HEAD?filepath=examples/reference/PDBe_MolStar.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcskovmadsen/panel-chemistry/HEAD?urlpath=lab/tree/examples/reference/PDBe_MolStar.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcskovmadsen/panel-chemistry/HEAD?urlpath=panel/PDBe_MolStar) |
-| Py3DMol Pane | [View](https://nbviewer.org/github/MarcSkovMadsen/panel-chemistry/blob/main/examples/reference/Py3DMol.ipynb) | [View](https://github.com/MarcSkovMadsen/panel-chemistry/blob/main/examples/reference/Py3DMol.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcskovmadsen/panel-chemistry/HEAD?filepath=examples/reference/Py3DMol.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcskovmadsen/panel-chemistry/HEAD?urlpath=lab/tree/examples/reference/Py3DMol.ipynb) | [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/marcskovmadsen/panel-chemistry/HEAD?urlpath=panel/Py3DMol) |
-
-### 👩‍🏫 Explore the examples locally
-
-Run
-
-```bash
-pip install pip -U
-pip install panel-chemistry[all]
-git clone https://github.com/awesome-panel/panel-chemistry.git
-cd panel-chemistry/examples
-```
-
-Then run
-
-```bash
-jupyter lab
-```
-
-or
-
-```bash
-panel serve reference/*.ipynb
-```
-
-### 🏃 Serve a data app
-
-Add the below to a python file or notebook
-
-```python
-import panel as pn
-from panel_chemistry.widgets import JSMEEditor
-
-pn.extension("jsme", sizing_mode="stretch_width")
-
-smiles="N[C@@H](CCC(=O)N[C@@H](CS)C(=O)NCC(=O)O)C(=O)O"
-editor = JSMEEditor(value=smiles, height=500, format="smiles")
-
-editor.servable()
-```
-
-Run `panel serve name_of_app.py` or `panel_serve name_of_notebook.ipynb`.
-
-![JSME Editor](https://raw.githubusercontent.com/MarcSkovMadsen/panel-chemistry/main/assets/panel-chemistry-example.png)
+[![PyPI version](https://badge.fury.io/py/panel-chemistry.svg)](https://pypi.org/project/panel-chemistry/)
+[![Downloads](https://pepy.tech/badge/panel-chemistry/month)](https://pepy.tech/project/panel-chemistry)
+![Python Versions](https://img.shields.io/badge/python-3.7%20%7C%203.8%20%7C%203.9%20%7C%203.10-blue)
+[![License](https://img.shields.io/badge/License-MIT%202.0-blue.svg)](https://opensource.org/licenses/MIT)
+![Test Results](https://github.com/MarcSkovMadsen/panel-chemistry/actions/workflows/tests.yaml/badge.svg?branch=main)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/awesome-panel/panel-chemistry/HEAD)

@@ -131,3 +131,4 @@ test_results
 src/panel_chemistry/node_modules
 .vscode
 src/panel_chemistry/.bokeh
+examples/awesome-panel/
