@@ -28,7 +28,7 @@ Then run
 git clone https://github.com/awesome-panel/panel-chemistry.git
 cd panel-chemistry
 pip install pip -U
-pip install -e .[all]
+pip install -e .[dev,examples]
 ```
 
 This will install the
