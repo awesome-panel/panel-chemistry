@@ -172,11 +172,11 @@ class PDBeMolStar(ReactiveHTML):  # pylint: disable=too-many-ancestors
     test = param.Boolean(default=False)
 
     _template = """
-<link id="molstarTheme" rel="stylesheet" type="text/css" href="https://www.ebi.ac.uk/pdbe/pdb-component-library/css/pdbe-molstar-1.2.1.css"/>
+<link id="molstarTheme" rel="stylesheet" type="text/css" href="https://www.ebi.ac.uk/pdbe/pdb-component-library/css/pdbe-molstar-3.1.0.css"/>
 <div id="container" style="width:100%; height: 100%;"><div id="pdbeViewer"></div></div>
 """
     __javascript__ = [
-        "https://www.ebi.ac.uk/pdbe/pdb-component-library/js/pdbe-molstar-plugin-1.2.1.js",
+        "https://www.ebi.ac.uk/pdbe/pdb-component-library/js/pdbe-molstar-plugin-3.1.0.js",
     ]
 
     _scripts = {
