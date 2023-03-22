@@ -127,6 +127,11 @@ class PDBeMolStar(ReactiveHTML):  # pylint: disable=too-many-ancestors
     )
 
     hide_controls = param.Boolean(default=True, doc="Hide the control menu")
+    
+    sequence_panel = param.Boolean(
+        default=True, 
+        doc="Show the sequence panel. Currently shown only when the controls are toggled"
+    )
 
     expanded = param.Boolean(default=False, doc="""Display full-screen by default on load""")
 
@@ -268,6 +273,7 @@ class PDBeMolStar(ReactiveHTML):  # pylint: disable=too-many-ancestors
                 lighting: data.lighting,
                 defaultPreset: data.default_preset,
                 pdbeLink: data.pdbe_link,
+                sequencePanel: data.sequence_panel,
             }
             if (data.visual_style!==null){
                 options["visualStyle"]=data.visual_style
@@ -301,9 +307,9 @@ class PDBeMolStar(ReactiveHTML):  # pylint: disable=too-many-ancestors
         state.viewerInstance.visual.setColor({select: state.toRgb(data.select_color)})""",
         "theme": """
         if (data.theme==="dark"){
-            molstarTheme.href="https://www.ebi.ac.uk/pdbe/pdb-component-library/css/pdbe-molstar-1.2.1.css"
+            molstarTheme.href="https://www.ebi.ac.uk/pdbe/pdb-component-library/css/pdbe-molstar-3.1.0.css"
         } else {
-            molstarTheme.href="https://www.ebi.ac.uk/pdbe/pdb-component-library/css/pdbe-molstar-light-1.2.1.css"
+            molstarTheme.href="https://www.ebi.ac.uk/pdbe/pdb-component-library/css/pdbe-molstar-light-3.1.0.css"
         }
         """,
         "hide_polymer": "state.viewerInstance.visual.visibility({polymer:!data.hide_polymer})",
