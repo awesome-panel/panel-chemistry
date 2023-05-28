@@ -29,6 +29,7 @@ REPRESENTATIONS = [
     "spacefill",
 ]
 
+
 # See https://embed.plnkr.co/plunk/m3GxFYx9cBjIanBp for an example JS implementation
 class PDBeMolStar(ReactiveHTML):  # pylint: disable=too-many-ancestors
     """PDBe MolStar structure viewer.
@@ -127,10 +128,10 @@ class PDBeMolStar(ReactiveHTML):  # pylint: disable=too-many-ancestors
     )
 
     hide_controls = param.Boolean(default=True, doc="Hide the control menu")
-    
+
     sequence_panel = param.Boolean(
-        default=True, 
-        doc="Show the sequence panel. Currently shown only when the controls are toggled"
+        default=True,
+        doc="Show the sequence panel. Currently shown only when the controls are toggled",
     )
 
     expanded = param.Boolean(default=False, doc="""Display full-screen by default on load""")

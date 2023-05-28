@@ -3,6 +3,10 @@ and Panel.
 
 It is a wrapper of the free javascript JSME Molecule Editor. See https://jsme-editor.github.io/
 """
+from __future__ import annotations
+
+from typing import ClassVar, Mapping
+
 import param
 from panel.widgets.base import Widget
 
@@ -67,11 +71,7 @@ class JSMEEditor(Widget):  # pylint: disable=too-many-ancestors
     # Set the Bokeh model to use
     _widget_type = _BkJSMEEditor
 
-    # Rename Panel Parameters -> Bokeh Model properties
-    # Parameters like title that does not exist on the Bokeh model should be renamed to None
-    _rename = {
-        "title": None,
-    }
+    _rename: ClassVar[Mapping[str, str | None]] = {"name": None}
 
     # Parameters to be mapped to Bokeh model properties
     value = param.String(

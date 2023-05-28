@@ -8,8 +8,6 @@ Author: https://github.com/Jhsmit
 """
 
 
-from typing import Dict
-
 import param
 from panel import extension
 from panel.pane.base import PaneBase
@@ -102,6 +100,10 @@ class NGLViewer(PaneBase):  # pylint: disable=too-many-ancestors
         The object to display. For example an url like 'rcsb://3dqb.pdb', 'rcsb://1NKT', '1NKT'.
         You can also specify a extension string if you define the extension 
         in the extension parameter"""
+    )
+    background_color = param.Color(
+        doc="""
+        A custom background color"""
     )
     extension = param.ObjectSelector(
         default="",

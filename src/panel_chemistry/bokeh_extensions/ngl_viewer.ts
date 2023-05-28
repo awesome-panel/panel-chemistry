@@ -1,5 +1,5 @@
 import * as p from "@bokehjs/core/properties"
-import {HTMLBox, HTMLBoxView} from "@bokehjs/models/layouts/html_box"
+import {HTMLBox, HTMLBoxView} from "./layout"
 
 declare namespace NGL {
   class AtomProxy{
@@ -96,7 +96,7 @@ export class NGLViewerView extends HTMLBoxView {
       this.connect(this.model.properties.color_scheme.change, this.updateParameters)
       this.connect(this.model.properties.custom_color_scheme.change, this.updateParameters)
       this.connect(this.model.properties.effect.change, this.updateEffect)
-      this.connect(this.model.properties.background.change, this.setBackgroundcolor)
+      this.connect(this.model.properties.background_color.change, this.setBackgroundcolor)
     }
 
     render(): void {
@@ -115,8 +115,8 @@ export class NGLViewerView extends HTMLBoxView {
         }, false );
         }
     setBackgroundcolor(): void {
-      console.log(this.model.background)
-      this._stage.setParameters( { backgroundColor: this.model.background} );
+      console.log(this.model.background_color)
+      this._stage.setParameters( { backgroundColor: this.model.background_color} );
     }
     after_layout(): void {
       super.after_layout()
@@ -177,6 +177,7 @@ export namespace NGLViewer {
     export type Attrs = p.AttrsOf<Props>
     export type Props = HTMLBox.Props & {
         object: p.Property<string>,
+        background_color: p.Property<string>,
         extension: p.Property<string>,
         representation: p.Property<string>,
         color_scheme: p.Property<string>,
@@ -201,6 +202,7 @@ export class NGLViewer extends HTMLBox {
       this.define<NGLViewer.Props>(({ String, Any }) => ({
         object:             [ String, ""],
         extension:             [ String, ""],
+        background_color:             [ String, ""],
         representation:              [ String, "ribbon"],
         color_scheme:               [ String, "chainid"],
         custom_color_scheme:               [ Any, "chainid"],

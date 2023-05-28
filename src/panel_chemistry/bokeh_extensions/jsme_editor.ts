@@ -1,5 +1,5 @@
 // See https://docs.bokeh.org/en/latest/docs/reference/models/layouts.html
-import { HTMLBox, HTMLBoxView } from "@bokehjs/models/layouts/html_box"
+import { HTMLBox, HTMLBoxView } from "./layout"
 
 // See https://docs.bokeh.org/en/latest/docs/reference/core/properties.html
 import * as p from "@bokehjs/core/properties"
