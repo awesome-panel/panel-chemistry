@@ -90,6 +90,7 @@ export class JSMEEditorView extends HTMLBoxView {
     valueFunc: any
     valueChanging: boolean = true
     container: HTMLDivElement
+    _intialized: boolean = false
 
     initialize(): void {
         super.initialize()
@@ -139,12 +140,13 @@ export class JSMEEditorView extends HTMLBoxView {
           style: {width: "100%", height: "100%"}
         })
         this.container.appendChild(el)
-
-        // wait for DOM to be updated
-        setTimeout(() => { this.createJSMEElement() }, 200);
+        this._intialized = false
     }
 
     createJSMEElement() {
+        if (this._intialized)
+            return
+
         const id = this.container.children[0].id
 
         // Need to add it to document body for JSME to be able to find the id
@@ -171,6 +173,7 @@ export class JSMEEditorView extends HTMLBoxView {
         document.body.removeChild(this.container)
         this.shadow_el.appendChild(this.container)
 
+        this._intialized = true
         console.log("render - end")
     }
 
@@ -207,13 +210,12 @@ export class JSMEEditorView extends HTMLBoxView {
     }
 
     resizeJSMEElement() {
-        if (this.jsmeElement !== undefined) {
-            this.jsmeElement.setSize(this.getWidth(), this.getHeight());
-        }
+        this.jsmeElement.setSize(this.getWidth(), this.getHeight());
     }
 
     after_layout(): void{
         super.after_layout()
+        this.createJSMEElement()
         this.resizeJSMEElement()
     }
 }
