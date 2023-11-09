@@ -89,6 +89,14 @@ export class JSMEEditorView extends HTMLBoxView {
     JSME = (window as any).JSApplet.JSME
     valueFunc: any
     valueChanging: boolean = true
+    container: HTMLDivElement
+
+    initialize(): void {
+        super.initialize()
+        this.container = div({
+          style: {display: "contents"}
+        })
+    }
 
     connect_signals(): void {
         super.connect_signals()
@@ -125,8 +133,23 @@ export class JSMEEditorView extends HTMLBoxView {
         console.log("render - start")
         super.render()
         const id = "jsme-" + uuidv4()
-        const container = div({class: "jsme-editor", id: id});
-        this.el.appendChild(container)
+        const el = div({
+          class: "jsme-editor",
+          id: id,
+          style: {width: "100%", height: "100%"}
+        })
+        this.container.appendChild(el)
+
+        // wait for DOM to be updated
+        setTimeout(() => { this.createJSMEElement() }, 200);
+    }
+
+    createJSMEElement() {
+        const id = this.container.children[0].id
+
+        // Need to add it to document body for JSME to be able to find the id
+        document.body.appendChild(this.container)
+
         this.jsmeElement = new this.JSME(id, this.getHeight(), this.getWidth(), {
             "options": this.model.options.join(","),
             "guicolor": this.model.guicolor
@@ -143,6 +166,10 @@ export class JSMEEditorView extends HTMLBoxView {
             this_.valueChanging = false
         }
         this.jsmeElement.setAfterStructureModifiedCallback(showEvent);
+
+        // Remove from document body and add to shadow DOM
+        document.body.removeChild(this.container)
+        this.shadow_el.appendChild(this.container)
 
         console.log("render - end")
     }
@@ -180,7 +207,9 @@ export class JSMEEditorView extends HTMLBoxView {
     }
 
     resizeJSMEElement() {
-        this.jsmeElement.setSize(this.getWidth(), this.getHeight());
+        if (this.jsmeElement !== undefined) {
+            this.jsmeElement.setSize(this.getWidth(), this.getHeight());
+        }
     }
 
     after_layout(): void{
@@ -213,6 +242,7 @@ export interface JSMEEditor extends JSMEEditor.Attrs { }
 // The Bokeh .ts model corresponding to the Bokeh .py model
 export class JSMEEditor extends HTMLBox {
     properties: JSMEEditor.Props
+    __view_type__: JSMEEditorView
 
     constructor(attrs?: Partial<JSMEEditor.Attrs>) {
         super(attrs)
@@ -220,11 +250,11 @@ export class JSMEEditor extends HTMLBox {
 
     static __module__ = "panel_chemistry.bokeh_extensions.jsme_editor"
 
-    static init_JSMEEditor(): void {
+    static {
         this.prototype.default_view = JSMEEditorView;
 
         this.define<JSMEEditor.Props>(({String, Array}) => ({
-            value: [String, ""],
+            value: [String, "N[C@@H](CCC(=O)N[C@@H](CS)C(=O)NCC(=O)O)C(=O)O"],
             format: [String, ""],
             options: [ Array(String),   [] ],
             jme: [String, ""],
