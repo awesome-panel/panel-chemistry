@@ -237,7 +237,7 @@ export class JSMEEditor extends HTMLBox {
         this.prototype.default_view = JSMEEditorView;
 
         this.define<JSMEEditor.Props>(({String, Array}) => ({
-            value: [String, "N[C@@H](CCC(=O)N[C@@H](CS)C(=O)NCC(=O)O)C(=O)O"],
+            value: [String, ""],
             format: [String, ""],
             options: [ Array(String),   [] ],
             jme: [String, ""],
