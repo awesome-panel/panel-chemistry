@@ -21,7 +21,7 @@ class JSMEEditor(HTMLBox):  # pylint: disable=too-few-public-methods,too-many-an
         "https://cdn.jsdelivr.net/npm/jsme-editor@2023.7.31/gwt/chrome/chrome.css",
     ]
 
-    value = String(default="N[C@@H](CCC(=O)N[C@@H](CS)C(=O)NCC(=O)O)C(=O)O")
+    value = String(default="")
     format = String(default="smiles")
     subscriptions = List(String, default=[]) # type: ignore
     options = List(String, default=[]) # type: ignore
