@@ -5,6 +5,6 @@
   "license": "Apache 2.0",
   "keywords": [],
   "dependencies": {
-    "@bokeh/bokehjs": "~3.3.0"
+    "@bokeh/bokehjs": "~3.3.1"
   }
 }
