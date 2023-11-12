@@ -189,6 +189,7 @@ export namespace NGLViewer {
 export interface NGLViewer extends NGLViewer.Attrs { }
 export class NGLViewer extends HTMLBox {
     properties: NGLViewer.Props
+    __view_type__: NGLViewerView
 
     constructor(attrs?: Partial<NGLViewer.Attrs>) {
       super(attrs)
@@ -196,16 +197,16 @@ export class NGLViewer extends HTMLBox {
 
     static __module__ = "panel_chemistry.bokeh_extensions.ngl_viewer"
 
-    static init_NGLViewer(): void {
+    static {
       this.prototype.default_view = NGLViewerView;
 
       this.define<NGLViewer.Props>(({ String, Any }) => ({
         object:             [ String, ""],
         extension:             [ String, ""],
         background_color:             [ String, ""],
-        representation:              [ String, "ribbon"],
-        color_scheme:               [ String, "chainid"],
-        custom_color_scheme:               [ Any, "chainid"],
+        representation:              [ String, "ball+stick"],
+        color_scheme:               [ String, "element"],
+        custom_color_scheme:               [ Any, ["white", "*"]],
         effect:               [ String, ""],
       }))
 

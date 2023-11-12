@@ -7,13 +7,13 @@ class NGLViewer(LayoutDOM):  # pylint: disable=too-many-ancestors
     """The [NGL Viewer](https://github.com/nglviewer/ngl) can be used
     to show and analyse pdb molecule structures"""
 
-    object = String()
-    background_color = String()
-    extension = String()
-    representation = String()
-    color_scheme = String()
-    effect = String()
+    object = String("")
+    extension = String("")
+    background_color = String("")
+    representation = String("ball+stick")
+    color_scheme = String("element")
     custom_color_scheme = List(List(String))
+    effect = String("")
 
     __javascript__ = [
         "https://unpkg.com/ngl@2.0.0-dev.37/dist/ngl.js",
