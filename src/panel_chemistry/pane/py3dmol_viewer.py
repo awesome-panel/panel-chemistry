@@ -12,7 +12,7 @@ import param
 try:
     import py3Dmol
 except ModuleNotFoundError:
-    # pylint: disable=invalid-name
+    # pylint: disable=invalid-name, too-few-public-methods
     class py3Dmol(param.Parameterized):  # type: ignore
         """Dummy py3Dmol class"""
 

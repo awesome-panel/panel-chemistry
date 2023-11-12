@@ -23,8 +23,8 @@ class JSMEEditor(HTMLBox):  # pylint: disable=too-few-public-methods,too-many-an
 
     value = String(default="N[C@@H](CCC(=O)N[C@@H](CS)C(=O)NCC(=O)O)C(=O)O")
     format = String(default="smiles")
-    subscriptions = List(String, default=[])
-    options = List(String, default=[])
+    subscriptions = List(String, default=[]) # type: ignore
+    options = List(String, default=[]) # type: ignore
 
     jme = String(default="")
     smiles = String(default="")

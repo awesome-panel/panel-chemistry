@@ -84,11 +84,12 @@ exclude = []
 [[tool.mypy.overrides]]
 module = [
     "bokeh.*",
+    "comm.*",
     "holoviews.*",
     "hvplot.*",
     "param",
-    "pyviz_comms",
     "py3Dmol",
+    "pyviz_comms",
 ]
 ignore_missing_imports = true
 
