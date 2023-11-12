@@ -24,12 +24,9 @@ function readSDFValue(jsmeElement: any) {
 }
 
 function setModelValue(model: JSMEEditor, jsmeElement: any){
-    console.log("setValue - start", model.value)
     var value = model.value
     if (model.format==="smiles"){
-        console.log("getting smiles")
         value = jsmeElement.smiles()
-        console.log("got smiles")
     } else if (model.format==="mol"){
         value = jsmeElement.molFile(false)
     } else if (model.format==="mol3000"){
@@ -40,17 +37,13 @@ function setModelValue(model: JSMEEditor, jsmeElement: any){
         value = jsmeElement.jmeFile()
     }
     if (model.value!==value && value!==null){
-        console.log("setting value", value)
         model.value = value
     }
-    console.log("setValue - end", model.value)
 }
 
 function setModelValues(model: JSMEEditor, jsmeElement: any){
-    console.log("setValues - start")
     setModelValue(model, jsmeElement)
-    setOtherModelValues(model, jsmeElement)
-    console.log("setValues - end")
+    setOtherModelValues(model, jsmeElement)   
 }
 
 function resetOtherModelValues(model: JSMEEditor, jsmeElement: any){
@@ -72,13 +65,11 @@ function cleanValue(value: any){
 }
 
 function setOtherModelValues(model: JSMEEditor, jsmeElement: any){
-    console.log("setOtherValues - start")
     if (model.subscriptions.includes("jme")){model.jme = cleanValue(jsmeElement.jmeFile())}
     if (model.subscriptions.includes("smiles")){model.smiles = cleanValue(jsmeElement.smiles())}
     if (model.subscriptions.includes("mol")){model.mol = cleanValue(jsmeElement.molFile(false))}
     if (model.subscriptions.includes("mol3000")){model.mol3000 = cleanValue(jsmeElement.molFile(true))}
     if (model.subscriptions.includes("sdf")){model.sdf = cleanValue(readSDFValue(jsmeElement))}
-    console.log("setOtherValues - end")
 }
 
 // The view of the Bokeh extension/ HTML element
@@ -89,12 +80,20 @@ export class JSMEEditorView extends HTMLBoxView {
     JSME = (window as any).JSApplet.JSME
     valueFunc: any
     valueChanging: boolean = true
+    container: HTMLDivElement
+    _intialized: boolean = false
+
+    initialize(): void {
+        super.initialize()
+        this.container = div({
+          style: {display: "contents"}
+        })
+    }
 
     connect_signals(): void {
         super.connect_signals()
 
         this.connect(this.model.properties.value.change, () => {
-            console.log("value change", this.model.value)
             if (!this.valueChanging){
                 if (this.model.value===""){
                     this.jsmeElement.reset()
@@ -104,29 +103,40 @@ export class JSMEEditorView extends HTMLBoxView {
             }
         })
         this.connect(this.model.properties.format.change, () => {
-            console.log("format change", this.model.format)
             setModelValue(this.model, this.jsmeElement);
         })
         this.connect(this.model.properties.subscriptions.change, () => {
-            console.log("subscriptions change", this.model.subscriptions)
             resetOtherModelValues(this.model, this.jsmeElement);
         })
         this.connect(this.model.properties.options.change, () => {
-            console.log("options change", this.model.options)
             this.setJSMEOptions()
         })
         this.connect(this.model.properties.guicolor.change, () => {
-            console.log("options change", this.model.options)
             this.setGUIColor()
         })
     }
 
     render(): void {
-        console.log("render - start")
         super.render()
         const id = "jsme-" + uuidv4()
-        const container = div({class: "jsme-editor", id: id});
-        this.el.appendChild(container)
+        const el = div({
+          class: "jsme-editor",
+          id: id,
+          style: {width: "100%", height: "100%"}
+        })
+        this.container.appendChild(el)
+        this._intialized = false
+    }
+
+    createJSMEElement() {
+        if (this._intialized)
+            return
+
+        const id = this.container.children[0].id
+
+        // Need to add it to document body for JSME to be able to find the id
+        document.body.appendChild(this.container)
+
         this.jsmeElement = new this.JSME(id, this.getHeight(), this.getWidth(), {
             "options": this.model.options.join(","),
             "guicolor": this.model.guicolor
@@ -136,25 +146,26 @@ export class JSMEEditorView extends HTMLBoxView {
         setModelValues(this.model, this.jsmeElement)
 
         const this_ = this;
-        function showEvent(event: any){
-            console.log("event", event)
+        function showEvent(_: any){
             this_.valueChanging = true
             setModelValues(this_.model, this_.jsmeElement)
             this_.valueChanging = false
         }
         this.jsmeElement.setAfterStructureModifiedCallback(showEvent);
 
-        console.log("render - end")
+        // Remove from document body and add to shadow DOM
+        document.body.removeChild(this.container)
+        this.shadow_el.appendChild(this.container)
+
+        this._intialized = true
     }
 
     setGUIColor(){
-        console.log("setGUIColor", this.model.guicolor)
         this.jsmeElement.setUserInterfaceBackgroundColor(this.model.guicolor)
     }
 
     setJSMEOptions(){
         const options = this.model.options.join(",")
-        console.log("setJSMEOptions", options)
         this.jsmeElement.options(options)
     }
 
@@ -185,6 +196,7 @@ export class JSMEEditorView extends HTMLBoxView {
 
     after_layout(): void{
         super.after_layout()
+        this.createJSMEElement()
         this.resizeJSMEElement()
     }
 }
@@ -213,6 +225,7 @@ export interface JSMEEditor extends JSMEEditor.Attrs { }
 // The Bokeh .ts model corresponding to the Bokeh .py model
 export class JSMEEditor extends HTMLBox {
     properties: JSMEEditor.Props
+    __view_type__: JSMEEditorView
 
     constructor(attrs?: Partial<JSMEEditor.Attrs>) {
         super(attrs)
@@ -220,7 +233,7 @@ export class JSMEEditor extends HTMLBox {
 
     static __module__ = "panel_chemistry.bokeh_extensions.jsme_editor"
 
-    static init_JSMEEditor(): void {
+    static {
         this.prototype.default_view = JSMEEditorView;
 
         this.define<JSMEEditor.Props>(({String, Array}) => ({
