@@ -1,5 +1,6 @@
 import * as p from "@bokehjs/core/properties"
-import {HTMLBox, HTMLBoxView} from "./layout"
+import {uuidv4, HTMLBox, HTMLBoxView} from "./layout"
+import {div} from "@bokehjs/core/dom"
 
 declare namespace NGL {
   class AtomProxy{
@@ -86,7 +87,18 @@ declare namespace NGL {
 }
 export class NGLViewerView extends HTMLBoxView {
     model: NGLViewer
+    container: HTMLDivElement;
+    _intialized: boolean = false
     _stage: any
+
+    initialize(): void {
+      super.initialize()
+      this.container = div({
+          class: "ngl-viewer",
+          id: "ngl-viewer-" + uuidv4(),
+          style: {width: "100%", height: "100%"}
+        })
+      }
 
     connect_signals(): void {
       super.connect_signals()
@@ -101,22 +113,34 @@ export class NGLViewerView extends HTMLBoxView {
 
     render(): void {
         super.render()
-        this.el.id = "viewport"
+        this._intialized = false
+        this.createNGLViewer()
+    }
+    setBackgroundcolor(): void {
+      this._stage.setParameters( { backgroundColor: this.model.background_color} );
+    }
+    createNGLViewer(){
+        if (this._intialized)
+          return
 
+        document.body.appendChild(this.container)
+        
         const wn = (window as any)
         const ngl = wn.NGL
-
-        this._stage = new ngl.Stage(this.el);
+        
+        this._stage = new ngl.Stage(this.container.id);
         this.setBackgroundcolor()
         const stage = this._stage
         this.updateStage();
         window.addEventListener( "resize", function(){
             stage.handleResize();
         }, false );
-        }
-    setBackgroundcolor(): void {
-      console.log(this.model.background_color)
-      this._stage.setParameters( { backgroundColor: this.model.background_color} );
+
+        // Remove from document body and add to shadow DOM
+        document.body.removeChild(this.container)
+        this.shadow_el.appendChild(this.container)
+
+        this._intialized = true
     }
     after_layout(): void {
       super.after_layout()

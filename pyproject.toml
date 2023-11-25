@@ -89,6 +89,7 @@ module = [
     "hvplot.*",
     "param",
     "py3Dmol",
+    "pydantic.*",
     "pyviz_comms",
 ]
 ignore_missing_imports = true
