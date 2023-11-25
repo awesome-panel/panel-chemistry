@@ -5,11 +5,13 @@ import panel as pn
 from panel_chemistry.widgets import JSMEEditor
 
 
-def test_can_construct():
-    JSMEEditor()
+def test_can_construct(document, comm):
+    editor = JSMEEditor()
+    widget = editor.get_root(document, comm=comm)
+    assert isinstance(widget, editor._widget_type)  # pylint: disable=protected-access
 
 
-def test_jsme_editor_app():
+def _create_app():
     pn.extension("jsme", sizing_mode="stretch_width")
     smiles = "N[C@@H](CCC(=O)N[C@@H](CS)C(=O)NCC(=O)O)C(=O)O"
     editor = JSMEEditor(value=smiles, height=500)
@@ -49,5 +51,9 @@ def test_jsme_editor_app():
     )
 
 
+def test_app():
+    assert _create_app()
+
+
 if __name__.startswith("bokeh"):
-    test_jsme_editor_app().servable()
+    _create_app().servable()

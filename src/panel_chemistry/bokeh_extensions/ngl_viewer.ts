@@ -1,5 +1,6 @@
 import * as p from "@bokehjs/core/properties"
-import {HTMLBox, HTMLBoxView} from "@bokehjs/models/layouts/html_box"
+import {uuidv4, HTMLBox, HTMLBoxView} from "./layout"
+import {div} from "@bokehjs/core/dom"
 
 declare namespace NGL {
   class AtomProxy{
@@ -86,7 +87,18 @@ declare namespace NGL {
 }
 export class NGLViewerView extends HTMLBoxView {
     model: NGLViewer
+    container: HTMLDivElement;
+    _intialized: boolean = false
     _stage: any
+
+    initialize(): void {
+      super.initialize()
+      this.container = div({
+          class: "ngl-viewer",
+          id: "ngl-viewer-" + uuidv4(),
+          style: {width: "100%", height: "100%"}
+        })
+      }
 
     connect_signals(): void {
       super.connect_signals()
@@ -96,27 +108,39 @@ export class NGLViewerView extends HTMLBoxView {
       this.connect(this.model.properties.color_scheme.change, this.updateParameters)
       this.connect(this.model.properties.custom_color_scheme.change, this.updateParameters)
       this.connect(this.model.properties.effect.change, this.updateEffect)
-      this.connect(this.model.properties.background.change, this.setBackgroundcolor)
+      this.connect(this.model.properties.background_color.change, this.setBackgroundcolor)
     }
 
     render(): void {
         super.render()
-        this.el.id = "viewport"
+        this._intialized = false
+        this.createNGLViewer()
+    }
+    setBackgroundcolor(): void {
+      this._stage.setParameters( { backgroundColor: this.model.background_color} );
+    }
+    createNGLViewer(){
+        if (this._intialized)
+          return
 
+        document.body.appendChild(this.container)
+        
         const wn = (window as any)
         const ngl = wn.NGL
-
-        this._stage = new ngl.Stage(this.el);
+        
+        this._stage = new ngl.Stage(this.container.id);
         this.setBackgroundcolor()
         const stage = this._stage
         this.updateStage();
         window.addEventListener( "resize", function(){
             stage.handleResize();
         }, false );
-        }
-    setBackgroundcolor(): void {
-      console.log(this.model.background)
-      this._stage.setParameters( { backgroundColor: this.model.background} );
+
+        // Remove from document body and add to shadow DOM
+        document.body.removeChild(this.container)
+        this.shadow_el.appendChild(this.container)
+
+        this._intialized = true
     }
     after_layout(): void {
       super.after_layout()
@@ -177,6 +201,7 @@ export namespace NGLViewer {
     export type Attrs = p.AttrsOf<Props>
     export type Props = HTMLBox.Props & {
         object: p.Property<string>,
+        background_color: p.Property<string>,
         extension: p.Property<string>,
         representation: p.Property<string>,
         color_scheme: p.Property<string>,
@@ -188,6 +213,7 @@ export namespace NGLViewer {
 export interface NGLViewer extends NGLViewer.Attrs { }
 export class NGLViewer extends HTMLBox {
     properties: NGLViewer.Props
+    __view_type__: NGLViewerView
 
     constructor(attrs?: Partial<NGLViewer.Attrs>) {
       super(attrs)
@@ -195,15 +221,16 @@ export class NGLViewer extends HTMLBox {
 
     static __module__ = "panel_chemistry.bokeh_extensions.ngl_viewer"
 
-    static init_NGLViewer(): void {
+    static {
       this.prototype.default_view = NGLViewerView;
 
       this.define<NGLViewer.Props>(({ String, Any }) => ({
         object:             [ String, ""],
         extension:             [ String, ""],
-        representation:              [ String, "ribbon"],
-        color_scheme:               [ String, "chainid"],
-        custom_color_scheme:               [ Any, "chainid"],
+        background_color:             [ String, ""],
+        representation:              [ String, "ball+stick"],
+        color_scheme:               [ String, "element"],
+        custom_color_scheme:               [ Any, ["white", "*"]],
         effect:               [ String, ""],
       }))
 

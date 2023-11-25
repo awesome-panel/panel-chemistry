@@ -18,7 +18,7 @@ Below we describe how to install and use this project for development.
 To install for development you will need to create and activate a virtual environment
 
 ```bash
-conda create --name panel-chemistry python=3.9 nodejs
+conda create --name panel-chemistry python=3.10 nodejs
 conda activate panel-chemistry
 ```
 

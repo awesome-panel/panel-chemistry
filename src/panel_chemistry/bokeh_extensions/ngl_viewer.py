@@ -3,19 +3,20 @@ from bokeh.core.properties import List, String
 from bokeh.models import LayoutDOM
 
 
-class NGLViewer(LayoutDOM):
+class NGLViewer(LayoutDOM):  # pylint: disable=too-many-ancestors
     """The [NGL Viewer](https://github.com/nglviewer/ngl) can be used
     to show and analyse pdb molecule structures"""
 
-    object = String()
-    extension = String()
-    representation = String()
-    color_scheme = String()
-    effect = String()
+    object = String("")
+    extension = String("")
+    background_color = String("")
+    representation = String("ball+stick")
+    color_scheme = String("element")
     custom_color_scheme = List(List(String))
+    effect = String("")
 
     __javascript__ = [
-        "https://unpkg.com/ngl@2.0.0-dev.37/dist/ngl.js",
+        "https://unpkg.com/ngl@2.2.1/dist/ngl.js",
     ]
 
     __js_skip__ = {
@@ -24,7 +25,7 @@ class NGLViewer(LayoutDOM):
 
     __js_require__ = {
         "paths": {
-            "NGL": "https://unpkg.com/ngl@2.0.0-dev.37/dist/ngl",
+            "NGL": "https://unpkg.com/ngl@2.2.1/dist/ngl",
         },
         "exports": {"NGL": "NGL"},
     }

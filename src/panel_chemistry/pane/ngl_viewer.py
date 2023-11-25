@@ -8,8 +8,6 @@ Author: https://github.com/Jhsmit
 """
 
 
-from typing import Dict
-
 import param
 from panel import extension
 from panel.pane.base import PaneBase
@@ -98,10 +96,15 @@ class NGLViewer(PaneBase):  # pylint: disable=too-many-ancestors
     to show and analyse pdb molecule structures"""
 
     object = param.String(
+        default="",
         doc="""
         The object to display. For example an url like 'rcsb://3dqb.pdb', 'rcsb://1NKT', '1NKT'.
         You can also specify a extension string if you define the extension 
-        in the extension parameter"""
+        in the extension parameter""",
+    )
+    background_color = param.Color(
+        doc="""
+        A custom background color"""
     )
     extension = param.ObjectSelector(
         default="",
@@ -161,15 +164,6 @@ class NGLViewer(PaneBase):  # pylint: disable=too-many-ancestors
             props["object"] = self.object
         model = _NGLViewer(**props)
         root = root or model
-        # self._link_props(
-        #     model,
-        #     [
-        #         "event",
-        #     ],
-        #     doc,
-        #     root,
-        #     comm,
-        # )
         self._models[root.ref["id"]] = (model, parent)
         return model
 

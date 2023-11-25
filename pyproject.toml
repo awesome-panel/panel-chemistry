@@ -34,7 +34,7 @@ classifiers = [
     "Topic :: Software Development :: Libraries",
 ]
 dependencies = [
-    "panel",
+    "panel>=1.0",
 ]
 dynamic = ["version"]
 
@@ -65,7 +65,7 @@ profile = "black"
 src_paths = ["src", "tests"]
 
 [tool.pylint.main]
-py-version=3.9
+py-version=3.10
 output-format = "colorized"
 max-attributes=12
 max-args=10
@@ -75,7 +75,7 @@ max-module-lines = 1000
 max-line-length=100
 
 [tool.mypy]
-python_version = "3.9"
+python_version = "3.10"
 namespace_packages = true
 explicit_package_bases = true
 mypy_path = "src"
@@ -84,11 +84,13 @@ exclude = []
 [[tool.mypy.overrides]]
 module = [
     "bokeh.*",
+    "comm.*",
     "holoviews.*",
     "hvplot.*",
     "param",
-    "pyviz_comms",
     "py3Dmol",
+    "pydantic.*",
+    "pyviz_comms",
 ]
 ignore_missing_imports = true
 

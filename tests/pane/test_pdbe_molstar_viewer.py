@@ -4,9 +4,11 @@ import panel as pn
 from panel_chemistry.pane import PDBeMolStar
 
 
-def test_can_create():
+def test_can_create(document, comm):
     """Test of the PDBeMolStar constructor"""
-    PDBeMolStar(molecule_id="1qyn", lighting="metallic", height=300, width=300)
+    molstar = PDBeMolStar(molecule_id="1qyn", lighting="metallic", height=300, width=300)
+    widget = molstar.get_root(document, comm=comm)
+    assert widget
 
 
 def test_functions():
@@ -49,7 +51,7 @@ def test_functions():
     viewer.reset(data)
 
 
-def test_app():
+def _create_app():
     """Returns an app for manually testing the PDBe Mol* Viewer"""
     pn.extension(sizing_mode="stretch_width")
     # 1NKT, 2GQ5, 3UOG and 5TXH
@@ -102,5 +104,10 @@ def test_app():
     return pn.Row(pn.WidgetBox(settings, width=300, sizing_mode="fixed"), viewer)
 
 
+def test_app():
+    """Can create test app"""
+    assert _create_app()
+
+
 if __name__.startswith("bokeh"):
-    test_app().servable()
+    _create_app().servable()
